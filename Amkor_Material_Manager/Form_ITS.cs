@@ -211,6 +211,7 @@ namespace Amkor_Material_Manager
             list.Add(dataGridView_group5);
             list.Add(dataGridView_group6);
             list.Add(dataGridView_group7);
+            list.Add(dgvCapaAll);
 
             for ( int i = 0; i<list.Count; i++)
             {
@@ -219,9 +220,13 @@ namespace Amkor_Material_Manager
                 list[i].Refresh();
 
                 list[i].Columns.Add("Capa", "Capa");
+                list[i].Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 list[i].Columns.Add("현재 수량", "현재 수량");
+                list[i].Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 list[i].Columns.Add("입고 가능 수량", "입고 가능 수량");
+                list[i].Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 list[i].Columns.Add("적재율(%)", "적재율(%)");
+                list[i].Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 list[i].AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             }
@@ -245,6 +250,11 @@ namespace Amkor_Material_Manager
             }
 
             List<Inchdata> inch_list = new List<Inchdata>();
+            int Tot7InchCnt = 0;
+            int Tot13InchCnt = 0;
+            int Tot7InchCapa = 0;
+            int Tot13InchCapa = 0;
+
 
             for (int i = 0; i < MtlList.Rows.Count; i++)
             {
@@ -258,7 +268,10 @@ namespace Amkor_Material_Manager
                 data.Inch_7_rate = MtlList.Rows[i]["INCH_7_LOAD_RATE"].ToString(); data.Inch_7_rate = data.Inch_7_rate.Trim();
                 data.Inch_13_rate = MtlList.Rows[i]["INCH_13_LOAD_RATE"].ToString(); data.Inch_13_rate = data.Inch_13_rate.Trim();
 
-
+                Tot7InchCnt += int.Parse(data.Inch_7_cnt);
+                Tot13InchCnt += int.Parse(data.Inch_13_cnt);
+                Tot7InchCapa += int.Parse(data.Inch_7_capa);
+                Tot13InchCapa += int.Parse(data.Inch_13_capa);
 
                 string inch_7_cal = (Int32.Parse(data.Inch_7_capa) - Int32.Parse(data.Inch_7_cnt)).ToString();
                 string inch_13_cal = (Int32.Parse(data.Inch_13_capa) - Int32.Parse(data.Inch_13_cnt)).ToString();
@@ -271,12 +284,22 @@ namespace Amkor_Material_Manager
 
                 list[i].Rows[0].Cells[2].Style.ForeColor = Color.Red;
                 list[i].Rows[1].Cells[2].Style.ForeColor = Color.Red;
-
-
             }
+                                   
+            string TotInch7Cal = (Tot7InchCapa - Tot7InchCnt).ToString();
+            string TotInch13Cal = (Tot13InchCapa - Tot13InchCnt).ToString();
 
-
-
+            list[list.Count - 1].Rows.Add(new object[4] {Tot7InchCapa, Tot7InchCnt, TotInch7Cal, Math.Round(((double)Tot7InchCnt / (double)Tot7InchCapa) * 100, 2).ToString()});
+            list[list.Count - 1].Rows.Add(new object[4] { Tot13InchCapa, Tot13InchCnt, TotInch13Cal, Math.Round(((double)Tot13InchCnt / (double)Tot13InchCapa) * 100, 2).ToString() });
+            list[list.Count - 1].Rows[0].HeaderCell.Value = "7\"";
+            list[list.Count - 1].Rows[1].HeaderCell.Value = "13\"";
+            list[list.Count - 1].Rows[0].DefaultCellStyle.BackColor = Color.Yellow;
+            list[list.Count - 1].Rows[1].DefaultCellStyle.BackColor = Color.Yellow;
+            list[list.Count - 1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
+            list[list.Count - 1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
+            list[list.Count - 1].DefaultCellStyle.SelectionBackColor = Color.Yellow;
+            list[list.Count - 1].ColumnHeadersDefaultCellStyle.BackColor = Color.Yellow;
+            list[list.Count - 1].RowHeadersDefaultCellStyle.BackColor = Color.Yellow;
         }
 
         //]210818_Sangik.choi_capa 조회 탭 추가 by이종명수석님
