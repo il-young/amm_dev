@@ -78,7 +78,9 @@ namespace Amkor_Material_Manager
         }
         public void Fnc_init()
         {
-            Version = Application.ProductVersion;
+            string strPath = Application.StartupPath + "\\Versioninfo.ini";
+            
+            Version = System.IO.File.ReadAllLines(strPath)[0];
             Text = "S/W Version:" + Version;
 
             Frm_Order.MdiParent = this;
@@ -344,6 +346,11 @@ namespace Amkor_Material_Manager
             Form_ITS.bUpdate_Timer = true;
 
             Fnc_SaveLog("재고 조회 창 이동.", 0);
+        }
+
+        private void AMM_Main_Load(object sender, EventArgs e)
+        {
+
         }
 
         public void Fnc_Show_HistoryViewer()
