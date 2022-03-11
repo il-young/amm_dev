@@ -47,11 +47,13 @@
             this.toolStripMenuItem_Refuse = new System.Windows.Forms.ToolStripMenuItem();
             this.button_accept = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.comboBox_pad = new System.Windows.Forms.ComboBox();
             this.comboBox_match = new System.Windows.Forms.ComboBox();
             this.comboBox_smsearch = new System.Windows.Forms.ComboBox();
             this.comboBox_twrUse = new System.Windows.Forms.ComboBox();
             this.comboBox_twrNo = new System.Windows.Forms.ComboBox();
             this.comboBox_startup = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -66,8 +68,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button_twrSave = new System.Windows.Forms.Button();
             this.button_Save = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBox_pad = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_List)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -82,18 +82,19 @@
             this.panel1.Controls.Add(this.textBox_sid);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(1, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(508, 111);
             this.panel1.TabIndex = 0;
             // 
             // button_request
             // 
+            this.button_request.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_request.Location = new System.Drawing.Point(341, 14);
             this.button_request.Name = "button_request";
             this.button_request.Size = new System.Drawing.Size(136, 81);
             this.button_request.TabIndex = 3;
-            this.button_request.Text = "요청하기";
+            this.button_request.Text = "등    록";
             this.button_request.UseVisualStyleBackColor = true;
             this.button_request.Click += new System.EventHandler(this.button_request_Click);
             // 
@@ -263,6 +264,18 @@
             this.panel2.Size = new System.Drawing.Size(1069, 639);
             this.panel2.TabIndex = 7;
             // 
+            // comboBox_pad
+            // 
+            this.comboBox_pad.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_pad.FormattingEnabled = true;
+            this.comboBox_pad.Items.AddRange(new object[] {
+            "사용 안함 (FALSE)",
+            "사용 (TRUE)"});
+            this.comboBox_pad.Location = new System.Drawing.Point(538, 246);
+            this.comboBox_pad.Name = "comboBox_pad";
+            this.comboBox_pad.Size = new System.Drawing.Size(237, 37);
+            this.comboBox_pad.TabIndex = 9;
+            // 
             // comboBox_match
             // 
             this.comboBox_match.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -321,6 +334,19 @@
             this.comboBox_startup.Name = "comboBox_startup";
             this.comboBox_startup.Size = new System.Drawing.Size(237, 37);
             this.comboBox_startup.TabIndex = 9;
+            // 
+            // label13
+            // 
+            this.label13.BackColor = System.Drawing.Color.Maroon;
+            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label13.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(405, 246);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(132, 37);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "숫자 패드";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label12
             // 
@@ -491,31 +517,6 @@
             this.button_Save.Text = "저장";
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
-            // 
-            // label13
-            // 
-            this.label13.BackColor = System.Drawing.Color.Maroon;
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(405, 246);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(132, 37);
-            this.label13.TabIndex = 8;
-            this.label13.Text = "숫자 패드";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // comboBox_pad
-            // 
-            this.comboBox_pad.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox_pad.FormattingEnabled = true;
-            this.comboBox_pad.Items.AddRange(new object[] {
-            "사용 안함 (FALSE)",
-            "사용 (TRUE)"});
-            this.comboBox_pad.Location = new System.Drawing.Point(538, 246);
-            this.comboBox_pad.Name = "comboBox_pad";
-            this.comboBox_pad.Size = new System.Drawing.Size(237, 37);
-            this.comboBox_pad.TabIndex = 9;
             // 
             // Form_Set
             // 

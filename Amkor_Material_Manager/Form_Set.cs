@@ -83,17 +83,23 @@ namespace Amkor_Material_Manager
 
         public void Fnc_Send_Request(string strSid, string strName)
         {
-            string strJudge = AMM_Main.AMM.SetUserRequest(strSid, strName);
+            //string strJudge = AMM_Main.AMM.SetUserRequest(strSid, strName);
 
-            if (strJudge == "OK")
-            {
-                Fnc_Send_Email(strSid, strName, 0);
-                MessageBox.Show("사용 요청이 정상적으로 등록 되었습니다.");
-            }
+            //if (strJudge == "OK")
+            //{
+            //    Fnc_Send_Email(strSid, strName, 0);
+            //    MessageBox.Show("사용 요청이 정상적으로 등록 되었습니다.");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("요청 실패!", "사용 요청");
+            //}
+            string res = AMM_Main.AMM.User_Register(strSid, strName);
+
+            if (res == "OK")
+                MessageBox.Show("정상적으로 등록 되었습니다.");
             else
-            {
-                MessageBox.Show("요청 실패!", "사용 요청");
-            }
+                MessageBox.Show("등록이 실패 했습니다.");
         }
 
         public void Fnc_Send_Email(string strSid, string strName, int nType)
