@@ -2001,7 +2001,8 @@
             "Group #4",
             "Group #5",
             "Group #6",
-            "Group #7"});
+            "Group #7",
+            "ALL"});
             this.comboBox_group2.Location = new System.Drawing.Point(832, 104);
             this.comboBox_group2.Name = "comboBox_group2";
             this.comboBox_group2.Size = new System.Drawing.Size(159, 37);

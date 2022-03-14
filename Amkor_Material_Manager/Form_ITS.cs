@@ -1244,7 +1244,37 @@ namespace Amkor_Material_Manager
 
             label_updatedate2.Text = "최근 업데이트: " + strToday + " " + strHead;
 
-            var MtlList = AMM_Main.AMM.GetInouthistroy(AMM_Main.strDefault_linecode, strEquipid, strTime_st, strTime_ed);
+            var MtlList = new DataTable();
+                
+            if(strEquipid != "ALL")
+                MtlList = AMM_Main.AMM.GetInouthistroy(AMM_Main.strDefault_linecode, strEquipid, strTime_st, strTime_ed);
+            else
+            {
+                string group_name = "";
+                var TableData = new DataTable();
+                for(int i = 0; i < comboBox_group2.Items.Count; i++)
+                {
+                    group_name = comboBox_group2.Items[i].ToString();
+
+                    if (group_name != "ALL" && group_name != "")
+                    {
+                        TableData = AMM_Main.AMM.GetInouthistroy(AMM_Main.strDefault_linecode, "TWR" + (i+1).ToString(), strTime_st, strTime_ed);
+
+                        if (i == 0)
+                        {
+                            MtlList = TableData;
+                        }
+                        else
+                        {
+                            for (int j = 0; j < TableData.Rows.Count; j++)
+                            {
+
+                                MtlList.Rows.Add(TableData.Rows[j].ItemArray);
+                            }
+                        }                        
+                    }                    
+                }
+            }
 
             int nMtlCount = MtlList.Rows.Count;
 
@@ -1253,6 +1283,7 @@ namespace Amkor_Material_Manager
                 return nMtlCount;
             }
 
+            
             List<StorageData2> list_input = new List<StorageData2>();
             List<StorageData2> list_return = new List<StorageData2>();
             List<StorageData2> list_out = new List<StorageData2>();
@@ -3274,6 +3305,10 @@ namespace Amkor_Material_Manager
             {
                 if (nGroup != 8)//210909_Sangik.choi_입출고정보 7번그룹 추가
                     Fnc_Process_GetINOUT_mtlinfo(nType, strEquipid, Double.Parse(strDate_st), Double.Parse(strDate_ed));
+                else if (nGroup == 8)
+                {
+                    Fnc_Process_GetINOUT_mtlinfo(nType, "ALL", Double.Parse(strDate_st), Double.Parse(strDate_ed));
+                }
             }            
 
             IsDateGathering = false;

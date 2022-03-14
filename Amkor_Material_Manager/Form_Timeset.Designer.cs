@@ -397,6 +397,7 @@
             this.Name = "Form_Timeset";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "시간 설정";
+            this.Load += new System.EventHandler(this.Form_Timeset_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

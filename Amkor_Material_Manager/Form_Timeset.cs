@@ -123,6 +123,11 @@ namespace Amkor_Material_Manager
             Timeset_Exit();
         }
 
+        private void Form_Timeset_Load(object sender, EventArgs e)
+        {
+
+        }
+
         public void Fnc_Init()
         {
             DateTime dToday = DateTime.Now;
@@ -140,11 +145,11 @@ namespace Amkor_Material_Manager
 
             comboBox_Min_ed.SelectedIndex = nCal; //0,5,10,15,20,25,30,35,40,45,50,55,59
 
-            radioButton1.Checked = true;
+            radioButton1.Checked = false;
             radioButton2.Checked = false;
             radioButton3.Checked = false;
             radioButton4.Checked = false;
-            radioButton5.Checked = false;
+            radioButton5.Checked = true;
 
             if (AMM_Main.nSelectedWin == 2)
             {
