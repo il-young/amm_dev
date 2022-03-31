@@ -55,6 +55,8 @@ namespace Amkor_Material_Manager
 
             Fnc_Init();
             timer1.Start();
+            tAutosync.Enabled = true;
+            tAutosync.Start();
         }
 
         public void Fnc_Init()
@@ -96,6 +98,7 @@ namespace Amkor_Material_Manager
             string strPickingID = label_pickid_LT.Text;
             //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
 
+            
 
             if (tabNo == 0)
             {
@@ -3541,12 +3544,18 @@ namespace Amkor_Material_Manager
             Fnc_Update();
         }
 
+        
+
         public void Fnc_Update()
         {
             if(bUpdate_Timer)
                 Fnc_Process_CalMaterialInfo();
                 Fnc_Init_datagrid_capa();
+
+            
         }
+
+        
 
         private void dataGridView_info_MouseUp(object sender, MouseEventArgs e)
         {
@@ -3635,7 +3644,7 @@ namespace Amkor_Material_Manager
 
         private void button_sync_Click(object sender, EventArgs e)
         {
-            if (nDbUpdate != 2)
+            if (nDbUpdate != 2 && sender != tAutosync)
             {
                 MessageBox.Show("Missmatch 확인을 먼저 하십시오");
                 return;
@@ -3645,10 +3654,13 @@ namespace Amkor_Material_Manager
                 return;
 
             //경고 메세지
-            DialogResult ret = MessageBox.Show("동기화 하시겠습까?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (ret != DialogResult.Yes)
-                return;
 
+            if (sender != tAutosync)
+            {
+                DialogResult ret = MessageBox.Show("동기화 하시겠습까?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (ret != DialogResult.Yes)
+                    return;
+            }
             IsDateGathering = true;
 
             //AMM delete
@@ -3730,24 +3742,27 @@ namespace Amkor_Material_Manager
 
             IsDateGathering = false;
 
-            MessageBox.Show("완료 되었습니다.");
+            if (sender != tAutosync)
+            {
+                MessageBox.Show("완료 되었습니다.");
 
-            int nIndex = comboBox_sel.SelectedIndex;
+                int nIndex = comboBox_sel.SelectedIndex;
 
-            if (nIndex == 0)
-            {
-                Fnc_Process_GetMaterials_Tower1();
-                Fnc_Process_GetAMMinfo("TWR1");
-            }
-            else if (nIndex == 1)
-            {
-                Fnc_Process_GetMaterials_Tower2();
-                Fnc_Process_GetAMMinfo("TWR2");
-            }
-            else if (nIndex == 2)
-            {
-                Fnc_Process_GetMaterials_Tower3();
-                Fnc_Process_GetAMMinfo("TWR3");
+                if (nIndex == 0)
+                {
+                    Fnc_Process_GetMaterials_Tower1();
+                    Fnc_Process_GetAMMinfo("TWR1");
+                }
+                else if (nIndex == 1)
+                {
+                    Fnc_Process_GetMaterials_Tower2();
+                    Fnc_Process_GetAMMinfo("TWR2");
+                }
+                else if (nIndex == 2)
+                {
+                    Fnc_Process_GetMaterials_Tower3();
+                    Fnc_Process_GetAMMinfo("TWR3");
+                }
             }
 
             nDbUpdate = 0;
@@ -5314,7 +5329,115 @@ namespace Amkor_Material_Manager
 
         }
 
+        private void btn_schedule_Click(object sender, EventArgs e)
+        {
+            string[] val = AMM_Main.AMM.ReadAutoSync().Split(',');
 
+            //string date, string time, string Interval, string val, string use
+            Form_schedule s = new Form_schedule(val[0], val[1], val[2], val[3], val[4]);
+
+            s.Show();
+        }
+
+        // 자동 업데이트 기능 추가 
+        private void tAutosync_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                AutoSyncParam = AMM_Main.AMM.ReadAutoSync().Split(',');
+
+                if (AutoSyncParam[4] == "1") // 사용 여부
+                {
+                    if (AutoSyncParam[2] == "일")
+                    {
+                        DateTime updateday = Convert.ToDateTime(AutoSyncParam[5]);
+                        if((DateTime.Now.Date - updateday.Date).Days > int.Parse(AutoSyncParam[3]))
+                        {
+                            DateTime dt = Convert.ToDateTime(AutoSyncParam[1]);
+
+                            if (DateTime.Now.Hour > dt.Hour)
+                            {
+                                RunSync(sender, e);
+                            }
+                            else if(DateTime.Now.Hour == dt.Hour && DateTime.Now.Minute >= dt.Minute)
+
+                            {
+                                RunSync(sender, e);
+                            }
+                        }
+                    }
+                    else if (AutoSyncParam[2] == "주")
+                    {
+
+                    }
+                    else if (AutoSyncParam[2] == "월")
+                    {
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        private void RunSync(object sender, EventArgs e)
+        {
+            for (int i = 0; i < comboBox_sel.Items.Count; i++)
+            {
+                comboBox_sel.SelectedIndex = i;
+                button_dbload_Click(sender, e);
+                button_missmatch_Click(sender, e);
+                button_sync_Click(sender, e);
+            }
+
+            AMM_Main.AMM.WriteAutoSync(string.Format("update TB_AUTO_SYNC set UPDATE_DAY='{0}' where UPDATE_NO=1", DateTime.Now.ToString("yyyy-MM-dd")));
+        }
+
+        string[] AutoSyncParam; //0:date, 1:time, 2:interval, 3:val, 4:use, 5:day
+        DateTime bdate = DateTime.Now.AddDays(-1);
+
+        private void AutoSync()
+        {
+            bdate = Convert.ToDateTime(AutoSyncParam[5]);
+
+            if (DateTime.Now.ToString("yyyy/MM/dd") != bdate.ToString("yyyy/MM/dd"))
+            {
+                AutoSyncParam = AMM_Main.AMM.ReadAutoSync().Split(',');
+
+                if (AutoSyncParam[4] == "1")
+                {
+
+                }
+            }
+        }
+
+        private int GetDay()
+        {
+            int res = -1;
+
+            if (AutoSyncParam[2] == "일")
+            {
+                res = int.Parse(AutoSyncParam[3]);
+            }
+            else if (AutoSyncParam[2] == "주")
+            {
+
+            }
+            else if (AutoSyncParam[2] == "월")
+            {
+
+            }
+
+            return res;
+        }
+
+        private void Form_ITS_Load(object sender, EventArgs e)
+        {
+            
+        }
 
         //]210810_Sangik.choi_장기보관관리기능추가(이종명수석님)
 

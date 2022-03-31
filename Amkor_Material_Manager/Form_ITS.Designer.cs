@@ -130,6 +130,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView_longterm = new System.Windows.Forms.DataGridView();
             this.tabPage_match = new System.Windows.Forms.TabPage();
+            this.btn_schedule = new System.Windows.Forms.Button();
             this.button_sync = new System.Windows.Forms.Button();
             this.button_missmatch = new System.Windows.Forms.Button();
             this.button_dbload = new System.Windows.Forms.Button();
@@ -214,6 +215,7 @@
             this.dataGridView_input = new System.Windows.Forms.DataGridView();
             this.button_excel2 = new System.Windows.Forms.Button();
             this.button_timeset = new System.Windows.Forms.Button();
+            this.tAutosync = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.tabPage_longterm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LTlist)).BeginInit();
@@ -641,6 +643,7 @@
             // 
             // tabPage_match
             // 
+            this.tabPage_match.Controls.Add(this.btn_schedule);
             this.tabPage_match.Controls.Add(this.button_sync);
             this.tabPage_match.Controls.Add(this.button_missmatch);
             this.tabPage_match.Controls.Add(this.button_dbload);
@@ -660,12 +663,23 @@
             this.tabPage_match.Text = "ASM 동기화";
             this.tabPage_match.UseVisualStyleBackColor = true;
             // 
+            // btn_schedule
+            // 
+            this.btn_schedule.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_schedule.BackgroundImage")));
+            this.btn_schedule.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_schedule.Location = new System.Drawing.Point(951, 7);
+            this.btn_schedule.Name = "btn_schedule";
+            this.btn_schedule.Size = new System.Drawing.Size(44, 34);
+            this.btn_schedule.TabIndex = 24;
+            this.btn_schedule.UseVisualStyleBackColor = true;
+            this.btn_schedule.Click += new System.EventHandler(this.btn_schedule_Click);
+            // 
             // button_sync
             // 
             this.button_sync.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_sync.Location = new System.Drawing.Point(731, 7);
             this.button_sync.Name = "button_sync";
-            this.button_sync.Size = new System.Drawing.Size(264, 34);
+            this.button_sync.Size = new System.Drawing.Size(214, 34);
             this.button_sync.TabIndex = 21;
             this.button_sync.Text = "동기화";
             this.button_sync.UseVisualStyleBackColor = true;
@@ -2307,6 +2321,11 @@
             this.button_timeset.Click += new System.EventHandler(this.button_timeset_Click);
             this.button_timeset.MouseHover += new System.EventHandler(this.button_timeset_MouseHover);
             // 
+            // tAutosync
+            // 
+            this.tAutosync.Interval = 50000;
+            this.tAutosync.Tick += new System.EventHandler(this.tAutosync_Tick);
+            // 
             // Form_ITS
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2323,6 +2342,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form_ITS";
+            this.Load += new System.EventHandler(this.Form_ITS_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.tabPage_longterm.ResumeLayout(false);
             this.tabPage_longterm.PerformLayout();
@@ -2469,5 +2489,7 @@
         private System.Windows.Forms.Label label_group7;
         private System.Windows.Forms.DataGridView dgvCapaAll;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button btn_schedule;
+        private System.Windows.Forms.Timer tAutosync;
     }
 }
