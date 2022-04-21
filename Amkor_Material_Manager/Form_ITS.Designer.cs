@@ -215,7 +215,50 @@
             this.dataGridView_input = new System.Windows.Forms.DataGridView();
             this.button_excel2 = new System.Windows.Forms.Button();
             this.button_timeset = new System.Windows.Forms.Button();
-            this.tAutosync = new System.Windows.Forms.Timer(this.components);
+            this.tabPage_Sorter = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.dgv_tower = new System.Windows.Forms.DataGridView();
+            this.TUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TQTY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TSIZE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TTARGET = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TDATE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TCHECK = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.dgv_fail = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MDATE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button3 = new System.Windows.Forms.Button();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.dgv_sorter = new System.Windows.Forms.DataGridView();
+            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QTY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SIZE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TARGET = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CHECK = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.EDTTower = new System.Windows.Forms.DateTimePicker();
+            this.SDTTower = new System.Windows.Forms.DateTimePicker();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.EDTSort = new System.Windows.Forms.DateTimePicker();
+            this.SDTSort = new System.Windows.Forms.DateTimePicker();
+            this.button4 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.performanceCounter1 = new System.Diagnostics.PerformanceCounter();
+            this.bgwSorter = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1.SuspendLayout();
             this.tabPage_longterm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LTlist)).BeginInit();
@@ -243,6 +286,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_output)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_return)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_input)).BeginInit();
+            this.tabPage_Sorter.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_tower)).BeginInit();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_fail)).BeginInit();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_sorter)).BeginInit();
+            this.panel8.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -269,6 +328,7 @@
             this.imageList1.Images.SetKeyName(2, "Inout.ico");
             this.imageList1.Images.SetKeyName(3, "동기화_58.bmp");
             this.imageList1.Images.SetKeyName(4, "longterm.bmp");
+            this.imageList1.Images.SetKeyName(5, "Sorter.png");
             // 
             // timer1
             // 
@@ -1366,6 +1426,7 @@
             this.tabControl_ITS.Controls.Add(this.tabPage_inout);
             this.tabControl_ITS.Controls.Add(this.tabPage_match);
             this.tabControl_ITS.Controls.Add(this.tabPage_longterm);
+            this.tabControl_ITS.Controls.Add(this.tabPage_Sorter);
             this.tabControl_ITS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl_ITS.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl_ITS.ImageList = this.imageList1;
@@ -2321,10 +2382,423 @@
             this.button_timeset.Click += new System.EventHandler(this.button_timeset_Click);
             this.button_timeset.MouseHover += new System.EventHandler(this.button_timeset_MouseHover);
             // 
-            // tAutosync
+            // tabPage_Sorter
             // 
-            this.tAutosync.Interval = 50000;
-            this.tAutosync.Tick += new System.EventHandler(this.tAutosync_Tick);
+            this.tabPage_Sorter.Controls.Add(this.panel4);
+            this.tabPage_Sorter.Controls.Add(this.panel3);
+            this.tabPage_Sorter.Controls.Add(this.panel2);
+            this.tabPage_Sorter.ImageIndex = 5;
+            this.tabPage_Sorter.Location = new System.Drawing.Point(4, 32);
+            this.tabPage_Sorter.Name = "tabPage_Sorter";
+            this.tabPage_Sorter.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Sorter.Size = new System.Drawing.Size(1232, 812);
+            this.tabPage_Sorter.TabIndex = 5;
+            this.tabPage_Sorter.Text = "Tower 입고 검증";
+            this.tabPage_Sorter.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.pictureBox5);
+            this.panel4.Controls.Add(this.pictureBox4);
+            this.panel4.Controls.Add(this.pictureBox3);
+            this.panel4.Controls.Add(this.panel7);
+            this.panel4.Controls.Add(this.panel6);
+            this.panel4.Controls.Add(this.panel5);
+            this.panel4.Location = new System.Drawing.Point(3, 53);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(968, 578);
+            this.panel4.TabIndex = 3;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(629, 286);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(45, 19);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox5.TabIndex = 5;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(629, 261);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(45, 19);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 4;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(296, 275);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(45, 19);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 3;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.dgv_tower);
+            this.panel7.Controls.Add(this.button2);
+            this.panel7.Location = new System.Drawing.Point(347, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(276, 578);
+            this.panel7.TabIndex = 2;
+            // 
+            // dgv_tower
+            // 
+            this.dgv_tower.AllowUserToAddRows = false;
+            this.dgv_tower.AllowUserToResizeRows = false;
+            this.dgv_tower.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_tower.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TUID,
+            this.TQTY,
+            this.TSIZE,
+            this.TTARGET,
+            this.TDATE,
+            this.TCHECK});
+            this.dgv_tower.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_tower.Location = new System.Drawing.Point(0, 45);
+            this.dgv_tower.Name = "dgv_tower";
+            this.dgv_tower.RowHeadersVisible = false;
+            this.dgv_tower.RowTemplate.Height = 23;
+            this.dgv_tower.Size = new System.Drawing.Size(276, 533);
+            this.dgv_tower.TabIndex = 4;
+            // 
+            // TUID
+            // 
+            this.TUID.HeaderText = "UID";
+            this.TUID.Name = "TUID";
+            this.TUID.ReadOnly = true;
+            // 
+            // TQTY
+            // 
+            this.TQTY.HeaderText = "QTY";
+            this.TQTY.Name = "TQTY";
+            this.TQTY.ReadOnly = true;
+            this.TQTY.Width = 70;
+            // 
+            // TSIZE
+            // 
+            this.TSIZE.HeaderText = "SIZE";
+            this.TSIZE.Name = "TSIZE";
+            this.TSIZE.ReadOnly = true;
+            this.TSIZE.Width = 50;
+            // 
+            // TTARGET
+            // 
+            this.TTARGET.HeaderText = "TARGET";
+            this.TTARGET.Name = "TTARGET";
+            this.TTARGET.ReadOnly = true;
+            this.TTARGET.Width = 50;
+            // 
+            // TDATE
+            // 
+            this.TDATE.HeaderText = "DATE";
+            this.TDATE.Name = "TDATE";
+            this.TDATE.ReadOnly = true;
+            // 
+            // TCHECK
+            // 
+            this.TCHECK.HeaderText = "CHECK";
+            this.TCHECK.Name = "TCHECK";
+            this.TCHECK.ReadOnly = true;
+            this.TCHECK.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Aqua;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(0, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(276, 45);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Tower";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.dgv_fail);
+            this.panel6.Controls.Add(this.button3);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel6.Location = new System.Drawing.Point(680, 0);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(288, 578);
+            this.panel6.TabIndex = 1;
+            // 
+            // dgv_fail
+            // 
+            this.dgv_fail.AllowUserToAddRows = false;
+            this.dgv_fail.AllowUserToResizeRows = false;
+            this.dgv_fail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_fail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.MDATE,
+            this.dataGridViewTextBoxColumn5});
+            this.dgv_fail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_fail.Location = new System.Drawing.Point(0, 45);
+            this.dgv_fail.Name = "dgv_fail";
+            this.dgv_fail.RowHeadersVisible = false;
+            this.dgv_fail.RowTemplate.Height = 23;
+            this.dgv_fail.Size = new System.Drawing.Size(288, 533);
+            this.dgv_fail.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "UID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "QTY";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "SIZE";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "TARGET";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 50;
+            // 
+            // MDATE
+            // 
+            this.MDATE.HeaderText = "DATE";
+            this.MDATE.Name = "MDATE";
+            this.MDATE.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "CHECK";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Visible = false;
+            this.dataGridViewTextBoxColumn5.Width = 10;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Aqua;
+            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(0, 0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(288, 45);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Miss";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.dgv_sorter);
+            this.panel5.Controls.Add(this.panel8);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(290, 578);
+            this.panel5.TabIndex = 0;
+            // 
+            // dgv_sorter
+            // 
+            this.dgv_sorter.AllowUserToAddRows = false;
+            this.dgv_sorter.AllowUserToResizeRows = false;
+            this.dgv_sorter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_sorter.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.UID,
+            this.QTY,
+            this.SIZE,
+            this.TARGET,
+            this.Sdate,
+            this.CHECK});
+            this.dgv_sorter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_sorter.Location = new System.Drawing.Point(0, 45);
+            this.dgv_sorter.Name = "dgv_sorter";
+            this.dgv_sorter.RowHeadersVisible = false;
+            this.dgv_sorter.RowTemplate.Height = 23;
+            this.dgv_sorter.Size = new System.Drawing.Size(290, 533);
+            this.dgv_sorter.TabIndex = 2;
+            // 
+            // UID
+            // 
+            this.UID.HeaderText = "UID";
+            this.UID.Name = "UID";
+            this.UID.ReadOnly = true;
+            // 
+            // QTY
+            // 
+            this.QTY.HeaderText = "QTY";
+            this.QTY.Name = "QTY";
+            this.QTY.ReadOnly = true;
+            this.QTY.Width = 70;
+            // 
+            // SIZE
+            // 
+            this.SIZE.HeaderText = "SIZE";
+            this.SIZE.Name = "SIZE";
+            this.SIZE.ReadOnly = true;
+            this.SIZE.Width = 50;
+            // 
+            // TARGET
+            // 
+            this.TARGET.HeaderText = "TARGET";
+            this.TARGET.Name = "TARGET";
+            this.TARGET.ReadOnly = true;
+            this.TARGET.Width = 50;
+            // 
+            // Sdate
+            // 
+            this.Sdate.HeaderText = "DATE";
+            this.Sdate.Name = "Sdate";
+            this.Sdate.ReadOnly = true;
+            // 
+            // CHECK
+            // 
+            this.CHECK.HeaderText = "CHECK";
+            this.CHECK.Name = "CHECK";
+            this.CHECK.ReadOnly = true;
+            this.CHECK.Visible = false;
+            this.CHECK.Width = 10;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.button1);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(290, 45);
+            this.panel8.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Aqua;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(290, 45);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Sorter";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.pictureBox7);
+            this.panel3.Controls.Add(this.EDTTower);
+            this.panel3.Controls.Add(this.SDTTower);
+            this.panel3.Controls.Add(this.pictureBox6);
+            this.panel3.Controls.Add(this.EDTSort);
+            this.panel3.Controls.Add(this.SDTSort);
+            this.panel3.Controls.Add(this.button4);
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(968, 50);
+            this.panel3.TabIndex = 2;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(474, 22);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(21, 10);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox7.TabIndex = 7;
+            this.pictureBox7.TabStop = false;
+            // 
+            // EDTTower
+            // 
+            this.EDTTower.CustomFormat = "yyyy/MM/dd";
+            this.EDTTower.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EDTTower.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EDTTower.Location = new System.Drawing.Point(502, 9);
+            this.EDTTower.Name = "EDTTower";
+            this.EDTTower.ShowUpDown = true;
+            this.EDTTower.Size = new System.Drawing.Size(127, 33);
+            this.EDTTower.TabIndex = 6;
+            // 
+            // SDTTower
+            // 
+            this.SDTTower.CustomFormat = "yyyy/MM/dd";
+            this.SDTTower.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SDTTower.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.SDTTower.Location = new System.Drawing.Point(340, 9);
+            this.SDTTower.Name = "SDTTower";
+            this.SDTTower.ShowUpDown = true;
+            this.SDTTower.Size = new System.Drawing.Size(127, 33);
+            this.SDTTower.TabIndex = 5;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(134, 23);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(21, 10);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox6.TabIndex = 4;
+            this.pictureBox6.TabStop = false;
+            // 
+            // EDTSort
+            // 
+            this.EDTSort.CustomFormat = "yyyy/MM/dd";
+            this.EDTSort.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EDTSort.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.EDTSort.Location = new System.Drawing.Point(162, 10);
+            this.EDTSort.Name = "EDTSort";
+            this.EDTSort.ShowUpDown = true;
+            this.EDTSort.Size = new System.Drawing.Size(127, 33);
+            this.EDTSort.TabIndex = 3;
+            // 
+            // SDTSort
+            // 
+            this.SDTSort.CustomFormat = "yyyy/MM/dd";
+            this.SDTSort.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SDTSort.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.SDTSort.Location = new System.Drawing.Point(0, 10);
+            this.SDTSort.Name = "SDTSort";
+            this.SDTSort.ShowUpDown = true;
+            this.SDTSort.Size = new System.Drawing.Size(127, 33);
+            this.SDTSort.TabIndex = 2;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.Yellow;
+            this.button4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button4.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(840, 0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(128, 50);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "조  회";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(3, 631);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1226, 178);
+            this.panel2.TabIndex = 1;
+            // 
+            // bgwSorter
+            // 
+            this.bgwSorter.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwSorter_DoWork);
             // 
             // Form_ITS
             // 
@@ -2374,6 +2848,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_output)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_return)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_input)).EndInit();
+            this.tabPage_Sorter.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.panel7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_tower)).EndInit();
+            this.panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_fail)).EndInit();
+            this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_sorter)).EndInit();
+            this.panel8.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2490,6 +2980,49 @@
         private System.Windows.Forms.DataGridView dgvCapaAll;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btn_schedule;
-        private System.Windows.Forms.Timer tAutosync;
+        private System.Windows.Forms.TabPage tabPage_Sorter;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.DataGridView dgv_tower;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.DataGridView dgv_sorter;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Diagnostics.PerformanceCounter performanceCounter1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.DateTimePicker SDTSort;
+        private System.ComponentModel.BackgroundWorker bgwSorter;
+        private System.Windows.Forms.DataGridView dgv_fail;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.DateTimePicker EDTSort;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.DateTimePicker EDTTower;
+        private System.Windows.Forms.DateTimePicker SDTTower;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TUID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TQTY;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TSIZE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TTARGET;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TDATE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TCHECK;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MDATE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QTY;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SIZE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TARGET;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sdate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CHECK;
     }
 }
