@@ -2633,6 +2633,7 @@
             this.dgv_sorter.RowTemplate.Height = 23;
             this.dgv_sorter.Size = new System.Drawing.Size(290, 533);
             this.dgv_sorter.TabIndex = 2;
+            this.dgv_sorter.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_sorter_CellClick);
             // 
             // UID
             // 
@@ -2780,9 +2781,9 @@
             this.button4.Dock = System.Windows.Forms.DockStyle.Right;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button4.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(840, 0);
+            this.button4.Location = new System.Drawing.Point(680, 0);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(128, 50);
+            this.button4.Size = new System.Drawing.Size(288, 50);
             this.button4.TabIndex = 1;
             this.button4.Text = "조  회";
             this.button4.UseVisualStyleBackColor = false;
@@ -2982,7 +2983,6 @@
         private System.Windows.Forms.Button btn_schedule;
         private System.Windows.Forms.TabPage tabPage_Sorter;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Panel panel7;
@@ -3024,5 +3024,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TARGET;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn CHECK;
+        private System.Windows.Forms.PictureBox pictureBox5;
     }
 }
