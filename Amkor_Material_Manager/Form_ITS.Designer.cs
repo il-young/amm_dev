@@ -104,6 +104,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -231,6 +232,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.dgv_fail = new System.Windows.Forms.DataGridView();
+            this.SID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -2466,6 +2468,7 @@
             this.dgv_tower.Name = "dgv_tower";
             this.dgv_tower.RowHeadersVisible = false;
             this.dgv_tower.RowTemplate.Height = 23;
+            this.dgv_tower.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_tower.Size = new System.Drawing.Size(276, 533);
             this.dgv_tower.TabIndex = 4;
             // 
@@ -2537,6 +2540,7 @@
             this.dgv_fail.AllowUserToResizeRows = false;
             this.dgv_fail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_fail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SID,
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
@@ -2548,8 +2552,15 @@
             this.dgv_fail.Name = "dgv_fail";
             this.dgv_fail.RowHeadersVisible = false;
             this.dgv_fail.RowTemplate.Height = 23;
+            this.dgv_fail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_fail.Size = new System.Drawing.Size(288, 533);
             this.dgv_fail.TabIndex = 5;
+            this.dgv_fail.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_fail_CellClick);
+            // 
+            // SID
+            // 
+            this.SID.HeaderText = "SID";
+            this.SID.Name = "SID";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -2631,12 +2642,15 @@
             this.dgv_sorter.Name = "dgv_sorter";
             this.dgv_sorter.RowHeadersVisible = false;
             this.dgv_sorter.RowTemplate.Height = 23;
+            this.dgv_sorter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_sorter.Size = new System.Drawing.Size(290, 533);
             this.dgv_sorter.TabIndex = 2;
             this.dgv_sorter.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_sorter_CellClick);
             // 
             // UID
             // 
+            dataGridViewCellStyle75.Font = new System.Drawing.Font("굴림", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.UID.DefaultCellStyle = dataGridViewCellStyle75;
             this.UID.HeaderText = "UID";
             this.UID.Name = "UID";
             this.UID.ReadOnly = true;
@@ -2864,7 +2878,7 @@
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3012,18 +3026,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TTARGET;
         private System.Windows.Forms.DataGridViewTextBoxColumn TDATE;
         private System.Windows.Forms.DataGridViewTextBoxColumn TCHECK;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MDATE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.DataGridViewTextBoxColumn UID;
         private System.Windows.Forms.DataGridViewTextBoxColumn QTY;
         private System.Windows.Forms.DataGridViewTextBoxColumn SIZE;
         private System.Windows.Forms.DataGridViewTextBoxColumn TARGET;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn CHECK;
-        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MDATE;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     }
 }

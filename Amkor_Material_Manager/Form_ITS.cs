@@ -5469,10 +5469,10 @@ namespace Amkor_Material_Manager
             if (bTowerThread == false)
                 TowerThread.Start();
 
+            dgv_fail.Rows.Clear();
+
             if (bgwSorter.IsBusy == false)
                 bgwSorter.RunWorkerAsync();
-
-
         }
 
         string AMMDBConnectionString = "server=10.135.200.35;uid=amm;pwd=amm@123;database=ATK4-AMM-DBv1";
@@ -5499,7 +5499,7 @@ namespace Amkor_Material_Manager
                     date = string.Format("[DATE] >= '{0}' and [DATE] <= '{1}'", SDTSort.Value.Date.ToString("yyyyMMdd"), EDTSort.Value.Date.ToString("yyyyMMdd"));
                 }
 
-                string sql = string.Format("select [RID], [QTY], [size], [target], [End] from vReelSorterResult where {0} order by[RID]", date);
+                string sql = string.Format("select [SID], [RID], [QTY], [size], [target], [End] from vReelSorterResult where {0} order by[RID]", date);
 
                 DataTable SorterData = SearchData(SORTERDBConnectionString, sql);
 
@@ -5508,8 +5508,15 @@ namespace Amkor_Material_Manager
 
                 SorterData.Columns.Add();
                 dgv_sorter.DataSource = SorterData;
-                dgv_sorter.Columns[5].Visible = false;
-                dgv_sorter.Columns[5].ReadOnly = false;
+
+                dgv_sorter.Columns[0].Visible = false;
+                dgv_sorter.Columns[6].Visible = false;
+                dgv_sorter.Columns[6].ReadOnly = false;
+
+                dgv_sorter.Columns[2].Width = 70;
+                dgv_sorter.Columns[3].Width = 30;
+                dgv_sorter.Columns[4].Width = 50;
+
                 bSorterThread = false;
             }
             catch (Exception ex)
@@ -5547,8 +5554,13 @@ namespace Amkor_Material_Manager
                 TowerData.Columns[5].ReadOnly = false;
 
                 dgv_tower.DataSource = TowerData;
-                dgv_tower.Columns[5].Visible = false;            
-            
+                dgv_tower.Columns[5].Visible = false;
+
+                dgv_tower.Columns[1].Width = 70;
+                dgv_tower.Columns[2].Width = 30;
+                dgv_tower.Columns[3].Width = 65;
+
+
                 bTowerThread = false;
             }
             catch (Exception ex)
@@ -5568,23 +5580,22 @@ namespace Amkor_Material_Manager
                     
                     foreach (DataGridViewRow srow in dgv_sorter.Rows)
                     {
-                                           
-
                         foreach (DataGridViewRow trow in dgv_tower.Rows)
                         {
-                            if (srow.Cells[0].Value.ToString() == trow.Cells[0].Value.ToString() &&
-                                srow.Cells[1].Value.ToString() == trow.Cells[1].Value.ToString() &&
-                                srow.Cells[2].Value.ToString() == trow.Cells[2].Value.ToString())
+                            if (srow.Cells[1].Value.ToString() == trow.Cells[0].Value.ToString() &&     // UID 검사
+                                srow.Cells[2].Value.ToString() == trow.Cells[1].Value.ToString() &&     // QTY 검사
+                                srow.Cells[3].Value.ToString() == trow.Cells[2].Value.ToString())       // SIZE 검사
                             {
-                                if (srow.Cells[3].Value.ToString().Substring(2, (srow.Cells[3].Value.ToString().Length - 2))
-                                    == trow.Cells[3].Value.ToString().Substring(3, (trow.Cells[3].Value.ToString().Length - 3)))
+                                if (srow.Cells[4].Value.ToString().Substring(2, (srow.Cells[4].Value.ToString().Length - 2))
+                                    == trow.Cells[3].Value.ToString().Substring(3, (trow.Cells[3].Value.ToString().Length - 3)))    // Tower 입고 위치 검사
                                 {
                                     srow.ReadOnly = false;
                                     srow.DefaultCellStyle.BackColor = Color.Blue;
                                     trow.DefaultCellStyle.BackColor = Color.Blue;
 
-                                    srow.Cells[5].Value = SorterCompState_Complete;
+                                    srow.Cells[6].Value = SorterCompState_Complete;
                                     trow.Cells[5].Value = SorterCompState_Complete;
+                                    break;
                                 }
                                 else
                                 {
@@ -5592,19 +5603,20 @@ namespace Amkor_Material_Manager
                                     srow.DefaultCellStyle.BackColor = Color.Yellow;
                                     trow.DefaultCellStyle.BackColor = Color.Yellow;
 
-                                    srow.Cells[5].Value = SorterCompState_InMiss;
+                                    srow.Cells[6].Value = SorterCompState_InMiss;
                                     trow.Cells[5].Value = SorterCompState_InMiss;
+                                    break;
                                 }
                             }
                         }
 
-                        if (srow.Cells[5].Value.ToString() == "")
+                        if (srow.Cells[6].Value.ToString() == "")
                         {
                             srow.ReadOnly = false;
                             srow.DefaultCellStyle.BackColor = Color.Red;
-                            srow.Cells[5].Value = SorterCompState_Fail;
+                            srow.Cells[6].Value = SorterCompState_Fail;
 
-                            dgv_fail.Rows.Add(srow.Cells[0].Value.ToString(), srow.Cells[1].Value.ToString(), srow.Cells[2].Value.ToString(), srow.Cells[3].Value.ToString(), srow.Cells[4].Value.ToString());
+                            dgv_fail.Rows.Add(srow.Cells[0].Value.ToString(), srow.Cells[1].Value.ToString(), srow.Cells[2].Value.ToString(), srow.Cells[3].Value.ToString(), srow.Cells[4].Value.ToString(), srow.Cells[5].Value.ToString());
                         }
                         srow.ReadOnly = true;
                     }
@@ -5654,7 +5666,7 @@ namespace Amkor_Material_Manager
 
         private void dgv_sorter_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0 && e.RowIndex != -1)
+            if (e.ColumnIndex == 1 && e.RowIndex != -1)
             {
                 string UIDVal = dgv_sorter.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 
@@ -5676,6 +5688,36 @@ namespace Amkor_Material_Manager
                 }
 
                 if(nBSearchUID == -1)
+                {
+                    MessageBox.Show("UID가 없습니다.");
+                }
+            }
+        }
+
+        private void dgv_fail_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1 && e.RowIndex != -1)
+            {
+                string UIDVal = dgv_fail.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+
+                if (nBSearchUID != -1)
+                    dgv_tower.Rows[nBSearchUID].Selected = false;
+
+                nBSearchUID = -1;
+                for (int i = 0; i < dgv_tower.RowCount; i++)
+                {
+                    if (dgv_tower.Rows[i].Cells[0].Value.ToString() == UIDVal)
+                    {
+                        dgv_tower.Rows[i].Selected = true;
+                        nBSearchUID = i;
+
+                        dgv_tower.DefaultCellStyle.SelectionBackColor = Color.Green;
+                        dgv_tower.FirstDisplayedScrollingRowIndex = i;
+                        break;
+                    }
+                }
+
+                if (nBSearchUID == -1)
                 {
                     MessageBox.Show("UID가 없습니다.");
                 }
