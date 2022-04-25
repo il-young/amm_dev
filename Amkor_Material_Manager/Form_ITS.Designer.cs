@@ -104,7 +104,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle73 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle74 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle75 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -223,31 +222,12 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.dgv_tower = new System.Windows.Forms.DataGridView();
-            this.TUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TQTY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TSIZE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TTARGET = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TDATE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TCHECK = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.dgv_fail = new System.Windows.Forms.DataGridView();
-            this.SID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MDATE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button3 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.dgv_sorter = new System.Windows.Forms.DataGridView();
-            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.QTY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SIZE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TARGET = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CHECK = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -259,7 +239,6 @@
             this.SDTSort = new System.Windows.Forms.DateTimePicker();
             this.button4 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.performanceCounter1 = new System.Diagnostics.PerformanceCounter();
             this.bgwSorter = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1.SuspendLayout();
             this.tabPage_longterm.SuspendLayout();
@@ -303,7 +282,6 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -2456,61 +2434,15 @@
             this.dgv_tower.AllowUserToAddRows = false;
             this.dgv_tower.AllowUserToResizeRows = false;
             this.dgv_tower.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_tower.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TUID,
-            this.TQTY,
-            this.TSIZE,
-            this.TTARGET,
-            this.TDATE,
-            this.TCHECK});
             this.dgv_tower.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_tower.Location = new System.Drawing.Point(0, 45);
             this.dgv_tower.Name = "dgv_tower";
             this.dgv_tower.RowHeadersVisible = false;
             this.dgv_tower.RowTemplate.Height = 23;
-            this.dgv_tower.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_tower.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgv_tower.Size = new System.Drawing.Size(276, 533);
             this.dgv_tower.TabIndex = 4;
-            // 
-            // TUID
-            // 
-            this.TUID.HeaderText = "UID";
-            this.TUID.Name = "TUID";
-            this.TUID.ReadOnly = true;
-            // 
-            // TQTY
-            // 
-            this.TQTY.HeaderText = "QTY";
-            this.TQTY.Name = "TQTY";
-            this.TQTY.ReadOnly = true;
-            this.TQTY.Width = 70;
-            // 
-            // TSIZE
-            // 
-            this.TSIZE.HeaderText = "SIZE";
-            this.TSIZE.Name = "TSIZE";
-            this.TSIZE.ReadOnly = true;
-            this.TSIZE.Width = 50;
-            // 
-            // TTARGET
-            // 
-            this.TTARGET.HeaderText = "TARGET";
-            this.TTARGET.Name = "TTARGET";
-            this.TTARGET.ReadOnly = true;
-            this.TTARGET.Width = 50;
-            // 
-            // TDATE
-            // 
-            this.TDATE.HeaderText = "DATE";
-            this.TDATE.Name = "TDATE";
-            this.TDATE.ReadOnly = true;
-            // 
-            // TCHECK
-            // 
-            this.TCHECK.HeaderText = "CHECK";
-            this.TCHECK.Name = "TCHECK";
-            this.TCHECK.ReadOnly = true;
-            this.TCHECK.Visible = false;
+            this.dgv_tower.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_tower_CellClick);
             // 
             // button2
             // 
@@ -2539,69 +2471,19 @@
             this.dgv_fail.AllowUserToAddRows = false;
             this.dgv_fail.AllowUserToResizeRows = false;
             this.dgv_fail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_fail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.SID,
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.MDATE,
-            this.dataGridViewTextBoxColumn5});
             this.dgv_fail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_fail.Location = new System.Drawing.Point(0, 45);
+            this.dgv_fail.MultiSelect = false;
             this.dgv_fail.Name = "dgv_fail";
             this.dgv_fail.RowHeadersVisible = false;
             this.dgv_fail.RowTemplate.Height = 23;
-            this.dgv_fail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_fail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgv_fail.Size = new System.Drawing.Size(288, 533);
             this.dgv_fail.TabIndex = 5;
             this.dgv_fail.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_fail_CellClick);
-            // 
-            // SID
-            // 
-            this.SID.HeaderText = "SID";
-            this.SID.Name = "SID";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "UID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "QTY";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 70;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "SIZE";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "TARGET";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 50;
-            // 
-            // MDATE
-            // 
-            this.MDATE.HeaderText = "DATE";
-            this.MDATE.Name = "MDATE";
-            this.MDATE.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "CHECK";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Visible = false;
-            this.dataGridViewTextBoxColumn5.Width = 10;
+            this.dgv_fail.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_fail_CellDoubleClick);
+            this.dgv_fail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_fail_KeyDown);
+            this.dgv_fail.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgv_fail_KeyUp);
             // 
             // button3
             // 
@@ -2630,65 +2512,15 @@
             this.dgv_sorter.AllowUserToAddRows = false;
             this.dgv_sorter.AllowUserToResizeRows = false;
             this.dgv_sorter.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_sorter.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.UID,
-            this.QTY,
-            this.SIZE,
-            this.TARGET,
-            this.Sdate,
-            this.CHECK});
             this.dgv_sorter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_sorter.Location = new System.Drawing.Point(0, 45);
             this.dgv_sorter.Name = "dgv_sorter";
             this.dgv_sorter.RowHeadersVisible = false;
             this.dgv_sorter.RowTemplate.Height = 23;
-            this.dgv_sorter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_sorter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgv_sorter.Size = new System.Drawing.Size(290, 533);
             this.dgv_sorter.TabIndex = 2;
             this.dgv_sorter.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_sorter_CellClick);
-            // 
-            // UID
-            // 
-            dataGridViewCellStyle75.Font = new System.Drawing.Font("굴림", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.UID.DefaultCellStyle = dataGridViewCellStyle75;
-            this.UID.HeaderText = "UID";
-            this.UID.Name = "UID";
-            this.UID.ReadOnly = true;
-            // 
-            // QTY
-            // 
-            this.QTY.HeaderText = "QTY";
-            this.QTY.Name = "QTY";
-            this.QTY.ReadOnly = true;
-            this.QTY.Width = 70;
-            // 
-            // SIZE
-            // 
-            this.SIZE.HeaderText = "SIZE";
-            this.SIZE.Name = "SIZE";
-            this.SIZE.ReadOnly = true;
-            this.SIZE.Width = 50;
-            // 
-            // TARGET
-            // 
-            this.TARGET.HeaderText = "TARGET";
-            this.TARGET.Name = "TARGET";
-            this.TARGET.ReadOnly = true;
-            this.TARGET.Width = 50;
-            // 
-            // Sdate
-            // 
-            this.Sdate.HeaderText = "DATE";
-            this.Sdate.Name = "Sdate";
-            this.Sdate.ReadOnly = true;
-            // 
-            // CHECK
-            // 
-            this.CHECK.HeaderText = "CHECK";
-            this.CHECK.Name = "CHECK";
-            this.CHECK.ReadOnly = true;
-            this.CHECK.Visible = false;
-            this.CHECK.Width = 10;
             // 
             // panel8
             // 
@@ -2878,7 +2710,6 @@
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            //((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3010,7 +2841,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
-        private System.Diagnostics.PerformanceCounter performanceCounter1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DateTimePicker SDTSort;
         private System.ComponentModel.BackgroundWorker bgwSorter;
@@ -3020,25 +2850,6 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.DateTimePicker EDTTower;
         private System.Windows.Forms.DateTimePicker SDTTower;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TUID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TQTY;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TSIZE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TTARGET;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TDATE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TCHECK;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn QTY;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SIZE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TARGET;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CHECK;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MDATE;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     }
 }
