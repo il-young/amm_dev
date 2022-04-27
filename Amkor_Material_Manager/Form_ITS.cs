@@ -5518,14 +5518,65 @@ namespace Amkor_Material_Manager
             {            
                 if (SDTSort.Value == EDTSort.Value)
                 {
-                    date = string.Format("[DATE] = '{0}'", SDTSort.Value.Date.ToString("yyyyMMdd"));
+                    date = string.Format("([DATE] = '{0}')", SDTSort.Value.Date.ToString("yyyyMMdd"));
                 }
                 else
                 {
-                    date = string.Format("[DATE] >= '{0}' and [DATE] <= '{1}'", SDTSort.Value.Date.ToString("yyyyMMdd"), EDTSort.Value.Date.ToString("yyyyMMdd"));
+                    date = string.Format("([DATE] >= '{0}' and [DATE] <= '{1}')", SDTSort.Value.Date.ToString("yyyyMMdd"), EDTSort.Value.Date.ToString("yyyyMMdd"));
                 }
 
-                string sql = string.Format("select [SID], [RID], [QTY], [size], [target], [End] from vReelSorterResult with(Nolock) where {0} order by[RID]", date);
+                date += "and (";
+
+                if(ch_seq1.Visible == true && ch_seq1.Checked == true)
+                {
+
+                    date += "[Seq]=1";
+                }
+
+                if (ch_seq2.Visible == true && ch_seq2.Checked == true)
+                {
+                    if(ch_seq1.Visible == true && ch_seq1.Checked == true)
+                    {
+                        date += " OR ";
+                    }
+                    date += "[Seq]=2";
+                }
+
+                if (ch_seq3.Visible == true && ch_seq3.Checked == true)
+                {
+                    if (ch_seq2.Visible == true && ch_seq2.Checked == true)
+                    {
+                        date += " OR ";
+                    }
+                    else if (ch_seq1.Visible == true && ch_seq1.Checked == true)
+                    {
+                        date += " OR ";
+                    }
+
+                    date += "[Seq]=3";
+                }
+
+                if (ch_seq4.Visible == true && ch_seq4.Checked == true)
+                {
+                    if (ch_seq3.Visible == true && ch_seq3.Checked == true)
+                    {
+                        date += " OR ";
+                    }
+                    else if (ch_seq2.Visible == true && ch_seq2.Checked == true)
+                    {
+                        date += " OR ";
+                    }
+                    else if (ch_seq1.Visible == true && ch_seq1.Checked == true)
+                    {
+                        date += "OR";
+                    }
+
+                        date += "[Seq]=4";
+                }                               
+
+                date += ")";
+
+                string sql = string.Format("select [SID], [RID], [QTY], [size], [target], [End], [Seq] from vReelSorterResult with(Nolock) where {0} order by[RID]", date);
 
                 SorterData = SearchData(SORTERDBConnectionString, sql);
                 SorterData.Columns.Add();
@@ -5536,12 +5587,13 @@ namespace Amkor_Material_Manager
                     dgv_sorter.DataSource = SorterData;
 
                     dgv_sorter.Columns[0].Visible = false;
-                    dgv_sorter.Columns[6].Visible = false;
-                    dgv_sorter.Columns[6].ReadOnly = false;
+                    dgv_sorter.Columns[SorterData.Columns.Count - 1].Visible = false;
+                    dgv_sorter.Columns[SorterData.Columns.Count - 1].ReadOnly = false;
 
                     dgv_sorter.Columns[2].Width = 70;
                     dgv_sorter.Columns[3].Width = 30;
                     dgv_sorter.Columns[4].Width = 50;
+                    dgv_sorter.Columns[6].Width = 50;
                 }));
 
                 //SorterData.Columns.Add();
@@ -5645,7 +5697,7 @@ namespace Amkor_Material_Manager
                                         dgv_sorter.Rows[i].DefaultCellStyle.BackColor = Color.Blue;
                                         dgv_tower.Rows[j].DefaultCellStyle.BackColor = Color.Blue;
 
-                                        SorterData.Rows[i][6] = SorterCompState_Complete;
+                                        SorterData.Rows[i][SorterData.Columns.Count - 1] = SorterCompState_Complete;
                                         dgv_tower.Rows[j].Cells[5].Value = SorterCompState_Complete;
                                                                                 
                                         break;
@@ -5656,7 +5708,7 @@ namespace Amkor_Material_Manager
                                         dgv_sorter.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
                                         dgv_tower.Rows[j].DefaultCellStyle.BackColor = Color.Yellow;
 
-                                        SorterData.Rows[i][6] = SorterCompState_InMiss;
+                                        SorterData.Rows[i][SorterData.Columns.Count - 1] = SorterCompState_InMiss;
                                         dgv_tower.Rows[j].Cells[5].Value = SorterCompState_InMiss;
                                         break;
                                     }
@@ -5664,11 +5716,11 @@ namespace Amkor_Material_Manager
                                 
                             }
 
-                            if (SorterData.Rows[i][6].ToString() == "")
+                            if (SorterData.Rows[i][SorterData.Columns.Count-1].ToString() == "")
                             {
                                 //srow.ReadOnly = false;
                                 dgv_sorter.Rows[i].DefaultCellStyle.BackColor = Color.Red;
-                                SorterData.Rows[i][6] = SorterCompState_Fail;
+                                SorterData.Rows[i][SorterData.Columns.Count - 1] = SorterCompState_Fail;
 
                                 FailData.ImportRow(SorterData.Rows[i]);
                                 //dgv_fail.BeginInvoke(new Action(() => {
@@ -5821,7 +5873,88 @@ namespace Amkor_Material_Manager
 
         private void SDTSort_MouseDown(object sender, MouseEventArgs e)
         {
-            int a = 0;
+         
+        }
+
+        private void SDTSort_ValueChanged(object sender, EventArgs e)
+        {
+            GetTotalSEQ();
+        }
+
+        private void GetTotalSEQ()
+        {
+            string date = "";
+            string res = "";
+
+            if (SDTSort.Value <= EDTSort.Value)
+            {
+                if (SDTSort.Value == EDTSort.Value)
+                {
+                    date = string.Format("[DATE] = '{0}'", SDTSort.Value.Date.ToString("yyyyMMdd"));
+                }
+                else
+                {
+                    date = string.Format("[DATE] >= '{0}' and [DATE] <= '{1}'", SDTSort.Value.Date.ToString("yyyyMMdd"), EDTSort.Value.Date.ToString("yyyyMMdd"));
+                }
+
+                string sql = string.Format("select [Seq] from vReelSorterResult with(Nolock) where {0} group by [Seq]", date);
+
+                SorterData = SearchData(SORTERDBConnectionString, sql);
+                
+                for(int i = 0; i< SorterData.Rows.Count; i++)
+                {
+                    res += SorterData.Rows[i][0].ToString() + ",";
+                }
+
+                if (res.Contains("1") == true)
+                {
+                    ch_seq1.Visible = true;
+                    ch_seq1.Checked = true;
+                }
+                else
+                {
+                    ch_seq1.Visible = false;
+                    ch_seq1.Checked = false;
+                }
+
+                if (res.Contains("2") == true)
+                {
+                    ch_seq2.Visible = true;
+                    ch_seq2.Checked = true;
+                }
+                else
+                {
+                    ch_seq2.Visible = false;
+                    ch_seq2.Checked = false;
+                }
+
+                if (res.Contains("3") == true)
+                {
+                    ch_seq3.Visible = true;
+                    ch_seq3.Checked = true;
+                }
+                else
+                {
+                    ch_seq3.Visible = false;
+                    ch_seq3.Checked = false;
+                }
+
+                if (res.Contains("4") == true)
+                {
+                    ch_seq4.Visible = true;
+                    ch_seq4.Checked = true;
+                }
+                else
+                {
+                    ch_seq4.Visible = false;
+                    ch_seq4.Checked = false;
+                }
+            }            
+        }
+
+        private void EDTSort_ValueChanged(object sender, EventArgs e)
+        {
+            GetTotalSEQ();
         }
 
 

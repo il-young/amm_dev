@@ -217,6 +217,10 @@
             this.button_timeset = new System.Windows.Forms.Button();
             this.tabPage_Sorter = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.ch_seq4 = new System.Windows.Forms.CheckBox();
+            this.ch_seq3 = new System.Windows.Forms.CheckBox();
+            this.ch_seq2 = new System.Windows.Forms.CheckBox();
+            this.ch_seq1 = new System.Windows.Forms.CheckBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -2378,6 +2382,10 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.ch_seq4);
+            this.panel4.Controls.Add(this.ch_seq3);
+            this.panel4.Controls.Add(this.ch_seq2);
+            this.panel4.Controls.Add(this.ch_seq1);
             this.panel4.Controls.Add(this.pictureBox5);
             this.panel4.Controls.Add(this.pictureBox4);
             this.panel4.Controls.Add(this.pictureBox3);
@@ -2388,6 +2396,50 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(968, 578);
             this.panel4.TabIndex = 3;
+            // 
+            // ch_seq4
+            // 
+            this.ch_seq4.AutoSize = true;
+            this.ch_seq4.Font = new System.Drawing.Font("Calibri", 12F);
+            this.ch_seq4.Location = new System.Drawing.Point(296, 100);
+            this.ch_seq4.Name = "ch_seq4";
+            this.ch_seq4.Size = new System.Drawing.Size(48, 23);
+            this.ch_seq4.TabIndex = 11;
+            this.ch_seq4.Text = "4차";
+            this.ch_seq4.UseVisualStyleBackColor = true;
+            // 
+            // ch_seq3
+            // 
+            this.ch_seq3.AutoSize = true;
+            this.ch_seq3.Font = new System.Drawing.Font("Calibri", 12F);
+            this.ch_seq3.Location = new System.Drawing.Point(296, 71);
+            this.ch_seq3.Name = "ch_seq3";
+            this.ch_seq3.Size = new System.Drawing.Size(48, 23);
+            this.ch_seq3.TabIndex = 10;
+            this.ch_seq3.Text = "3차";
+            this.ch_seq3.UseVisualStyleBackColor = true;
+            // 
+            // ch_seq2
+            // 
+            this.ch_seq2.AutoSize = true;
+            this.ch_seq2.Font = new System.Drawing.Font("Calibri", 12F);
+            this.ch_seq2.Location = new System.Drawing.Point(296, 42);
+            this.ch_seq2.Name = "ch_seq2";
+            this.ch_seq2.Size = new System.Drawing.Size(48, 23);
+            this.ch_seq2.TabIndex = 9;
+            this.ch_seq2.Text = "2차";
+            this.ch_seq2.UseVisualStyleBackColor = true;
+            // 
+            // ch_seq1
+            // 
+            this.ch_seq1.AutoSize = true;
+            this.ch_seq1.Font = new System.Drawing.Font("Calibri", 12F);
+            this.ch_seq1.Location = new System.Drawing.Point(296, 13);
+            this.ch_seq1.Name = "ch_seq1";
+            this.ch_seq1.Size = new System.Drawing.Size(48, 23);
+            this.ch_seq1.TabIndex = 8;
+            this.ch_seq1.Text = "1차";
+            this.ch_seq1.UseVisualStyleBackColor = true;
             // 
             // pictureBox5
             // 
@@ -2609,6 +2661,7 @@
             this.EDTSort.ShowUpDown = true;
             this.EDTSort.Size = new System.Drawing.Size(127, 33);
             this.EDTSort.TabIndex = 3;
+            this.EDTSort.ValueChanged += new System.EventHandler(this.EDTSort_ValueChanged);
             // 
             // SDTSort
             // 
@@ -2620,6 +2673,7 @@
             this.SDTSort.ShowUpDown = true;
             this.SDTSort.Size = new System.Drawing.Size(127, 33);
             this.SDTSort.TabIndex = 2;
+            this.SDTSort.ValueChanged += new System.EventHandler(this.SDTSort_ValueChanged);
             // 
             // button4
             // 
@@ -2697,6 +2751,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_input)).EndInit();
             this.tabPage_Sorter.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -2851,5 +2906,9 @@
         private System.Windows.Forms.DateTimePicker EDTTower;
         private System.Windows.Forms.DateTimePicker SDTTower;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.CheckBox ch_seq4;
+        private System.Windows.Forms.CheckBox ch_seq3;
+        private System.Windows.Forms.CheckBox ch_seq2;
+        private System.Windows.Forms.CheckBox ch_seq1;
     }
 }
