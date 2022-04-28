@@ -2626,7 +2626,6 @@
             this.EDTTower.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EDTTower.Location = new System.Drawing.Point(502, 9);
             this.EDTTower.Name = "EDTTower";
-            this.EDTTower.ShowUpDown = true;
             this.EDTTower.Size = new System.Drawing.Size(127, 33);
             this.EDTTower.TabIndex = 6;
             // 
@@ -2637,7 +2636,6 @@
             this.SDTTower.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.SDTTower.Location = new System.Drawing.Point(340, 9);
             this.SDTTower.Name = "SDTTower";
-            this.SDTTower.ShowUpDown = true;
             this.SDTTower.Size = new System.Drawing.Size(127, 33);
             this.SDTTower.TabIndex = 5;
             // 
@@ -2658,7 +2656,6 @@
             this.EDTSort.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.EDTSort.Location = new System.Drawing.Point(162, 10);
             this.EDTSort.Name = "EDTSort";
-            this.EDTSort.ShowUpDown = true;
             this.EDTSort.Size = new System.Drawing.Size(127, 33);
             this.EDTSort.TabIndex = 3;
             this.EDTSort.ValueChanged += new System.EventHandler(this.EDTSort_ValueChanged);
@@ -2670,7 +2667,6 @@
             this.SDTSort.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.SDTSort.Location = new System.Drawing.Point(0, 10);
             this.SDTSort.Name = "SDTSort";
-            this.SDTSort.ShowUpDown = true;
             this.SDTSort.Size = new System.Drawing.Size(127, 33);
             this.SDTSort.TabIndex = 2;
             this.SDTSort.ValueChanged += new System.EventHandler(this.SDTSort_ValueChanged);
