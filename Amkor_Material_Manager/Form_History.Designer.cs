@@ -119,10 +119,10 @@
             this.tabPage_history.Controls.Add(this.dataGridView_info);
             this.tabPage_history.Controls.Add(this.textBox_mtlinput);
             this.tabPage_history.ImageIndex = 0;
-            this.tabPage_history.Location = new System.Drawing.Point(4, 38);
+            this.tabPage_history.Location = new System.Drawing.Point(4, 32);
             this.tabPage_history.Name = "tabPage_history";
             this.tabPage_history.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_history.Size = new System.Drawing.Size(1542, 1019);
+            this.tabPage_history.Size = new System.Drawing.Size(1542, 1025);
             this.tabPage_history.TabIndex = 0;
             this.tabPage_history.Text = "자재 이력";
             // 
@@ -217,7 +217,7 @@
             this.textBox_mtlinput.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_mtlinput.Location = new System.Drawing.Point(207, 66);
             this.textBox_mtlinput.Name = "textBox_mtlinput";
-            this.textBox_mtlinput.Size = new System.Drawing.Size(333, 56);
+            this.textBox_mtlinput.Size = new System.Drawing.Size(333, 47);
             this.textBox_mtlinput.TabIndex = 5;
             this.textBox_mtlinput.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox_mtlinput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_mtlinput_KeyPress);
@@ -266,10 +266,10 @@
             this.tabPage_Event.Controls.Add(this.button_timeset);
             this.tabPage_Event.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage_Event.ImageIndex = 1;
-            this.tabPage_Event.Location = new System.Drawing.Point(4, 38);
+            this.tabPage_Event.Location = new System.Drawing.Point(4, 32);
             this.tabPage_Event.Name = "tabPage_Event";
             this.tabPage_Event.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Event.Size = new System.Drawing.Size(1542, 1019);
+            this.tabPage_Event.Size = new System.Drawing.Size(1542, 1025);
             this.tabPage_Event.TabIndex = 1;
             this.tabPage_Event.Text = "Event 이력";
             // 
@@ -302,7 +302,7 @@
             this.label_updatedate2.ForeColor = System.Drawing.Color.Blue;
             this.label_updatedate2.Location = new System.Drawing.Point(452, 7);
             this.label_updatedate2.Name = "label_updatedate2";
-            this.label_updatedate2.Size = new System.Drawing.Size(359, 31);
+            this.label_updatedate2.Size = new System.Drawing.Size(273, 24);
             this.label_updatedate2.TabIndex = 17;
             this.label_updatedate2.Text = "최근 조회: 2020.03.30 00:00:00";
             // 
@@ -391,10 +391,12 @@
             "Group #4",
             "Group #5",
             "Group #6",
-            "Group #7"});
+            "Group #7",
+            "Group #8",
+            "Group #9"});
             this.comboBox_group2.Location = new System.Drawing.Point(148, 145);
             this.comboBox_group2.Name = "comboBox_group2";
-            this.comboBox_group2.Size = new System.Drawing.Size(149, 45);
+            this.comboBox_group2.Size = new System.Drawing.Size(149, 37);
             this.comboBox_group2.TabIndex = 11;
             this.comboBox_group2.SelectedIndexChanged += new System.EventHandler(this.comboBox_group2_SelectedIndexChanged);
             // 

@@ -44,12 +44,16 @@
             this.checkBox_Dsel2 = new System.Windows.Forms.CheckBox();
             this.checkBox_Dsel1 = new System.Windows.Forms.CheckBox();
             this.button_Start = new System.Windows.Forms.Button();
+            this.checkBox_G9 = new System.Windows.Forms.CheckBox();
+            this.checkBox_G8 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBox_G9);
+            this.groupBox1.Controls.Add(this.checkBox_G8);
             this.groupBox1.Controls.Add(this.checkBox_G7);
             this.groupBox1.Controls.Add(this.checkBox_G6);
             this.groupBox1.Controls.Add(this.checkBox_G3);
@@ -69,7 +73,7 @@
             this.checkBox_G7.AutoSize = true;
             this.checkBox_G7.Location = new System.Drawing.Point(33, 129);
             this.checkBox_G7.Name = "checkBox_G7";
-            this.checkBox_G7.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G7.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G7.TabIndex = 1;
             this.checkBox_G7.Text = "Group 7";
             this.checkBox_G7.UseVisualStyleBackColor = true;
@@ -79,7 +83,7 @@
             this.checkBox_G6.AutoSize = true;
             this.checkBox_G6.Location = new System.Drawing.Point(319, 87);
             this.checkBox_G6.Name = "checkBox_G6";
-            this.checkBox_G6.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G6.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G6.TabIndex = 0;
             this.checkBox_G6.Text = "Group 6";
             this.checkBox_G6.UseVisualStyleBackColor = true;
@@ -89,7 +93,7 @@
             this.checkBox_G3.AutoSize = true;
             this.checkBox_G3.Location = new System.Drawing.Point(319, 44);
             this.checkBox_G3.Name = "checkBox_G3";
-            this.checkBox_G3.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G3.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G3.TabIndex = 0;
             this.checkBox_G3.Text = "Group 3";
             this.checkBox_G3.UseVisualStyleBackColor = true;
@@ -99,7 +103,7 @@
             this.checkBox_G5.AutoSize = true;
             this.checkBox_G5.Location = new System.Drawing.Point(175, 87);
             this.checkBox_G5.Name = "checkBox_G5";
-            this.checkBox_G5.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G5.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G5.TabIndex = 0;
             this.checkBox_G5.Text = "Group 5";
             this.checkBox_G5.UseVisualStyleBackColor = true;
@@ -109,7 +113,7 @@
             this.checkBox_G2.AutoSize = true;
             this.checkBox_G2.Location = new System.Drawing.Point(175, 42);
             this.checkBox_G2.Name = "checkBox_G2";
-            this.checkBox_G2.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G2.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G2.TabIndex = 0;
             this.checkBox_G2.Text = "Group 2";
             this.checkBox_G2.UseVisualStyleBackColor = true;
@@ -119,7 +123,7 @@
             this.checkBox_G4.AutoSize = true;
             this.checkBox_G4.Location = new System.Drawing.Point(33, 86);
             this.checkBox_G4.Name = "checkBox_G4";
-            this.checkBox_G4.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G4.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G4.TabIndex = 0;
             this.checkBox_G4.Text = "Group 4";
             this.checkBox_G4.UseVisualStyleBackColor = true;
@@ -129,7 +133,7 @@
             this.checkBox_G1.AutoSize = true;
             this.checkBox_G1.Location = new System.Drawing.Point(33, 42);
             this.checkBox_G1.Name = "checkBox_G1";
-            this.checkBox_G1.Size = new System.Drawing.Size(100, 28);
+            this.checkBox_G1.Size = new System.Drawing.Size(79, 23);
             this.checkBox_G1.TabIndex = 0;
             this.checkBox_G1.Text = "Group 1";
             this.checkBox_G1.UseVisualStyleBackColor = true;
@@ -153,7 +157,7 @@
             this.checkBox_Dsel5.AutoSize = true;
             this.checkBox_Dsel5.Location = new System.Drawing.Point(33, 200);
             this.checkBox_Dsel5.Name = "checkBox_Dsel5";
-            this.checkBox_Dsel5.Size = new System.Drawing.Size(97, 28);
+            this.checkBox_Dsel5.Size = new System.Drawing.Size(80, 23);
             this.checkBox_Dsel5.TabIndex = 0;
             this.checkBox_Dsel5.Text = "배출 정보";
             this.checkBox_Dsel5.UseVisualStyleBackColor = true;
@@ -164,7 +168,7 @@
             this.checkBox_Dsel4.AutoSize = true;
             this.checkBox_Dsel4.Location = new System.Drawing.Point(33, 160);
             this.checkBox_Dsel4.Name = "checkBox_Dsel4";
-            this.checkBox_Dsel4.Size = new System.Drawing.Size(167, 28);
+            this.checkBox_Dsel4.Size = new System.Drawing.Size(136, 23);
             this.checkBox_Dsel4.TabIndex = 0;
             this.checkBox_Dsel4.Text = "입/출고 (상세 정보)";
             this.checkBox_Dsel4.UseVisualStyleBackColor = true;
@@ -174,7 +178,7 @@
             this.checkBox_Dsel3.AutoSize = true;
             this.checkBox_Dsel3.Location = new System.Drawing.Point(33, 120);
             this.checkBox_Dsel3.Name = "checkBox_Dsel3";
-            this.checkBox_Dsel3.Size = new System.Drawing.Size(163, 28);
+            this.checkBox_Dsel3.Size = new System.Drawing.Size(133, 23);
             this.checkBox_Dsel3.TabIndex = 0;
             this.checkBox_Dsel3.Text = "입/출고 (SID 기준)";
             this.checkBox_Dsel3.UseVisualStyleBackColor = true;
@@ -184,7 +188,7 @@
             this.checkBox_Dsel2.AutoSize = true;
             this.checkBox_Dsel2.Location = new System.Drawing.Point(33, 80);
             this.checkBox_Dsel2.Name = "checkBox_Dsel2";
-            this.checkBox_Dsel2.Size = new System.Drawing.Size(144, 28);
+            this.checkBox_Dsel2.Size = new System.Drawing.Size(118, 23);
             this.checkBox_Dsel2.TabIndex = 0;
             this.checkBox_Dsel2.Text = "재고 (상세 정보)";
             this.checkBox_Dsel2.UseVisualStyleBackColor = true;
@@ -194,7 +198,7 @@
             this.checkBox_Dsel1.AutoSize = true;
             this.checkBox_Dsel1.Location = new System.Drawing.Point(33, 40);
             this.checkBox_Dsel1.Name = "checkBox_Dsel1";
-            this.checkBox_Dsel1.Size = new System.Drawing.Size(140, 28);
+            this.checkBox_Dsel1.Size = new System.Drawing.Size(115, 23);
             this.checkBox_Dsel1.TabIndex = 0;
             this.checkBox_Dsel1.Text = "재고 (SID 기준)";
             this.checkBox_Dsel1.UseVisualStyleBackColor = true;
@@ -210,6 +214,26 @@
             this.button_Start.UseVisualStyleBackColor = false;
             this.button_Start.Click += new System.EventHandler(this.button_Start_Click);
             this.button_Start.MouseHover += new System.EventHandler(this.button_Start_MouseHover);
+            // 
+            // checkBox_G9
+            // 
+            this.checkBox_G9.AutoSize = true;
+            this.checkBox_G9.Location = new System.Drawing.Point(319, 129);
+            this.checkBox_G9.Name = "checkBox_G9";
+            this.checkBox_G9.Size = new System.Drawing.Size(79, 23);
+            this.checkBox_G9.TabIndex = 2;
+            this.checkBox_G9.Text = "Group 9";
+            this.checkBox_G9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_G8
+            // 
+            this.checkBox_G8.AutoSize = true;
+            this.checkBox_G8.Location = new System.Drawing.Point(175, 129);
+            this.checkBox_G8.Name = "checkBox_G8";
+            this.checkBox_G8.Size = new System.Drawing.Size(79, 23);
+            this.checkBox_G8.TabIndex = 3;
+            this.checkBox_G8.Text = "Group 8";
+            this.checkBox_G8.UseVisualStyleBackColor = true;
             // 
             // Form_Excel
             // 
@@ -249,5 +273,7 @@
         private System.Windows.Forms.CheckBox checkBox_Dsel1;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.CheckBox checkBox_G7;
+        private System.Windows.Forms.CheckBox checkBox_G9;
+        private System.Windows.Forms.CheckBox checkBox_G8;
     }
 }

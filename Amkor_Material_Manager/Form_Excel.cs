@@ -24,7 +24,8 @@ namespace Amkor_Material_Manager
         private void button_Start_Click(object sender, EventArgs e)
         {
             if (checkBox_G1.Checked == false && checkBox_G2.Checked == false && checkBox_G3.Checked == false
-                && checkBox_G4.Checked == false && checkBox_G5.Checked == false && checkBox_G6.Checked == false && checkBox_G7.Checked == false) //210824_Sangik.choi_타워그룹추가
+                && checkBox_G4.Checked == false && checkBox_G5.Checked == false && checkBox_G6.Checked == false && checkBox_G7.Checked == false
+               && checkBox_G8.Checked == false && checkBox_G9.Checked) //210824_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
             {
                 MessageBox.Show("그룹은 최소 하나 이상 선택 되어야 합니다.");
                 checkBox_G1.Checked = true;
@@ -96,6 +97,10 @@ namespace Amkor_Material_Manager
             Form_ITS.bGroupUse[4] = checkBox_G5.Checked;
             Form_ITS.bGroupUse[5] = checkBox_G6.Checked;
             Form_ITS.bGroupUse[6] = checkBox_G7.Checked;//210824_Sangik.choi_타워그룹추가
+            Form_ITS.bGroupUse[7] = checkBox_G8.Checked;//220823_ilyoung_타워그룹추가
+            Form_ITS.bGroupUse[8] = checkBox_G9.Checked;//220823_ilyoung_타워그룹추가
+
+
 
             Form_ITS.bExcel_Start = true;
 
@@ -156,6 +161,18 @@ namespace Amkor_Material_Manager
                         else
                             checkBox_G7.Checked = false;
                         //]210824_Sangik.choi_타워그룹추가
+
+                        //220823_ilyoung_타워그룹추가
+                        if (strSplit[7] == "True")
+                            checkBox_G8.Checked = true;
+                        else
+                            checkBox_G8.Checked = false;
+
+                        if (strSplit[8] == "True")
+                            checkBox_G9.Checked = true;
+                        else
+                            checkBox_G9.Checked = false;
+                        //220823_ilyoung_타워그룹추가
 
                         if (strSplit[7] == "True")
                             checkBox_Dsel1.Checked = true;

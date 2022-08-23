@@ -23,7 +23,7 @@ namespace Amkor_Material_Manager
         {
             comboBox_twrNo.Refresh();
             
-            for(int n = 1; n < 8; n++)//210825_Sangik.choi_타워그룹추가 7 -> 8
+            for(int n = 1; n < 10; n++)//210825_Sangik.choi_타워그룹추가 7 -> 8 //220823_ilyoung_타워그룹추가
             {
                 for(int m = 1; m < 5; m++)
                 {

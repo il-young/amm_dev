@@ -29,9 +29,9 @@ namespace Amkor_Material_Manager
         public static int nDefaultGroup = 0, nProgress = 0, nSelectedWin = 0;
         public static bool bThread_Order = false;
         //public static bool[] bTAlarm = { false, false, false, false, false, false };
-        // [210805_Sangik.choi_타워그룹추가
-        public static bool[] bTAlarm = { false, false, false, false, false, false, false };
-        // ]210805_Sangik.choi_타워그룹추가
+        // [210805_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+        public static bool[] bTAlarm = { false, false, false, false, false, false, false, false, false };
+        // ]210805_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
 
         int nColorindex = 0;
 

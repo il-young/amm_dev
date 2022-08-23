@@ -290,6 +290,13 @@ namespace Amkor_Material_Manager
                     label_pickid.Text = "PK0000001";
                 //]20210805_Sangik.choi_타워그룹추가
 
+                //220823_ilyoung_타워그룹추가
+                else if (strGroupinfo == "8")
+                    label_pickid.Text = "PL0000001";
+                else if (strGroupinfo == "9")
+                    label_pickid.Text = "PM0000001";
+                //220823_ilyoung_타워그룹추가
+
             }
             else
             {
@@ -1006,7 +1013,7 @@ namespace Amkor_Material_Manager
 
             if (MtlList.Rows.Count < 1)
             {
-                for (int n = 1; n < 8; n++) //210923_Sangik.choi_자재 조회 시 7번 그룹 표기 안되는 문제 조치
+                for (int n = 1; n < 10; n++) //210923_Sangik.choi_자재 조회 시 7번 그룹 표기 안되는 문제 조치
                 {
                     equipid = "TWR" + n.ToString();
 
@@ -1042,7 +1049,8 @@ namespace Amkor_Material_Manager
                     }
                 }
 
-                if(strMsg == "")
+
+                if (strMsg == "")
                 {
                     if (!lastmtl)
                     {
@@ -2311,8 +2319,8 @@ namespace Amkor_Material_Manager
         {
             //int[] nCount = new int[6] { 0, 0, 0, 0, 0, 0 };
 
-            //[210805_Sanigk_choi_타워그룹추가
-            int[] nCount = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+            //[210805_Sanigk_choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+            int[] nCount = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             //]210805_Sanigk_choi_타워그룹추가
 
 
@@ -2402,14 +2410,50 @@ namespace Amkor_Material_Manager
                 label_G7.BackColor = Color.Green;
             label_G7.Text = str;
 
-            Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6]);
+            //220823_ilyoung_타워그룹추가
+            str = string.Format("{0} 건", nCount[7]);
+            if (nCount[7] == 0)
+                label_G8.BackColor = Color.Blue;
+            else
+                label_G8.BackColor = Color.Green;
+            label_G8.Text = str;
+
+            str = string.Format("{0} 건", nCount[8]);
+            if (nCount[8] == 0)
+                label_G9.BackColor = Color.Blue;
+            else
+                label_G9.BackColor = Color.Green;
+            label_G9.Text = str;
+            //220823_ilyoung_타워그룹추가
+
+            //Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
 
 
             //]210805_Sangik.choi_타워그룹추가
 
+            //220823_ilyoung_타워그룹추가
+            str = string.Format("{0} 건", nCount[6]);
+            if (nCount[7] == 0)
+                label_G8.BackColor = Color.Blue;
+            else
+                label_G8.BackColor = Color.Green;
+            label_G7.Text = str;
+
+            //Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
+
+            str = string.Format("{0} 건", nCount[6]);
+            if (nCount[6] == 0)
+                label_G7.BackColor = Color.Blue;
+            else
+                label_G7.BackColor = Color.Green;
+            label_G7.Text = str;
+
+            Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
+            //220823_ilyoung_타워그룹추가
+
 
         }
-        public void Fnc_DrawDoughnutChart_Ready(int nGroup1, int nGroup2, int nGroup3, int nGroup4, int nGroup5, int nGroup6, int nGroup7) //210823_Sangik.choi_타워그룹추가 
+        public void Fnc_DrawDoughnutChart_Ready(int nGroup1, int nGroup2, int nGroup3, int nGroup4, int nGroup5, int nGroup6, int nGroup7, int nGroup8, int nGroup9) //210823_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
         {
             chart1.Series.Clear();
             chart1.Legends.Clear();
@@ -2440,6 +2484,11 @@ namespace Amkor_Material_Manager
             string strValue7 = string.Format("Group 7 \n{0} EA", nGroup7);
             //]210805_Sangik.choi_타워그룹추가
 
+            //220823_ilyoung_타워그룹추가
+            string strValue8 = string.Format("Group 8 \n{0} EA", nGroup8);
+            string strValue9 = string.Format("Group 9 \n{0} EA", nGroup9);
+            //220823_ilyoung_타워그룹추가
+
 
             if (nGroup1 > 0)
                 chart1.Series[seriesname].Points.AddXY(strValue1, nGroup1);
@@ -2464,11 +2513,18 @@ namespace Amkor_Material_Manager
                 chart1.Series[seriesname].Points.AddXY(strValue7, nGroup7);
             //]210805_Sangik.choi_타워그룹추가
 
+            //220823_ilyoung_타워그룹추가
+            if (nGroup8 > 0)
+                chart1.Series[seriesname].Points.AddXY(strValue8, nGroup8);
+            if (nGroup9 > 0)
+                chart1.Series[seriesname].Points.AddXY(strValue9, nGroup9);
+            //220823_ilyoung_타워그룹추가
+
 
             chart1.Series[seriesname].LabelBackColor = Color.Green;
             chart1.Series[seriesname].LabelForeColor = Color.White;
 
-            if (nGroup1 == 0 && nGroup2 == 0 && nGroup3 == 0 && nGroup4 == 0 && nGroup5 == 0 && nGroup6 == 0 && nGroup7 == 0)
+            if (nGroup1 == 0 && nGroup2 == 0 && nGroup3 == 0 && nGroup4 == 0 && nGroup5 == 0 && nGroup6 == 0 && nGroup7 == 0 && nGroup8 == 0 && nGroup9 == 0) //220823_ilyoung_타워그룹추가
             {
                 strValue1 = string.Format("대기 자재 없음");
                 chart1.Series[seriesname].Points.AddXY(strValue1, 100);
@@ -2742,8 +2798,27 @@ namespace Amkor_Material_Manager
                     {
                         Fnc_DeleteReady(n);
                     }
-                }               
+                }
                 //]210823_Sangik.choi_타워 그룹 추가
+
+                //220823_ilyoung_타워그룹추가
+                else if (strPrefix == "PL")
+                {
+                    if (strPosition != "8")
+                    {
+                        Fnc_DeleteReady(n);
+                    }
+                }
+                else if (strPrefix == "PM")
+                {
+                    if (strPosition != "9")
+                    {
+                        Fnc_DeleteReady(n);
+                    }
+                }
+                //220823_ilyoung_타워그룹추가
+
+
 
             }
         }
