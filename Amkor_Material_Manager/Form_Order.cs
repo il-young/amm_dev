@@ -1154,7 +1154,7 @@ namespace Amkor_Material_Manager
                 {
                     strMsg = "";
 
-                    for (int n = 1; n < 8; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치
+                    for (int n = 1; n < 10; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치 //220823_ilyoung_타워그룹추가
                     {
                         equipid = "TWR" + n.ToString();
 
@@ -1237,7 +1237,7 @@ namespace Amkor_Material_Manager
             {
                 nCheckGroup = 0;
 
-                for (int n = 1; n < 8; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치
+                for (int n = 1; n < 10; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치   //220823_ilyoung_타워그룹추가
                 {
                     if (n != Int32.Parse(strGroup))
                     {
@@ -1381,7 +1381,7 @@ namespace Amkor_Material_Manager
 
             if (MtlList.Rows.Count < 1)
             {
-                for (int n = 1; n < 8; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치
+                for (int n = 1; n < 10; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치  //220823_ilyoung_타워그룹추가
                 {
                     equipid = "TWR" + n.ToString();
 
@@ -1449,7 +1449,7 @@ namespace Amkor_Material_Manager
 
                 if (list.Count == 0)
                 {
-                    for (int n = 1; n < 8; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치
+                    for (int n = 1; n < 10; n++)//210923_Sangik.choi_자재 조회 시 7번그룹 표기 안되는 문제 조치  //220823_ilyoung_타워그룹추가
                     {
                         equipid = "TWR" + n.ToString();
 
@@ -2357,7 +2357,14 @@ namespace Amkor_Material_Manager
             dt = null;
             //]210805_Sanigk_choi_타워그룹추가
 
-
+            //220823_ilyoung_타워그룹추가
+            dt = AMM_Main.AMM.GetPickingID(strlinecode, "TWR8");
+            nCount[7] = dt.Rows.Count;
+            dt = null;
+            dt = AMM_Main.AMM.GetPickingID(strlinecode, "TWR9");
+            nCount[8] = dt.Rows.Count;
+            dt = null;
+            //220823_ilyoung_타워그룹추가
 
             string str = string.Format("{0} 건", nCount[0]);
 

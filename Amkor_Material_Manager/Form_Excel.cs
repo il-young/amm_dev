@@ -80,7 +80,7 @@ namespace Amkor_Material_Manager
         {
             string strPath = strSavefilePath + "\\Excel_config.ini";
 
-            string text = checkBox_G1.Checked + ";" + checkBox_G2.Checked + ";" + checkBox_G3.Checked + ";" + checkBox_G4.Checked + ";" + checkBox_G5.Checked + ";" + checkBox_G6.Checked + ";" + checkBox_G7.Checked + ";"
+            string text = checkBox_G1.Checked + ";" + checkBox_G2.Checked + ";" + checkBox_G3.Checked + ";" + checkBox_G4.Checked + ";" + checkBox_G5.Checked + ";" + checkBox_G6.Checked + ";" + checkBox_G7.Checked + ";" + checkBox_G8.Checked + ";" + checkBox_G9.Checked + ";"
                 + checkBox_Dsel1.Checked + ";" + checkBox_Dsel2.Checked + ";" + checkBox_Dsel3.Checked + ";" + checkBox_Dsel4.Checked + ";" + checkBox_Dsel5.Checked;
             System.IO.File.WriteAllText(strPath, text);
 
@@ -174,27 +174,27 @@ namespace Amkor_Material_Manager
                             checkBox_G9.Checked = false;
                         //220823_ilyoung_타워그룹추가
 
-                        if (strSplit[7] == "True")
+                        if (strSplit[9] == "True")
                             checkBox_Dsel1.Checked = true;
                         else
                             checkBox_Dsel1.Checked = false;
 
-                        if (strSplit[8] == "True")
+                        if (strSplit[10] == "True")
                             checkBox_Dsel2.Checked = true;
                         else
                             checkBox_Dsel2.Checked = false;
 
-                        if (strSplit[9] == "True")
+                        if (strSplit[11] == "True")
                             checkBox_Dsel3.Checked = true;
                         else
                             checkBox_Dsel3.Checked = false;
 
-                        if (strSplit[10] == "True")
+                        if (strSplit[12] == "True")
                             checkBox_Dsel4.Checked = true;
                         else
                             checkBox_Dsel4.Checked = false;
 
-                        if (strSplit[11] == "True")
+                        if (strSplit[13] == "True")
                             checkBox_Dsel5.Checked = true;
                         else
                             checkBox_Dsel5.Checked = false;

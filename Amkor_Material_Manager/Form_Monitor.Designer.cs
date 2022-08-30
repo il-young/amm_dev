@@ -292,7 +292,7 @@
             // 
             this.label_Info_G1.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G1.Location = new System.Drawing.Point(2, 211);
             this.label_Info_G1.Name = "label_Info_G1";
@@ -305,7 +305,7 @@
             // 
             this.label_Info_G2.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G2.Location = new System.Drawing.Point(112, 211);
             this.label_Info_G2.Name = "label_Info_G2";
@@ -318,7 +318,7 @@
             // 
             this.label_Info_G3.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G3.Location = new System.Drawing.Point(222, 211);
             this.label_Info_G3.Name = "label_Info_G3";
@@ -331,7 +331,7 @@
             // 
             this.label_Info_G4.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G4.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G4.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G4.Location = new System.Drawing.Point(332, 211);
             this.label_Info_G4.Name = "label_Info_G4";
@@ -344,7 +344,7 @@
             // 
             this.label_Info_G5.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G5.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G5.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G5.Location = new System.Drawing.Point(442, 211);
             this.label_Info_G5.Name = "label_Info_G5";
@@ -357,7 +357,7 @@
             // 
             this.label_Info_G6.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G6.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G6.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G6.Location = new System.Drawing.Point(552, 211);
             this.label_Info_G6.Name = "label_Info_G6";
@@ -436,7 +436,7 @@
             // 
             this.label_Info_G7.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G7.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G7.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G7.Location = new System.Drawing.Point(662, 211);
             this.label_Info_G7.Name = "label_Info_G7";
@@ -492,7 +492,7 @@
             // 
             this.label_Info_G9.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G9.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G9.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G9.Location = new System.Drawing.Point(882, 211);
             this.label_Info_G9.Name = "label_Info_G9";
@@ -548,7 +548,7 @@
             // 
             this.label_Info_G8.BackColor = System.Drawing.SystemColors.Info;
             this.label_Info_G8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Info_G8.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Info_G8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Info_G8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.label_Info_G8.Location = new System.Drawing.Point(772, 211);
             this.label_Info_G8.Name = "label_Info_G8";
