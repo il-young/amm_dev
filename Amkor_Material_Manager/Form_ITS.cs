@@ -599,9 +599,9 @@ namespace Amkor_Material_Manager
             string[] strSum = new string[9] { "", "", "", "", "", "", "", "", "" };//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
             int nTotal = 0;
 
-            for (int j = 0; j < 9; j++)//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+            for (int j = 0; j < nSum.Length; j++)//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < dataGridView_sum.Rows.Count; i++)   //220823_ilyoung_타워그룹추가
                 {
                     int nCal = Int32.Parse(dataGridView_sum.Rows[i].Cells[j + 1].Value.ToString());
                     nSum[j] = nSum[j] + nCal;
@@ -2458,7 +2458,7 @@ namespace Amkor_Material_Manager
                 }
             }
             xlWorkSheet9.Columns.AutoFit();
-            /////////////////////////////////////////
+            ///////////////////////////////////////////220823_ilyoung_타워그룹추가
             ///
             xlWorkSheet10 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(10);
             xlWorkSheet10.Name = "Group 9";
@@ -2511,6 +2511,8 @@ namespace Amkor_Material_Manager
             Marshal.ReleaseComObject(xlWorkSheet6);
             Marshal.ReleaseComObject(xlWorkSheet7);
             Marshal.ReleaseComObject(xlWorkSheet8);//211018_Sangik.choi_재고관리 7번그룹 오류 수정
+            Marshal.ReleaseComObject(xlWorkSheet7); //220823_ilyoung_타워그룹추가
+            Marshal.ReleaseComObject(xlWorkSheet8); //220823_ilyoung_타워그룹추가
 
             Marshal.ReleaseComObject(xlWorkBook);
             Marshal.ReleaseComObject(xlApp);
@@ -3368,7 +3370,7 @@ namespace Amkor_Material_Manager
             Fnc_Init_datagrid(nType);
 
             //if (nGroup != 7)
-            if (nGroup != 10) //210824_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+            if (nGroup != comboBox_group.Items.Count) //210824_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
                 Fnc_Process_GetMaterialinfo(nType, strEquipid);
             else
             {
@@ -3395,7 +3397,7 @@ namespace Amkor_Material_Manager
                 Fnc_Init_datagrid(nType);
 
                 //if (nGroup != 7)
-                if (nGroup != 10) //210824_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+                if (nGroup != comboBox_group.Items.Count) //210824_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
                     Fnc_Process_GetMaterialinfo(nType, strEquipid);
                 else
                 {
@@ -3520,7 +3522,7 @@ namespace Amkor_Material_Manager
             }
             else
             {
-                if (nGroup != 10)//210909_Sangik.choi_입출고정보 7번그룹 추가 //220823_ilyoung_타워그룹추가
+                if (nGroup != comboBox_group2.Items.Count)//210909_Sangik.choi_입출고정보 7번그룹 추가 //220823_ilyoung_타워그룹추가
                     Fnc_Process_GetINOUT_mtlinfo(nType, strEquipid, Double.Parse(strDate_st), Double.Parse(strDate_ed));
                 else if (nGroup == 10)
                 {
