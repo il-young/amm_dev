@@ -2439,21 +2439,21 @@ namespace Amkor_Material_Manager
             //]210805_Sangik.choi_타워그룹추가
 
             //220823_ilyoung_타워그룹추가
-            str = string.Format("{0} 건", nCount[6]);
-            if (nCount[7] == 0)
-                label_G8.BackColor = Color.Blue;
-            else
-                label_G8.BackColor = Color.Green;
-            label_G7.Text = str;
+            //str = string.Format("{0} 건", nCount[9]);
+            //if (nCount[9] == 0)
+            //    label_G8.BackColor = Color.Blue;
+            //else
+            //    label_G8.BackColor = Color.Green;
+            //label_G8.Text = str;
 
-            //Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
+            ////Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
 
-            str = string.Format("{0} 건", nCount[6]);
-            if (nCount[6] == 0)
-                label_G7.BackColor = Color.Blue;
-            else
-                label_G7.BackColor = Color.Green;
-            label_G7.Text = str;
+            //str = string.Format("{0} 건", nCount[10]);
+            //if (nCount[10] == 0)
+            //    label_G9.BackColor = Color.Blue;
+            //else
+            //    label_G9.BackColor = Color.Green;
+            //label_G9.Text = str;
 
             Fnc_DrawDoughnutChart_Ready(nCount[0], nCount[1], nCount[2], nCount[3], nCount[4], nCount[5], nCount[6], nCount[7], nCount[8]);
             //220823_ilyoung_타워그룹추가
