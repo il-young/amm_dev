@@ -30,11 +30,11 @@ namespace Amkor_Material_Manager
                 int[] nAlive = { -1, -1, -1, -1, -1, -1 };
                 string[] strAlive = { "", "", "", "", "", ""};*/
 
-        bool[] bStopwatch_Alve = { false, false, false, false, false, false ,false, false, false };
-        bool[] bAliveAlarm = { false, false, false, false, false, false, false, false, false };
+        bool[] bStopwatch_Alve = { false, false, false, false, false, false ,false, false, false }; //220823_ilyoung_타워그룹추가
+        bool[] bAliveAlarm = { false, false, false, false, false, false, false, false, false }; //220823_ilyoung_타워그룹추가
 
-        int[] nAlive = { -1, -1, -1, -1, -1, -1 , -1, -1, -1};
-        string[] strAlive = { "", "", "", "", "", "" , "", "", ""};
+        int[] nAlive = { -1, -1, -1, -1, -1, -1 , -1, -1, -1};  //220823_ilyoung_타워그룹추가
+        string[] strAlive = { "", "", "", "", "", "" , "", "", ""}; //220823_ilyoung_타워그룹추가
         //]210823_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
 
         public Form_Monitor()
