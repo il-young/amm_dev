@@ -343,15 +343,15 @@ namespace Amkor_Material_Manager
 
                 dataGridView_info.Columns.Add("NO", "NO");
                 dataGridView_info.Columns.Add("SID", "SID");
-                dataGridView_info.Columns.Add("Batch#", "Batch#");
+                dataGridView_info.Columns.Add("AMKOR_BATCH", "Batch#");
                 dataGridView_info.Columns.Add("UID", "UID");
-                dataGridView_info.Columns.Add("Qty", "Qty");
-                dataGridView_info.Columns.Add("투입형태", "투입형태");
-                dataGridView_info.Columns.Add("위치", "위치");
-                dataGridView_info.Columns.Add("제조일", "제조일");
-                dataGridView_info.Columns.Add("투입일", "투입일");
-                dataGridView_info.Columns.Add("제조사", "제조사");
-                dataGridView_info.Columns.Add("인치", "인치");
+                dataGridView_info.Columns.Add("QTY", "Qty");
+                dataGridView_info.Columns.Add("INPUT_TYPE", "투입형태");
+                dataGridView_info.Columns.Add("TOWER_NO", "위치");
+                dataGridView_info.Columns.Add("PRODUCTION_DATE", "제조일");
+                dataGridView_info.Columns.Add("DATETIME", "투입일");
+                dataGridView_info.Columns.Add("MANUFACTURER", "제조사");
+                dataGridView_info.Columns.Add("INCH_INFO", "인치");
             }
             else
             {
@@ -553,95 +553,115 @@ namespace Amkor_Material_Manager
 
             DataTable MtlList = null;
 
-            string strTowerNo = "", strEquip = "";
-            for (int n = 1; n < 5; n++)
+            try
             {
-                strEquip = "TWR1"; strTowerNo = string.Format("T010{0}", n.ToString());
-                //GetMTLInfo()-query = string.Format(@"SELECT * FROM TB_MTL_INFO WHERE LINE_CODE='{0}' and EQUIP_ID='{1}' and TOWER_NO='{2}');
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[0] = MtlList.Rows.Count; MtlList = null;
-
-                strEquip = "TWR2"; strTowerNo = string.Format("T020{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[1] = MtlList.Rows.Count; MtlList = null;
-
-                strEquip = "TWR3"; strTowerNo = string.Format("T030{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[2] = MtlList.Rows.Count; MtlList = null;
-
-                strEquip = "TWR4"; strTowerNo = string.Format("T040{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[3] = MtlList.Rows.Count; MtlList = null;
-
-                strEquip = "TWR5"; strTowerNo = string.Format("T050{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[4] = MtlList.Rows.Count; MtlList = null;
-
-                strEquip = "TWR6"; strTowerNo = string.Format("T060{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[5] = MtlList.Rows.Count; MtlList = null;
-
-                //[210831_Sangik.choi_타워그룹추가
-                strEquip = "TWR7"; strTowerNo = string.Format("T070{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[6] = MtlList.Rows.Count; MtlList = null;
-
-                //dataGridView_sum.Rows.Add(new object[8] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString() });
-                //]210831_Sangik.choi_타워그룹추가
-
-                //220823_ilyoung_타워그룹추가
-                strEquip = "TWR8"; strTowerNo = string.Format("T080{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[7] = MtlList.Rows.Count; MtlList = null;
-
-                //dataGridView_sum.Rows.Add(new object[8] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString() });
-
-                strEquip = "TWR9"; strTowerNo = string.Format("T090{0}", n.ToString());
-                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo); nCount[8] = MtlList.Rows.Count; MtlList = null;
-
-                dataGridView_sum.Rows.Add(new object[10] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString(), nCount[7].ToString(), nCount[8].ToString() });
-                //220823_ilyoung_타워그룹추가
-            }
-
-            int[] nSum = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
-            string[] strSum = new string[9] { "", "", "", "", "", "", "", "", "" };//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
-            int nTotal = 0;
-
-            for (int j = 0; j < nSum.Length; j++)//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
-            {
-                for (int i = 0; i < dataGridView_sum.Rows.Count; i++)   //220823_ilyoung_타워그룹추가
+                string strTowerNo = "", strEquip = "";
+                for (int n = 1; n < 5; n++)
                 {
-                    int nCal = Int32.Parse(dataGridView_sum.Rows[i].Cells[j + 1].Value.ToString());
-                    nSum[j] = nSum[j] + nCal;
+                    strEquip = "TWR1"; strTowerNo = string.Format("T010{0}", n.ToString());
+                    //GetMTLInfo()-query = string.Format(@"SELECT * FROM TB_MTL_INFO WHERE LINE_CODE='{0}' and EQUIP_ID='{1}' and TOWER_NO='{2}');
+                    nCount[0] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    strEquip = "TWR2"; strTowerNo = string.Format("T020{0}", n.ToString());
+                    nCount[1] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    strEquip = "TWR3"; strTowerNo = string.Format("T030{0}", n.ToString());
+                    nCount[2] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    strEquip = "TWR4"; strTowerNo = string.Format("T040{0}", n.ToString());
+                    nCount[3] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    strEquip = "TWR5"; strTowerNo = string.Format("T050{0}", n.ToString());
+                    nCount[4] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    strEquip = "TWR6"; strTowerNo = string.Format("T060{0}", n.ToString());
+                    nCount[5] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+
+                    //[210831_Sangik.choi_타워그룹추가
+                    strEquip = "TWR7"; strTowerNo = string.Format("T070{0}", n.ToString());
+                    nCount[6] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    //dataGridView_sum.Rows.Add(new object[8] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString() });
+                    //]210831_Sangik.choi_타워그룹추가
+
+                    //220823_ilyoung_타워그룹추가
+                    strEquip = "TWR8"; strTowerNo = string.Format("T080{0}", n.ToString());
+                    nCount[7] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    //dataGridView_sum.Rows.Add(new object[8] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString() });
+
+                    strEquip = "TWR9"; strTowerNo = string.Format("T090{0}", n.ToString());
+                    nCount[8] = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquip, strTowerNo).Rows.Count;
+
+                    dataGridView_sum.Rows.Add(new object[10] { n.ToString(), nCount[0].ToString(), nCount[1].ToString(), nCount[2].ToString(), nCount[3].ToString(), nCount[4].ToString(), nCount[5].ToString(), nCount[6].ToString(), nCount[7].ToString(), nCount[8].ToString() });
+                    //220823_ilyoung_타워그룹추가
                 }
 
-                strSum[j] = string.Format("{0:0,0}", nSum[j]);
-                nTotal = nTotal + nSum[j];
+                int[] nSum = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+                string[] strSum = new string[9] { "", "", "", "", "", "", "", "", "" };//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+                int nTotal = 0;
+
+                for (int j = 0; j < nSum.Length; j++)//210831_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
+                {
+                    for (int i = 0; i < dataGridView_sum.Rows.Count; i++)   //220823_ilyoung_타워그룹추가
+                    {
+                        try
+                        {
+                            int nCal = Int32.Parse(dataGridView_sum.Rows[i].Cells[j + 1].Value.ToString().Replace(",",""));
+                            nSum[j] = nSum[j] + nCal;
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw;
+                        }
+                        
+                    }
+
+                    strSum[j] = string.Format("{0:0,0}", nSum[j]);
+                    nTotal = nTotal + nSum[j];
+                }
+
+                dataGridView_sum.Rows.Add(new object[10] { "SUM", strSum[0].ToString(), strSum[1].ToString(), strSum[2].ToString(), strSum[3].ToString(), strSum[4].ToString(), strSum[5].ToString(), strSum[6].ToString(), strSum[7].ToString(), strSum[8].ToString() });//210831_Sangik.choi_타워그룹추가  //220823_ilyoung_타워그룹추가
+                dataGridView_sum.Rows[4].DefaultCellStyle.ForeColor = Color.White;
+                dataGridView_sum.Rows[4].DefaultCellStyle.BackColor = Color.OrangeRed;
+                dataGridView_sum.Rows[4].DefaultCellStyle.Font = new Font("Calibri", 13.00F, FontStyle.Bold);
+                dataGridView_sum.Rows[0].Selected = false;
+                dataGridView_sum.Rows[4].Selected = false;
+
+                string strnQty = string.Format("{0:0,0}", nTotal);
+                label_total.Text = strnQty + " REEL";
+
+                string strToday = string.Format("{0}-{1:00}-{2:00}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                string strHead = string.Format("{0:00}:{1:00}:{2:00}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+
+                label_updatedate.Text = "최근 업데이트: " + strToday + " " + strHead;
+
+                //////Infomation
+                int nType = comboBox_type.SelectedIndex; //0: SID, 1:Detail info
+                int nGroup = comboBox_group.SelectedIndex + 1;
+
+                string strEquipid = "TWR" + nGroup.ToString();
+
+                Fnc_Init_datagrid(nType);
+
+                if (nGroup != 10)//210831_Sangik.choi_타워그룹추가  //220823_ilyoung_타워그룹추가
+                    Fnc_Process_GetMaterialinfo(nType, strEquipid);
+                else
+                {
+                    Fnc_Process_GetMaterialinfo_All(nType);
+                }
+
+                IsDateGathering = false;
             }
-
-            dataGridView_sum.Rows.Add(new object[10] { "SUM", strSum[0].ToString(), strSum[1].ToString(), strSum[2].ToString(), strSum[3].ToString(), strSum[4].ToString(), strSum[5].ToString(), strSum[6].ToString(), strSum[7].ToString(), strSum[8].ToString() });//210831_Sangik.choi_타워그룹추가  //220823_ilyoung_타워그룹추가
-            dataGridView_sum.Rows[4].DefaultCellStyle.ForeColor = Color.White;
-            dataGridView_sum.Rows[4].DefaultCellStyle.BackColor = Color.OrangeRed;
-            dataGridView_sum.Rows[4].DefaultCellStyle.Font = new Font("Calibri", 13.00F, FontStyle.Bold);
-            dataGridView_sum.Rows[0].Selected = false;
-            dataGridView_sum.Rows[4].Selected = false;
-
-            string strnQty = string.Format("{0:0,0}", nTotal);
-            label_total.Text = strnQty + " REEL";
-
-            string strToday = string.Format("{0}-{1:00}-{2:00}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-            string strHead = string.Format("{0:00}:{1:00}:{2:00}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-
-            label_updatedate.Text = "최근 업데이트: " + strToday + " " + strHead;
-
-            //////Infomation
-            int nType = comboBox_type.SelectedIndex; //0: SID, 1:Detail info
-            int nGroup = comboBox_group.SelectedIndex + 1;
-
-            string strEquipid = "TWR" + nGroup.ToString();
-
-            Fnc_Init_datagrid(nType);
-
-            if (nGroup != 10)//210831_Sangik.choi_타워그룹추가  //220823_ilyoung_타워그룹추가
-                Fnc_Process_GetMaterialinfo(nType, strEquipid);
-            else
+            catch (Exception ex)
             {
-                Fnc_Process_GetMaterialinfo_All(nType);
+
+                
             }
 
-            IsDateGathering = false;
+            
         }
 
 
@@ -939,8 +959,12 @@ namespace Amkor_Material_Manager
             return nMtlCount;
         }
 
+        DateTime FindTime = new DateTime();
+
         private int Fnc_Process_GetMaterialinfo_All(int nType) //nType 0 : SID, 1: 상세 정보
         {
+            FindTime = isClick == true ? DateTime.Now : new DateTime();
+
             DataTable MtlList = null;
 
             List<StorageData> list = new List<StorageData>();
@@ -972,14 +996,18 @@ namespace Amkor_Material_Manager
 
                 list.Add(data);
             }
-            MtlList = null;
 
             list.Sort(CompareStorageData);
+
+            
 
             int nIndex = 1;
 
             if (nType == 0) //SID
             {
+                
+
+
                 string strSetSID = "", strLocation = "", strLocation_before = "";
                 int nReelcount = 0; double nQty = 0;
                 int nIdx = 0;
@@ -1052,6 +1080,43 @@ namespace Amkor_Material_Manager
             }
             else if (nType == 1) //Detatil info
             {
+                dataGridView_info.Columns.Clear();
+                dataGridView_info.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;                
+                dataGridView_info.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
+                dataGridView_info.RowHeadersVisible = false;
+                dataGridView_info.SuspendLayout();
+
+                dataGridView_info.Columns.Add("DATETIME", "투입일");
+                dataGridView_info.Columns.Add("LINE_CODE", "LINE CODE");
+                dataGridView_info.Columns.Add("EQUIP_ID", "그룹");
+                dataGridView_info.Columns.Add("TOWER_NO", "위치");
+                dataGridView_info.Columns.Add("UID", "UID");
+                dataGridView_info.Columns.Add("SID", "SID");
+                dataGridView_info.Columns.Add("LOTID", "LOT");
+                dataGridView_info.Columns.Add("QTY", "Qty");
+                dataGridView_info.Columns.Add("MANUFACTURER", "제조사");
+                dataGridView_info.Columns.Add("PRODUCTION_DATE", "제조일");
+                dataGridView_info.Columns.Add("INCH_INFO", "인치");
+                dataGridView_info.Columns.Add("INPUT_TYPE", "투입형태");
+                dataGridView_info.Columns.Add("AMKOR_BATCH", "Batch#");
+
+                //dataGridView_info.DataSource = MtlList;
+
+                //foreach(DataColumn col in MtlList.Columns)
+                //{
+                //    var c = new DataGridViewTextBoxColumn() { HeaderText = col.ColumnName };
+                //    dataGridView_info.Columns.Add(c);
+                //}
+
+
+                //dataGridView_info.DataSource = MtlList;
+
+                foreach (DataRow row in MtlList.Rows)
+                {                    
+                    dataGridView_info.Rows.Add(row.ItemArray);
+                }
+
+                /*
                 foreach (var item in list)
                 {
                     string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
@@ -1061,12 +1126,23 @@ namespace Amkor_Material_Manager
 
                     dataGridView_info.Rows.Add(new object[11] { nIndex++, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, strdate, item.Manufacturer, item.Inch });
                 }
+                */
+
+                //dataGridView_info.RowHeadersVisible = true;
+                dataGridView_info.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                dataGridView_info.ResumeLayout();
+                
+                MtlList = null;
             }
             else
-            {
+            {                
+                MtlList = null;
                 return nMtlCount;
             }
 
+
+
+            MtlList = null;
             return nMtlCount;
         }
 
@@ -2006,9 +2082,10 @@ namespace Amkor_Material_Manager
 
         private void button_excel_Click(object sender, EventArgs e)
         {
-            Fnc_Process_CalMaterialInfo();
+            //Fnc_Process_CalMaterialInfo();
 
             bExcel_Start = false;
+
 
             nExcelIndex = 0;
 
@@ -2019,6 +2096,8 @@ namespace Amkor_Material_Manager
             {
                 return;
             }
+
+            FindTime = DateTime.Now;
 
             IsDateGathering = true;
             ////bExcelUse[0] = ASM all file, 1: ASM SID sorting , 2: In/out/return All data, 3: In/out/return SID sortinf 
@@ -2118,9 +2197,45 @@ namespace Amkor_Material_Manager
             Fnc_Process_CalMaterialInfo();
         }
 
+        public static DataTable GetDataGridViewAsDataTable(DataGridView _DataGridView)
+        {
+            try
+            {
+                if (_DataGridView.ColumnCount == 0)
+                    return null;
+                DataTable dtSource = new DataTable();
+                //////create columns
+                foreach (DataGridViewColumn col in _DataGridView.Columns)
+                {
+                    if (col.ValueType == null)
+                        dtSource.Columns.Add(col.Name, typeof(string));
+                    else
+                        dtSource.Columns.Add(col.Name, col.ValueType);
+                    dtSource.Columns[col.Name].Caption = col.HeaderText;
+                }
+                ///////insert row data
+                foreach (DataGridViewRow row in _DataGridView.Rows)
+                {
+                    DataRow drNewRow = dtSource.NewRow();
+                    foreach (DataColumn col in dtSource.Columns)
+                    {
+                        drNewRow[col.ColumnName] = row.Cells[col.ColumnName].Value;
+                    }
+                    dtSource.Rows.Add(drNewRow);
+                }
+                return dtSource;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public void Fnc_ExcelCreate_InventoryInfo(string strPath, int nType)
         {
             Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+            xlApp.Visible = false;
+            xlApp.UserControl = false;
 
             if (xlApp == null)
             {
@@ -2129,6 +2244,11 @@ namespace Amkor_Material_Manager
             }
 
             Excel.Workbook xlWorkBook;
+
+            List<Excel.Worksheet> xlworksheets  = new List<Excel.Worksheet>();// = new Excel.Worksheet()[0];
+
+
+            /*
             Excel.Worksheet xlWorkSheet;
             Excel.Worksheet xlWorkSheet2;
             Excel.Worksheet xlWorkSheet3;
@@ -2139,381 +2259,102 @@ namespace Amkor_Material_Manager
             Excel.Worksheet xlWorkSheet8;//211018_Sangik.choi_재고관리 7번그룹 오류 수정
             Excel.Worksheet xlWorkSheet9;   //220823_ilyoung_타워그룹추가
             Excel.Worksheet xlWorkSheet10;   //220823_ilyoung_타워그룹추가
+            */
 
             object misValue = System.Reflection.Missing.Value;
-
             xlWorkBook = xlApp.Workbooks.Add(misValue);
-            xlWorkSheet2 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //1
-            xlWorkSheet3 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //2
-            xlWorkSheet4 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //3
-            xlWorkSheet5 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //4
-            xlWorkSheet6 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //5
-            xlWorkSheet7 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //6
-            xlWorkSheet8 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);//211018_Sangik.choi_재고관리 7번그룹 오류 수정
-            xlWorkSheet9 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue);  //8 //220823_ilyoung_타워그룹추가
-            xlWorkSheet10 = xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue); //9 //220823_ilyoung_타워그룹추가
+
+            for (int i = 0; i < comboBox_group.Items.Count -1; i++)//220823_ilyoung_타워그룹추가
+            {
+                if(bGroupUse[i] == true)
+                    xlworksheets.Add(xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue));
+            }
+
+            xlworksheets.Add(xlWorkBook.Worksheets.Add(misValue, misValue, 1, misValue)); // ALL Sheet
 
             /////Input save////////
             int nCellcount = 0;
 
-            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            xlWorkSheet.Name = "ALL";
+            xlworksheets[0] = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            xlworksheets[0].Name = "ALL";
 
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo_All(0);
+            int nBeforExcelRowcount = 0;
+            int xlSheetCnt = 0;
 
-            int nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet.Cells[1, 2] = "No";
-            xlWorkSheet.Cells[1, 3] = "SID";
-            xlWorkSheet.Cells[1, 4] = "릴수";
-            xlWorkSheet.Cells[1, 5] = "TTL";
-            xlWorkSheet.Cells[1, 6] = "인치";
-            xlWorkSheet.Cells[1, 7] = "위치";
-            xlWorkSheet.Columns.AutoFit();
-
-            for (int i = 0; i < nGcount; i++)
+            for (int i = 1; i < comboBox_group.Items.Count; i++)
             {
-                xlWorkSheet.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                xlWorkSheet.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                xlWorkSheet.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                xlWorkSheet.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                xlWorkSheet.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                xlWorkSheet.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                nCellcount++;
-            }
-
-            xlWorkSheet.Columns.AutoFit();
-            /////////////////////////////////////////////
-
-            xlWorkSheet2 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(2);
-            xlWorkSheet2.Name = "Group 1";
-
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR1");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet2.Cells[1, 2] = "No";
-            xlWorkSheet2.Cells[1, 3] = "SID";
-            xlWorkSheet2.Cells[1, 4] = "릴수";
-            xlWorkSheet2.Cells[1, 5] = "TTL";
-            xlWorkSheet2.Cells[1, 6] = "TTL";
-            xlWorkSheet2.Cells[1, 7] = "위치";
-            xlWorkSheet2.Columns.AutoFit();
-
-            if (bGroupUse[0])
-            {
-                for (int i = 0; i < nGcount; i++)
+                if (bGroupUse[i -1] == true)
                 {
-                    xlWorkSheet2.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet2.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet2.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet2.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet2.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet2.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
+                    dataGridView_info.Rows.Clear();
+                    Fnc_Process_GetMaterialinfo(0, "TWR" + i.ToString());
 
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet2.Columns.AutoFit();
-            ///////////////////////////////////////////////////
-            xlWorkSheet3 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(3);
-            xlWorkSheet3.Name = "Group 2";
 
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR2");
+                    DataTable MtlList = GetDataGridViewAsDataTable(dataGridView_info);
 
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
+                    int iRow = 0;
+                    string[] headers = new string[MtlList.Columns.Count];
+                    string[] columns = new string[MtlList.Columns.Count];
+                    string[,] item = new string[MtlList.Rows.Count, 6];
 
-            xlWorkSheet3.Cells[1, 2] = "No";
-            xlWorkSheet3.Cells[1, 3] = "SID";
-            xlWorkSheet3.Cells[1, 4] = "릴수";
-            xlWorkSheet3.Cells[1, 5] = "TTL";
-            xlWorkSheet3.Cells[1, 6] = "인치";
-            xlWorkSheet3.Cells[1, 7] = "위치";
-            xlWorkSheet3.Columns.AutoFit();
+                    xlworksheets[xlSheetCnt + 1] = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(xlSheetCnt + 2);
+                    xlworksheets[xlSheetCnt + 1].Name = "TWR" + i.ToString();
 
-            if (bGroupUse[1])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet3.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet3.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet3.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet3.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet3.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet3.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
+                    //Fnc_Init_datagrid(0);
+                    //Fnc_Process_GetMaterialinfo_All(0);
 
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet3.Columns.AutoFit();
-            /////////////////////////////////////////
+                    int nGcount = MtlList.Rows.Count;
+                    nCellcount = 0;
 
-            xlWorkSheet4 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(4);
-            xlWorkSheet4.Name = "Group 3";
+                    if (MtlList.Rows.Count > 0)
+                    {
 
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR3");
+                        for (int c = 0; c < MtlList.Columns.Count; c++)
+                        {
+                            //DataTable 첫 Row에있는 컬럼명을 담기
+                            headers[c] = MtlList.Columns[c].ColumnName;
+                            //컬럼 위치값을 가져오기
+                            columns[c] = ExcelColumnIndexToName(c);
+                        }
 
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
+                        for (int rowNo = 0; rowNo < MtlList.Rows.Count; rowNo++)
+                        {
 
-            xlWorkSheet4.Cells[1, 2] = "No";
-            xlWorkSheet4.Cells[1, 3] = "SID";
-            xlWorkSheet4.Cells[1, 4] = "릴수";
-            xlWorkSheet4.Cells[1, 5] = "TTL";
-            xlWorkSheet4.Cells[1, 6] = "인치";
-            xlWorkSheet4.Cells[1, 7] = "위치";
-            xlWorkSheet4.Columns.AutoFit();
+                            for (int colNo = 0; colNo < MtlList.Columns.Count; colNo++)
+                            {
+                                item[rowNo, colNo] = MtlList.Rows[rowNo][colNo].ToString();
+                            }
 
-            if (bGroupUse[2])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet4.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet4.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet4.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet4.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet4.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet4.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
+                            iRow++;
+                        }
+                    }
 
-                    nCellcount++;
+                    xlworksheets[xlSheetCnt + 1].get_Range("A1", columns[MtlList.Columns.Count - 1] + "1").Value2 = headers;
+                    xlworksheets[xlSheetCnt + 1].get_Range("A2", columns[MtlList.Columns.Count - 1] + (MtlList.Rows.Count + 1).ToString()).Value = item;
+                    xlworksheets[xlSheetCnt + 1].Cells.NumberFormat = @"@";
+                    xlworksheets[xlSheetCnt + 1].Columns.AutoFit();
+
+                    xlworksheets[0].get_Range("A1", columns[MtlList.Columns.Count - 1] + "1").Value2 = headers;
+                    xlworksheets[0].get_Range("A" + (nBeforExcelRowcount + 2).ToString(), columns[MtlList.Columns.Count - 1] + (MtlList.Rows.Count + nBeforExcelRowcount + 1).ToString()).Value = item;
+                    nBeforExcelRowcount += iRow;
+                    iRow = 0;
+                    xlSheetCnt += 1;
                 }
             }
 
-            xlWorkSheet4.Columns.AutoFit();
-            /////////////////////////////////////////
-            //////////////////////////////////////////////////////
-            xlWorkSheet5 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(5);
-            xlWorkSheet5.Name = "Group 4";
+            xlworksheets[0].Columns.AutoFit();
 
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR4");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet5.Cells[1, 2] = "No";
-            xlWorkSheet5.Cells[1, 3] = "SID";
-            xlWorkSheet5.Cells[1, 4] = "릴수";
-            xlWorkSheet5.Cells[1, 5] = "TTL";
-            xlWorkSheet5.Cells[1, 6] = "인치";
-            xlWorkSheet5.Cells[1, 7] = "위치";
-            xlWorkSheet5.Columns.AutoFit();
-
-            if (bGroupUse[3])
+            for (int i = 0; i < nBeforExcelRowcount ; i++)
             {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet5.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet5.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet5.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet5.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet5.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet5.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
+            
+                xlworksheets[0].Cells[i + 2, 1] = (i + 1).ToString();
             }
-            xlWorkSheet5.Columns.AutoFit();
-            //////////////////////////////////////////////////////
-            xlWorkSheet6 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(6);
-            xlWorkSheet6.Name = "Group 5";
 
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR5");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet6.Cells[1, 2] = "No";
-            xlWorkSheet6.Cells[1, 3] = "SID";
-            xlWorkSheet6.Cells[1, 4] = "릴수";
-            xlWorkSheet6.Cells[1, 5] = "TTL";
-            xlWorkSheet6.Cells[1, 6] = "인치";
-            xlWorkSheet6.Cells[1, 7] = "위치";
-            xlWorkSheet6.Columns.AutoFit();
-
-            if (bGroupUse[4])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet6.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet6.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet6.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet6.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet6.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet6.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet6.Columns.AutoFit();
-            //////////////////////////////////////////////////////
-            xlWorkSheet7 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(7);
-            xlWorkSheet7.Name = "Group 6";
-
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR6");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet7.Cells[1, 2] = "No";
-            xlWorkSheet7.Cells[1, 3] = "SID";
-            xlWorkSheet7.Cells[1, 4] = "릴수";
-            xlWorkSheet7.Cells[1, 5] = "TTL";
-            xlWorkSheet7.Cells[1, 6] = "인치";
-            xlWorkSheet7.Cells[1, 7] = "위치";
-            xlWorkSheet7.Columns.AutoFit();
-
-            if (bGroupUse[5])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet7.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet7.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet7.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet7.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet7.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet7.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet7.Columns.AutoFit();
-            /////////////////////////////////////////
-            //[211018_Sangik.choi_재고관리 7번그룹 오류 수정
-
-            xlWorkSheet8 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(8);
-            xlWorkSheet8.Name = "Group 7";
-
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR7");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet8.Cells[1, 2] = "No";
-            xlWorkSheet8.Cells[1, 3] = "SID";
-            xlWorkSheet8.Cells[1, 4] = "릴수";
-            xlWorkSheet8.Cells[1, 5] = "TTL";
-            xlWorkSheet8.Cells[1, 6] = "인치";
-            xlWorkSheet8.Cells[1, 7] = "위치";
-            xlWorkSheet8.Columns.AutoFit();
-
-            if (bGroupUse[6])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet8.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet8.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet8.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet8.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet8.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet8.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet7.Columns.AutoFit();
-            ///////////////////////////////////////////220823_ilyoung_타워그룹추가
-            //]211018_Sangik.choi_재고관리 7번그룹 오류 수정
-
-            xlWorkSheet9 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(9);//220823_ilyoung_타워그룹추가
-            xlWorkSheet9.Name = "Group 8";
-
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR8");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet9.Cells[1, 2] = "No";
-            xlWorkSheet9.Cells[1, 3] = "SID";
-            xlWorkSheet9.Cells[1, 4] = "릴수";
-            xlWorkSheet9.Cells[1, 5] = "TTL";
-            xlWorkSheet9.Cells[1, 6] = "인치";
-            xlWorkSheet9.Cells[1, 7] = "위치";
-            xlWorkSheet9.Columns.AutoFit();
-
-            if (bGroupUse[7])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet9.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet9.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet9.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet9.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet9.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet9.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet9.Columns.AutoFit();
-            ///////////////////////////////////////////220823_ilyoung_타워그룹추가
-            ///
-            xlWorkSheet10 = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(10);
-            xlWorkSheet10.Name = "Group 9";
-
-            Fnc_Init_datagrid(0);
-            Fnc_Process_GetMaterialinfo(0, "TWR9");
-
-            nGcount = dataGridView_info.RowCount;
-            nCellcount = 0;
-
-            xlWorkSheet10.Cells[1, 2] = "No";
-            xlWorkSheet10.Cells[1, 3] = "SID";
-            xlWorkSheet10.Cells[1, 4] = "릴수";
-            xlWorkSheet10.Cells[1, 5] = "TTL";
-            xlWorkSheet10.Cells[1, 6] = "인치";
-            xlWorkSheet10.Cells[1, 7] = "위치";
-            xlWorkSheet10.Columns.AutoFit();
-
-            if (bGroupUse[8])
-            {
-                for (int i = 0; i < nGcount; i++)
-                {
-                    xlWorkSheet10.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet10.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet10.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet10.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet10.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet10.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-
-                    nCellcount++;
-                }
-            }
-            xlWorkSheet10.Columns.AutoFit();
-            /////////////////////////////////////////
-
-
-
-
-
+            xlApp.Visible = true;
 
             xlWorkBook.SaveAs(strPath, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
-
-            Marshal.ReleaseComObject(xlWorkSheet);
-            Marshal.ReleaseComObject(xlWorkSheet2);
-            Marshal.ReleaseComObject(xlWorkSheet3);
-            Marshal.ReleaseComObject(xlWorkSheet4);
-            Marshal.ReleaseComObject(xlWorkSheet5);
-            Marshal.ReleaseComObject(xlWorkSheet6);
-            Marshal.ReleaseComObject(xlWorkSheet7);
-            Marshal.ReleaseComObject(xlWorkSheet8);//211018_Sangik.choi_재고관리 7번그룹 오류 수정
-            Marshal.ReleaseComObject(xlWorkSheet7); //220823_ilyoung_타워그룹추가
-            Marshal.ReleaseComObject(xlWorkSheet8); //220823_ilyoung_타워그룹추가
-
+            
             Marshal.ReleaseComObject(xlWorkBook);
             Marshal.ReleaseComObject(xlApp);
 
@@ -2524,7 +2365,7 @@ namespace Amkor_Material_Manager
                 //string strMsg = "파일(타워재고 SID 기준)  저장 완료! 경로:" + strPath;
                 //MessageBox.Show(strMsg);
 
-                System.Diagnostics.Process.Start(strPath);
+                //System.Diagnostics.Process.Start(strPath);
             }
         }
 
@@ -3272,6 +3113,9 @@ namespace Amkor_Material_Manager
             try
             {            
                 Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                xlApp.Visible = false;
+                xlApp.UserControl = false;
+                object TypMissing = Type.Missing;
 
                 if (xlApp == null)
                 {
@@ -3292,56 +3136,62 @@ namespace Amkor_Material_Manager
                 xlWorkSheet1.Name = "상세정보";
 
                 Fnc_Init_datagrid(1); //상세 정보
-                Fnc_Process_GetMaterialinfo_DetailAll();
+                //Fnc_Process_GetMaterialinfo_DetailAll();
 
-                int nGcount = dataGridView_info.RowCount;
-                nCellcount = 0;
+                DataTable MtlList = null;                
 
-                xlWorkSheet1.Cells[1, 2] = "No";
-                xlWorkSheet1.Cells[1, 3] = "SID";
-                xlWorkSheet1.Cells[1, 4] = "Batch#";
-                xlWorkSheet1.Cells[1, 5] = "UID";
-                xlWorkSheet1.Cells[1, 6] = "Qty";
-                xlWorkSheet1.Cells[1, 7] = "투입형태";
-                xlWorkSheet1.Cells[1, 8] = "위치";
-                xlWorkSheet1.Cells[1, 9] = "제조일";
-                xlWorkSheet1.Cells[1, 10] = "투입일";
-                xlWorkSheet1.Cells[1, 11] = "제조사";
-                xlWorkSheet1.Cells[1, 12] = "인치";
+                MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode);
 
-
-                for (int i = 0; i < nGcount; i++)
+                int iRow = 0;
+                string[] headers = new string[MtlList.Columns.Count];
+                string[] columns = new string[MtlList.Columns.Count];
+                string[,] item = new string[MtlList.Rows.Count, MtlList.Columns.Count];
+                
+                if (MtlList.Rows.Count > 0)
                 {
-                    string stwr = dataGridView_info.Rows[i].Cells[8].Value.ToString().Substring(0, 1);
+                    for (int c = 0; c < MtlList.Columns.Count; c++)
+                    {
+                        //DataTable 첫 Row에있는 컬럼명을 담기
+                        headers[c] = MtlList.Columns[c].ColumnName;
+                        //컬럼 위치값을 가져오기
+                        columns[c] = ExcelColumnIndexToName(c);
+                    }
 
-                    xlWorkSheet1.Cells[2 + nCellcount, 2] = nCellcount + 1;
-                    xlWorkSheet1.Cells[2 + nCellcount, 3] = dataGridView_info.Rows[i].Cells[1].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 4] = dataGridView_info.Rows[i].Cells[2].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 5] = dataGridView_info.Rows[i].Cells[3].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 6] = dataGridView_info.Rows[i].Cells[4].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 7] = dataGridView_info.Rows[i].Cells[5].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 8] = dataGridView_info.Rows[i].Cells[6].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 9] = dataGridView_info.Rows[i].Cells[7].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 10] = dataGridView_info.Rows[i].Cells[8].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 11] = dataGridView_info.Rows[i].Cells[9].Value.ToString();
-                    xlWorkSheet1.Cells[2 + nCellcount, 12] = dataGridView_info.Rows[i].Cells[10].Value.ToString();
 
-                    nCellcount++;
+                    for (int rowNo = 0; rowNo < MtlList.Rows.Count; rowNo++)
+                    {
+                        for (int colNo = 0; colNo < MtlList.Columns.Count; colNo++)
+                        {
+
+                            item[rowNo, colNo] = MtlList.Rows[rowNo][colNo].ToString();
+                        }
+
+                        iRow++;
+                    }
                 }
+
+                //해당위치에 컬럼명을 담기
+                xlWorkSheet1.get_Range("A1", columns[MtlList.Columns.Count - 1] + "1").Value2 = headers;
+                //해당위치부터 데이터정보를 담기
+                xlWorkSheet1.get_Range("A2", columns[MtlList.Columns.Count - 1] + (MtlList.Rows.Count + 1).ToString()).Value = item;
+                xlWorkSheet1.Cells.NumberFormat = @"@";
+                xlWorkSheet1.Columns.AutoFit();
+                xlWorkBook.SaveAs(strPath, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, misValue, misValue, misValue);
+                //xlWorkSheet1.SaveAs(strPath, Excel.XlFileFormat.xlWorkbookNormal, null, null, false, false,
+                //Excel.XlSaveAsAccessMode.xlShared, false, false, null, null, null);
+
+                xlApp.Visible = true;
+
+                releaseObject(xlApp);
+                releaseObject(xlWorkSheet1);
+                releaseObject(xlWorkBook);
 
                 xlWorkSheet1.Columns.AutoFit();
 
                 /////////////////////////////////////////
                 ///
 
-                xlWorkBook.SaveAs(strPath, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, misValue, misValue, misValue);
-                xlWorkBook.Close(true, misValue, misValue);
-                xlApp.Quit();
-
-                Marshal.ReleaseComObject(xlWorkSheet1);
-                Marshal.ReleaseComObject(xlWorkBook);
-                Marshal.ReleaseComObject(xlApp);
-
+               
                 //IsDateGathering = false;
 
                 if (nType == 0)
@@ -3358,8 +3208,39 @@ namespace Amkor_Material_Manager
             }
         }
 
+        private string ExcelColumnIndexToName(int Index)
+        {
+            string range = "";
+            if (Index < 0) return range;
+            for (int i = 1; Index + i > 0; i = 0)
+            {
+                range = ((char)(65 + Index % 26)).ToString() + range;
+                Index /= 26;
+            }
+            if (range.Length > 1) range = ((char)((int)range[0] - 1)).ToString() + range.Substring(1);
+            return range;
+        }
+
+        private static void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception e)
+            {
+                obj = null;
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
         private void comboBox_group_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FindTime = isClick == true ? DateTime.Now : new DateTime();
             int nType = comboBox_type.SelectedIndex; //0: SID, 1:Detail info
             int nGroup = comboBox_group.SelectedIndex + 1;
 
@@ -3383,8 +3264,9 @@ namespace Amkor_Material_Manager
         private void comboBox_type_SelectedIndexChanged(object sender, EventArgs e)
         {
             int nType = comboBox_type.SelectedIndex;
-
+            FindTime = isClick == true ? DateTime.Now : new DateTime();
             Fnc_Init_datagrid(nType);
+            
 
             if (AMM_Main.nSelectedWin == 2)
             {
@@ -3755,9 +3637,38 @@ namespace Amkor_Material_Manager
             }
         }
 
+        int TimerCnt = 0;
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Fnc_Update();
+            if (TimerCnt >= 180)
+            {
+                TimerCnt = 0;
+                Fnc_Update();
+
+                if ((DateTime.Now - FindTime).TotalMinutes >= Properties.Settings.Default.DefaultSaftyTime)
+                {
+                    l_WaitTime.Text = "00:00";
+                    Fnc_Init_datagrid_capa();
+                }
+            }
+            else
+            {
+                int TotSec = int.Parse(((Properties.Settings.Default.DefaultSaftyTime * 60) - (int)(DateTime.Now - FindTime).TotalSeconds).ToString());
+
+                if (TotSec >= 0)
+                {
+                    l_WaitTime.Text = string.Format("{0}:{1}", (TotSec / 60).ToString("D2"), (TotSec % 60).ToString("D2"));
+                }
+                else
+                {
+
+                }
+
+                TimerCnt++;
+            }
+
+                
         }
 
 
@@ -3765,10 +3676,7 @@ namespace Amkor_Material_Manager
         public void Fnc_Update()
         {
             if (bUpdate_Timer)
-                Fnc_Process_CalMaterialInfo();
-            Fnc_Init_datagrid_capa();
-
-
+                Fnc_Process_CalMaterialInfo();           
         }
 
 
@@ -5653,6 +5561,8 @@ namespace Amkor_Material_Manager
             dgv_tower.DoubleBuffered(true);
             dgv_fail.DoubleBuffered(true);
 
+            dataGridView_info.DoubleBuffered(true);
+
             
         }
 
@@ -6160,6 +6070,23 @@ namespace Amkor_Material_Manager
         private void EDTSort_ValueChanged(object sender, EventArgs e)
         {
             GetTotalSEQ();
+        }
+
+        bool isClick = false; 
+
+        private void comboBox_type_MouseClick(object sender, MouseEventArgs e)
+        {
+            isClick = true;
+        }
+
+        private void comboBox_type_MouseDown(object sender, MouseEventArgs e)
+        {
+            isClick = true;
+        }
+
+        private void comboBox_group_MouseDown(object sender, MouseEventArgs e)
+        {
+            isClick = true;
         }
 
 

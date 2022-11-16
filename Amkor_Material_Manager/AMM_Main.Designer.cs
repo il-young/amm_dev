@@ -44,6 +44,7 @@
             this.button_request = new System.Windows.Forms.Button();
             this.button_setting = new System.Windows.Forms.Button();
             this.label_state = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -219,11 +220,22 @@
             this.label_state.TabIndex = 9;
             this.label_state.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(14, 426);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AMM_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_state);
             this.Controls.Add(this.button_setting);
             this.Controls.Add(this.button_request);
@@ -267,6 +279,7 @@
         private System.Windows.Forms.Button button_request;
         private System.Windows.Forms.Button button_setting;
         private System.Windows.Forms.Label label_state;
+        private System.Windows.Forms.Button button1;
     }
 }
 

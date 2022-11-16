@@ -353,6 +353,12 @@ namespace Amkor_Material_Manager
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //string res = AMM.GetWebServiceData("http://10.131.3.43:8080/api/reel/amkor-batch/k4/json?REEL_ID=RC18190E2251CZ0&SID=101416634&VENDOR_LOT=WG250600M").Result;
+            //AMM.SetAmkorBatch(res);
+        }
+
         public void Fnc_Show_HistoryViewer()
         {
             Frm_Order.Fnc_MtlListCheck();
