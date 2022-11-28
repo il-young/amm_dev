@@ -26,7 +26,7 @@ namespace Amkor_Material_Manager
         string strSelLotid = "";
         string strSelUid = "";
         string strKeepingcount = "";
-        string strPickingID = "";
+        public string strPickingID = "";
         string strDefaultPickingID = "";
         int nTabIndex = 0;
         int nReadyMTLcount = 0;

@@ -2349,7 +2349,7 @@ namespace Amkor_Material_Manager
                 xlworksheets[0].Cells[i + 2, 1] = (i + 1).ToString();
             }
 
-            xlApp.Visible = true;
+            //SIDxlApp.Visible = true;
 
             xlWorkBook.SaveAs(strPath, Excel.XlFileFormat.xlOpenXMLWorkbook, misValue, misValue, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
@@ -2365,7 +2365,7 @@ namespace Amkor_Material_Manager
                 //string strMsg = "파일(타워재고 SID 기준)  저장 완료! 경로:" + strPath;
                 //MessageBox.Show(strMsg);
 
-                //System.Diagnostics.Process.Start(strPath);
+                System.Diagnostics.Process.Start(strPath);
             }
         }
 
@@ -4714,6 +4714,87 @@ namespace Amkor_Material_Manager
         //]210819_Sangik.choi_로그함수추가
 
 
+        private void Fnc_Picklist_Send2(string strlincode, string strequip, string strPickID)
+        {
+            if (strPickID == "")
+            {
+                MessageBox.Show("배출 ID 정보가 없습니다.");
+                return;
+            }
+            ///Picklist 생성
+            DataTable dt = AMM_Main.AMM.GetPickingReadyinfo_ID(strPickID);
+
+            int nCount = dt.Rows.Count;
+
+            if (nCount == 0)
+            {
+                MessageBox.Show("리스트 생성 목록이 없습니다.");
+                return;
+            }
+
+            StorageData data = new StorageData();
+
+            string strJudge = "";
+
+            for (int i = 0; i < nCount; i++)
+            {
+                data.Linecode = dt.Rows[i]["LINE_CODE"].ToString(); data.Linecode = data.Linecode.Trim();
+                data.Equipid = dt.Rows[i]["EQUIP_ID"].ToString(); data.Equipid = data.Equipid.Trim();
+                data.UID = dt.Rows[i]["UID"].ToString(); data.UID = data.UID.Trim();
+                data.Requestor = dt.Rows[i]["REQUESTOR"].ToString(); data.Requestor = data.Requestor.Trim();
+                data.Tower_no = dt.Rows[i]["TOWER_NO"].ToString(); data.Tower_no = data.Tower_no.Trim();
+                data.SID = dt.Rows[i]["SID"].ToString(); data.SID = data.SID.Trim();
+                data.LOTID = dt.Rows[i]["LOTID"].ToString(); data.LOTID = data.LOTID.Trim();
+                data.Quantity = dt.Rows[i]["QTY"].ToString(); data.Quantity = data.Quantity.Trim();
+                data.Manufacturer = dt.Rows[i]["MANUFACTURER"].ToString(); data.Manufacturer = data.Manufacturer.Trim();
+                data.Production_date = dt.Rows[i]["PRODUCTION_DATE"].ToString(); data.Production_date = data.Production_date.Trim();
+                data.Inch = dt.Rows[i]["INCH_INFO"].ToString(); data.Inch = data.Inch.Trim();
+                data.Input_type = dt.Rows[i]["INPUT_TYPE"].ToString(); data.Input_type = data.Input_type.Trim();
+
+                strJudge = AMM_Main.AMM.SetPicking_Listinfo(strlincode, strequip, strPickID, data.UID, textBox_badge.Text, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "AMM");
+
+                if (strJudge == "NG")
+                {
+                    MessageBox.Show("DB 연결을 할 수 없습니다.\n네트워크 연결 상태를 확인 하십시오.");
+                    AMM_Main.strAMM_Connect = "NG";
+                    return;
+                }
+                else if (strJudge == "DUPLICATE")
+                {
+                    string str = string.Format("자재 리스트가 중복 되었습니다.\n SID = '{0}', UID = '{1}'", data.SID, data.UID);
+                    MessageBox.Show(str);
+                    return;
+                }
+            }
+
+            strJudge = AMM_Main.AMM.Delete_PickReadyinfo(strlincode, strPickID);
+
+            if (strJudge == "NG")
+            {
+                string str = string.Format("DB 연결을 할 수 없습니다.\n네트워크 연결 상태를 확인 하십시오.");
+                MessageBox.Show(str);
+                AMM_Main.strAMM_Connect = "NG";
+
+                return;
+            }
+            ///Pick ID Info
+            ///
+            strJudge = AMM_Main.AMM.SetPickingID(strlincode, strequip, strPickID, label_count.Text, AMM_Main.strRequestor_id);
+
+            if (strJudge == "NG")
+            {
+                string str = string.Format("DB 연결을 할 수 없습니다.\n네트워크 연결 상태를 확인 하십시오.");
+                MessageBox.Show(str);
+                AMM_Main.strAMM_Connect = "NG";
+                return;
+            }
+
+            string strLog = string.Format("PICK LIST 생성 완료 - 사번:{0}, PICKID:{1}, 수량:{2}", textBox_badge.Text, strPickID, nCount.ToString());
+
+
+        }
+
+
         //[210817_Sangik.choi_장기보관관리기능추가(이종명수석님)
 
         private void Fnc_Picklist_Send(string strlincode, string strequip, string strPickID)
@@ -4725,7 +4806,7 @@ namespace Amkor_Material_Manager
             }
             ///Picklist 생성
             DataTable dt = AMM_Main.AMM.GetPickingReadyinfo_ID(strPickID);
-
+            
             int nCount = dt.Rows.Count;
 
             if (nCount == 0)
@@ -6089,7 +6170,63 @@ namespace Amkor_Material_Manager
             isClick = true;
         }
 
+        private void btn_MakeOutList_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string temp = "";
+                List<DataGridViewRow> ASMRows = new List<DataGridViewRow>();
+                //int nGroup = int.Parse(comboBox_sel.Text.Substring(1, 1));
+                string strGroup = comboBox_sel.Text.Substring(1, 1);
+                string ID = "";
 
+                if (DialogResult.OK == InputBox("사번입력", "사번을 입력 하세요 ", ref ID))
+                {
+
+                    if (dataGridView_missmatch.RowCount > 0)
+                    {
+                        Fnc_Get_PickID("TWR" + strGroup);
+
+                        for (int i = 0; i < dataGridView_missmatch.RowCount; i++)
+                        {
+                            //if (dataGridView_missmatch.Rows[i].DefaultCellStyle.ForeColor == Color.Blue)
+                            {
+                                //string[] MissReelInfo = dataGridView_missmatch.Rows[i].Cells[0].Value.ToString().Split(';');
+                                //ASMRows.Add(dataGridView_missmatch.Rows[i]);
+                                temp = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, "TWR" + strGroup, label_pickid_LT.Text, dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), ID, dataGridView_missmatch.Rows[i].Cells[6].Value.ToString()
+                                    , dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
+                                    dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(), "Sync");
+                                AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[i].Cells[3].Value.ToString());
+                            }
+                        }
+
+                        if (label_pickid_LT.Text != "")
+                        {
+                            Fnc_Picklist_Comfirm();
+                            //Fnc_Save_TowerUseInfo();
+
+                            label_count.Text = dataGridView_missmatch.RowCount.ToString();
+                            textBox_badge.Text = ID;
+
+                            Fnc_Picklist_Send(AMM_Main.strDefault_linecode, "TWR" + strGroup, label_pickid_LT.Text);
+                        }
+                    }
+                    else
+                    {
+                        Form_Progress frm = new Form_Progress();
+                        frm.Form_Show("목록이 비어 있습니다.", 0);
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+        }
 
         //]210810_Sangik.choi_장기보관관리기능추가(이종명수석님)
 
@@ -6179,6 +6316,47 @@ namespace Amkor_Material_Manager
             return obj1.SID.CompareTo(obj2.SID);
         }
 
+
+        public static DialogResult InputBox(string title, string content, ref string value)
+        {
+            Form form = new Form();
+            PictureBox picture = new PictureBox();
+            Label label = new Label();
+            TextBox textBox = new TextBox();
+            Button buttonOk = new Button();
+            Button buttonCancel = new Button();
+
+            form.ClientSize = new Size(300, 100);
+            form.Controls.AddRange(new Control[] { label, picture, textBox, buttonOk, buttonCancel });
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MaximizeBox = false;
+            form.MinimizeBox = false;
+            form.AcceptButton = buttonOk;
+            form.CancelButton = buttonCancel;
+
+            form.Text = title;
+            //picture.Image = Properties.Resources.Clogo;
+            picture.SizeMode = PictureBoxSizeMode.StretchImage;
+            label.Text = content;
+            textBox.Text = value;
+            buttonOk.Text = "확인";
+            buttonCancel.Text = "취소";
+
+            buttonOk.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            picture.SetBounds(10, 10, 50, 50);
+            label.SetBounds(65, 17, 100, 20);
+            textBox.SetBounds(65, 40, 220, 20);
+            buttonOk.SetBounds(135, 70, 70, 20);
+            buttonCancel.SetBounds(215, 70, 70, 20);
+
+            DialogResult dialogResult = form.ShowDialog();
+
+            value = textBox.Text;
+            return dialogResult;
+        }
     }
 }
 

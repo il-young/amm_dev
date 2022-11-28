@@ -136,6 +136,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView_longterm = new System.Windows.Forms.DataGridView();
             this.tabPage_match = new System.Windows.Forms.TabPage();
+            this.btn_MakeOutList = new System.Windows.Forms.Button();
             this.btn_schedule = new System.Windows.Forms.Button();
             this.button_sync = new System.Windows.Forms.Button();
             this.button_missmatch = new System.Windows.Forms.Button();
@@ -703,6 +704,7 @@
             // 
             // tabPage_match
             // 
+            this.tabPage_match.Controls.Add(this.btn_MakeOutList);
             this.tabPage_match.Controls.Add(this.btn_schedule);
             this.tabPage_match.Controls.Add(this.button_sync);
             this.tabPage_match.Controls.Add(this.button_missmatch);
@@ -722,6 +724,18 @@
             this.tabPage_match.TabIndex = 2;
             this.tabPage_match.Text = "ASM 동기화";
             this.tabPage_match.UseVisualStyleBackColor = true;
+            // 
+            // btn_MakeOutList
+            // 
+            this.btn_MakeOutList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btn_MakeOutList.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_MakeOutList.Location = new System.Drawing.Point(670, 590);
+            this.btn_MakeOutList.Name = "btn_MakeOutList";
+            this.btn_MakeOutList.Size = new System.Drawing.Size(325, 33);
+            this.btn_MakeOutList.TabIndex = 25;
+            this.btn_MakeOutList.Text = "ASM 배출 명령 생성";
+            this.btn_MakeOutList.UseVisualStyleBackColor = false;
+            this.btn_MakeOutList.Click += new System.EventHandler(this.btn_MakeOutList_Click);
             // 
             // btn_schedule
             // 
@@ -860,7 +874,7 @@
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView_missmatch.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView_missmatch.RowTemplate.Height = 23;
-            this.dataGridView_missmatch.Size = new System.Drawing.Size(325, 539);
+            this.dataGridView_missmatch.Size = new System.Drawing.Size(325, 499);
             this.dataGridView_missmatch.TabIndex = 14;
             // 
             // dataGridView_amm
@@ -3072,5 +3086,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label l_WaitTime;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btn_MakeOutList;
     }
 }
