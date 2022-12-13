@@ -6177,15 +6177,63 @@ namespace Amkor_Material_Manager
                 string temp = "";
                 List<DataGridViewRow> ASMRows = new List<DataGridViewRow>();
                 //int nGroup = int.Parse(comboBox_sel.Text.Substring(1, 1));
-                string strGroup = comboBox_sel.Text.Substring(1, 1);
+                string strGroup = "TWR" + comboBox_sel.Text.Substring(1, 1);
                 string ID = "";
 
-                if (DialogResult.OK == InputBox("사번입력", "사번을 입력 하세요 ", ref ID))
+                bool isUse = false;
+                                
+                DataTable dt_Status = AMM_Main.AMM.GetStatus(AMM_Main.strDefault_linecode, strGroup);                
+                
+                string strStatus = dt_Status.Rows[0]["TYPE"].ToString(); strStatus = strStatus.Trim();
+
+                
+                if (strStatus != "READY")
                 {
+                    isUse = true;
+                }
+
+                if (isUse == true)
+                {
+                    string str = string.Format("Ready 상태일 때만 동기화 가능 합니다. \n잠시 후 다시 시도 하세요.");
+
+                    Form_Progress fp = new Form_Progress();
+                    fp.Form_Show(str, 1000);
+
+                    while (fp.bState)
+                    {
+                        Application.DoEvents();
+                        Thread.Sleep(1);
+                    }
+                    return;
+                }
+
+
+
+
+                if (DialogResult.OK == InputBox("사번입력", "사번 입력 ", ref ID))
+                {   
+                    string strName = AMM_Main.AMM.User_check(ID);
+                    strName = strName.Trim();
+
+                    if (strName == "NO_INFO")
+                    {
+                        string str = string.Format("등록 되지 않은 사용자 입니다.\n등록 후 사용 하세요.", 1000);
+
+                        Form_Progress fp = new Form_Progress();
+                        fp.Form_Show(str, 1000);
+
+                        while (fp.bState)
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(1);
+                        }
+                        return;
+                    }
+
 
                     if (dataGridView_missmatch.RowCount > 0)
                     {
-                        Fnc_Get_PickID("TWR" + strGroup);
+                        Fnc_Get_PickID(strGroup);
 
                         for (int i = 0; i < dataGridView_missmatch.RowCount; i++)
                         {
@@ -6193,7 +6241,7 @@ namespace Amkor_Material_Manager
                             {
                                 //string[] MissReelInfo = dataGridView_missmatch.Rows[i].Cells[0].Value.ToString().Split(';');
                                 //ASMRows.Add(dataGridView_missmatch.Rows[i]);
-                                temp = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, "TWR" + strGroup, label_pickid_LT.Text, dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), ID, dataGridView_missmatch.Rows[i].Cells[6].Value.ToString()
+                                temp = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text, dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), ID, dataGridView_missmatch.Rows[i].Cells[6].Value.ToString()
                                     , dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
                                     dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(), "Sync");
                                 AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[i].Cells[3].Value.ToString());
@@ -6208,8 +6256,11 @@ namespace Amkor_Material_Manager
                             label_count.Text = dataGridView_missmatch.RowCount.ToString();
                             textBox_badge.Text = ID;
 
-                            Fnc_Picklist_Send(AMM_Main.strDefault_linecode, "TWR" + strGroup, label_pickid_LT.Text);
+                            Fnc_Picklist_Send(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text);
                         }
+
+                        Form_Progress frm = new Form_Progress();
+                        frm.Form_Show("배출 명령이 생성 되었습니다.", 0);
                     }
                     else
                     {

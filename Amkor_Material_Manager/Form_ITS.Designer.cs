@@ -137,8 +137,6 @@
             this.dataGridView_longterm = new System.Windows.Forms.DataGridView();
             this.tabPage_match = new System.Windows.Forms.TabPage();
             this.btn_MakeOutList = new System.Windows.Forms.Button();
-            this.btn_schedule = new System.Windows.Forms.Button();
-            this.button_sync = new System.Windows.Forms.Button();
             this.button_missmatch = new System.Windows.Forms.Button();
             this.button_dbload = new System.Windows.Forms.Button();
             this.comboBox_sel = new System.Windows.Forms.ComboBox();
@@ -705,8 +703,6 @@
             // tabPage_match
             // 
             this.tabPage_match.Controls.Add(this.btn_MakeOutList);
-            this.tabPage_match.Controls.Add(this.btn_schedule);
-            this.tabPage_match.Controls.Add(this.button_sync);
             this.tabPage_match.Controls.Add(this.button_missmatch);
             this.tabPage_match.Controls.Add(this.button_dbload);
             this.tabPage_match.Controls.Add(this.comboBox_sel);
@@ -736,28 +732,6 @@
             this.btn_MakeOutList.Text = "ASM 배출 명령 생성";
             this.btn_MakeOutList.UseVisualStyleBackColor = false;
             this.btn_MakeOutList.Click += new System.EventHandler(this.btn_MakeOutList_Click);
-            // 
-            // btn_schedule
-            // 
-            this.btn_schedule.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_schedule.BackgroundImage")));
-            this.btn_schedule.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_schedule.Location = new System.Drawing.Point(951, 7);
-            this.btn_schedule.Name = "btn_schedule";
-            this.btn_schedule.Size = new System.Drawing.Size(44, 34);
-            this.btn_schedule.TabIndex = 24;
-            this.btn_schedule.UseVisualStyleBackColor = true;
-            this.btn_schedule.Click += new System.EventHandler(this.btn_schedule_Click);
-            // 
-            // button_sync
-            // 
-            this.button_sync.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_sync.Location = new System.Drawing.Point(731, 7);
-            this.button_sync.Name = "button_sync";
-            this.button_sync.Size = new System.Drawing.Size(214, 34);
-            this.button_sync.TabIndex = 21;
-            this.button_sync.Text = "동기화";
-            this.button_sync.UseVisualStyleBackColor = true;
-            this.button_sync.Click += new System.EventHandler(this.button_sync_Click);
             // 
             // button_missmatch
             // 
@@ -789,7 +763,13 @@
             this.comboBox_sel.Items.AddRange(new object[] {
             "G1",
             "G2",
-            "G3"});
+            "G3",
+            "G4",
+            "G5",
+            "G6",
+            "G7",
+            "G8",
+            "G9"});
             this.comboBox_sel.Location = new System.Drawing.Point(10, 7);
             this.comboBox_sel.Name = "comboBox_sel";
             this.comboBox_sel.Size = new System.Drawing.Size(183, 34);
@@ -2966,7 +2946,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DataGridView dataGridView_longterm;
         private System.Windows.Forms.TabPage tabPage_match;
-        private System.Windows.Forms.Button button_sync;
         private System.Windows.Forms.Button button_missmatch;
         private System.Windows.Forms.Button button_dbload;
         private System.Windows.Forms.ComboBox comboBox_sel;
@@ -3050,7 +3029,6 @@
         private System.Windows.Forms.Label label_group7;
         private System.Windows.Forms.DataGridView dgvCapaAll;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button btn_schedule;
         private System.Windows.Forms.TabPage tabPage_Sorter;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox pictureBox4;

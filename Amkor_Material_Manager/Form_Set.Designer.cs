@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button_request = new System.Windows.Forms.Button();
             this.textBox_name = new System.Windows.Forms.TextBox();
@@ -47,6 +47,8 @@
             this.toolStripMenuItem_Refuse = new System.Windows.Forms.ToolStripMenuItem();
             this.button_accept = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
             this.comboBox_pad = new System.Windows.Forms.ComboBox();
             this.comboBox_match = new System.Windows.Forms.ComboBox();
             this.comboBox_smsearch = new System.Windows.Forms.ComboBox();
@@ -68,8 +70,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button_twrSave = new System.Windows.Forms.Button();
             this.button_Save = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_List)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -158,46 +164,46 @@
             this.dataGridView_List.AllowUserToDeleteRows = false;
             this.dataGridView_List.AllowUserToResizeColumns = false;
             this.dataGridView_List.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-            this.dataGridView_List.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.AliceBlue;
+            this.dataGridView_List.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView_List.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView_List.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView_List.BackgroundColor = System.Drawing.Color.AliceBlue;
             this.dataGridView_List.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_List.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_List.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_List.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_List.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_List.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView_List.Location = new System.Drawing.Point(10, 54);
             this.dataGridView_List.MultiSelect = false;
             this.dataGridView_List.Name = "dataGridView_List";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_List.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_List.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView_List.RowHeadersVisible = false;
             this.dataGridView_List.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView_List.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView_List.RowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView_List.RowTemplate.Height = 23;
             this.dataGridView_List.Size = new System.Drawing.Size(370, 457);
             this.dataGridView_List.TabIndex = 5;
@@ -238,6 +244,11 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.label17);
+            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.label16);
+            this.panel2.Controls.Add(this.listBox1);
             this.panel2.Controls.Add(this.numericUpDown1);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.comboBox_pad);
@@ -257,6 +268,7 @@
             this.panel2.Controls.Add(this.textBox_group);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.textBox_line);
+            this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.dataGridView_List);
@@ -268,6 +280,31 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1069, 639);
             this.panel2.TabIndex = 7;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.numericUpDown1.Location = new System.Drawing.Point(227, 600);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 32);
+            this.numericUpDown1.TabIndex = 11;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label14.Location = new System.Drawing.Point(11, 602);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(210, 21);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "Refresh Block Time :";
             // 
             // comboBox_pad
             // 
@@ -312,18 +349,18 @@
             this.comboBox_twrUse.Items.AddRange(new object[] {
             "사용 ",
             "미사용"});
-            this.comboBox_twrUse.Location = new System.Drawing.Point(538, 474);
+            this.comboBox_twrUse.Location = new System.Drawing.Point(870, 102);
             this.comboBox_twrUse.Name = "comboBox_twrUse";
-            this.comboBox_twrUse.Size = new System.Drawing.Size(237, 37);
+            this.comboBox_twrUse.Size = new System.Drawing.Size(102, 37);
             this.comboBox_twrUse.TabIndex = 9;
             // 
             // comboBox_twrNo
             // 
             this.comboBox_twrNo.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_twrNo.FormattingEnabled = true;
-            this.comboBox_twrNo.Location = new System.Drawing.Point(538, 436);
+            this.comboBox_twrNo.Location = new System.Drawing.Point(870, 64);
             this.comboBox_twrNo.Name = "comboBox_twrNo";
-            this.comboBox_twrNo.Size = new System.Drawing.Size(237, 37);
+            this.comboBox_twrNo.Size = new System.Drawing.Size(102, 37);
             this.comboBox_twrNo.TabIndex = 9;
             this.comboBox_twrNo.SelectedIndexChanged += new System.EventHandler(this.comboBox_twrNo_SelectedIndexChanged);
             // 
@@ -398,9 +435,9 @@
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label11.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(405, 474);
+            this.label11.Location = new System.Drawing.Point(781, 102);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(132, 37);
+            this.label11.Size = new System.Drawing.Size(83, 37);
             this.label11.TabIndex = 8;
             this.label11.Text = "사용 여부";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -424,9 +461,9 @@
             this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label10.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(405, 436);
+            this.label10.Location = new System.Drawing.Point(781, 64);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(132, 37);
+            this.label10.Size = new System.Drawing.Size(83, 37);
             this.label10.TabIndex = 8;
             this.label10.Text = "타워 번호";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -460,9 +497,9 @@
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label8.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(405, 390);
+            this.label8.Location = new System.Drawing.Point(781, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(370, 45);
+            this.label8.Size = new System.Drawing.Size(191, 45);
             this.label8.TabIndex = 8;
             this.label8.Text = "타워 사용 설정";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -505,9 +542,9 @@
             // 
             // button_twrSave
             // 
-            this.button_twrSave.Location = new System.Drawing.Point(594, 517);
+            this.button_twrSave.Location = new System.Drawing.Point(781, 145);
             this.button_twrSave.Name = "button_twrSave";
-            this.button_twrSave.Size = new System.Drawing.Size(181, 70);
+            this.button_twrSave.Size = new System.Drawing.Size(191, 70);
             this.button_twrSave.TabIndex = 1;
             this.button_twrSave.Text = "저장";
             this.button_twrSave.UseVisualStyleBackColor = true;
@@ -523,30 +560,73 @@
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
-            // label14
+            // label15
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label14.Location = new System.Drawing.Point(11, 602);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(210, 21);
-            this.label14.TabIndex = 10;
-            this.label14.Text = "Refresh Block Time :";
+            this.label15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(78)))), ((int)(((byte)(88)))));
+            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label15.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(405, 369);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(370, 45);
+            this.label15.TabIndex = 8;
+            this.label15.Text = "동기화 설정";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // numericUpDown1
+            // listBox1
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.numericUpDown1.Location = new System.Drawing.Point(227, 600);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(57, 32);
-            this.numericUpDown1.TabIndex = 11;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(405, 417);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(370, 112);
+            this.listBox1.TabIndex = 12;
+            // 
+            // label16
+            // 
+            this.label16.BackColor = System.Drawing.Color.Maroon;
+            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label16.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(405, 532);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(61, 37);
+            this.label16.TabIndex = 13;
+            this.label16.Text = "Tower";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "사용 안함 (FALSE)",
+            "사용 (TRUE)"});
+            this.comboBox1.Location = new System.Drawing.Point(472, 532);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(92, 37);
+            this.comboBox1.TabIndex = 14;
+            // 
+            // label17
+            // 
+            this.label17.BackColor = System.Drawing.Color.Maroon;
+            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label17.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.White;
+            this.label17.Location = new System.Drawing.Point(570, 533);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(61, 37);
+            this.label17.TabIndex = 15;
+            this.label17.Text = "Dir";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("굴림", 18F, System.Drawing.FontStyle.Bold);
+            this.textBox1.Location = new System.Drawing.Point(637, 535);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(138, 35);
+            this.textBox1.TabIndex = 16;
             // 
             // Form_Set
             // 
@@ -614,5 +694,11 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

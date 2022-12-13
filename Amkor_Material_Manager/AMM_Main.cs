@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using AMM;
+using System.Data.SqlClient;
 
 namespace Amkor_Material_Manager
 {
@@ -355,8 +356,26 @@ namespace Amkor_Material_Manager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //string res = AMM.GetWebServiceData("http://10.131.3.43:8080/api/reel/amkor-batch/k4/json?REEL_ID=RC18190E2251CZ0&SID=101416634&VENDOR_LOT=WG250600M").Result;
-            //AMM.SetAmkorBatch(res);
+            try
+            {
+                using (SqlConnection c = new SqlConnection(@"Provider = Microsoft.Jet.OLEDB.4.0; Data Source = 10.135.230.103; Jet OLEDB:Database Password = "))
+                {
+                    c.Open();
+
+                    //using (SqlCommand cmd = new SqlCommand(queryString, c))
+                    //{
+                    //    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    //    {
+                    //        adt.Fill(dt);
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
         }
 
         public void Fnc_Show_HistoryViewer()
