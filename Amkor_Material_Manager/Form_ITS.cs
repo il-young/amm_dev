@@ -16,7 +16,7 @@ using System.Security.Cryptography;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Windows.Input;
-
+using System.Data.OleDb;
 
 namespace Amkor_Material_Manager
 {
@@ -3722,11 +3722,121 @@ namespace Amkor_Material_Manager
                 Fnc_Process_GetMaterials_Tower3();
                 Fnc_Process_GetAMMinfo("TWR3");
             }
+            else
+            {
+                GetMycronicTower(n + 1);
+                Fnc_Process_GetAMMinfo("TWR" + (n + 1).ToString());
+            }
 
             dataGridView_missmatch.Columns.Clear();
             dataGridView_missmatch.Rows.Clear();
 
             nDbUpdate = 1;
+        }
+
+
+        private void GetMycronicTower(int Group)
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+            {
+                c.Open();
+
+                using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", Group), c))
+                {
+                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    {
+                        adt.Fill(dt);
+                    }
+                }
+            }
+
+            string DB_path = dt.Rows[0][0].ToString();
+            DataConn conn1 = new DataConn();
+            DataSet ds;
+
+            string sql = @"SELECT [Batch], [Carrier], [Stock], [DepotDate], [DepotTime], [CreateDate], [Manufactur], [Depot] from [Carrier] order by [Carrier]";
+
+
+            //string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
+
+            ds = conn1.GetDataset(sql, DB_path);
+            SortMDB(ds);
+            //dataGridView_asm.DataSource = ds.Tables[0];
+        }
+
+        private void SortMDB(DataSet ds)
+        {
+
+            dataGridView_asm.Columns.Clear();
+            dataGridView_asm.Rows.Clear();
+
+            dataGridView_asm.Columns.Add("NO", "NO");
+            dataGridView_asm.Columns.Add("SID", "SID");
+            dataGridView_asm.Columns.Add("Batch#", "Batch#");
+            dataGridView_asm.Columns.Add("UID", "UID");
+            dataGridView_asm.Columns.Add("Qty", "Qty");
+            dataGridView_asm.Columns.Add("투입일", "투입일");
+            dataGridView_asm.Columns.Add("제조일", "제조일");
+            dataGridView_asm.Columns.Add("제조사", "제조사");
+            dataGridView_asm.Columns.Add("위치", "위치");
+
+            try
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    dataGridView_asm.Rows.Add(
+                        (i + 1).ToString(),
+                        "",
+                        ds.Tables[0].Rows[i]["Batch"].ToString(),
+                        ds.Tables[0].Rows[i]["Carrier"].ToString(),
+                        ds.Tables[0].Rows[i]["Stock"].ToString(),
+                        ds.Tables[0].Rows[i]["DepotDate"].ToString() + " " + ds.Tables[0].Rows[i]["DepotTime"].ToString(),
+                        ds.Tables[0].Rows[i]["CreateDate"].ToString(),
+                        ds.Tables[0].Rows[i]["Manufactur"].ToString(),
+                        ds.Tables[0].Rows[i]["Depot"].ToString().Length < 10 ? ds.Tables[0].Rows[i]["Depot"].ToString() : ds.Tables[0].Rows[i]["Depot"].ToString().Substring(6, 5)
+                    );
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            //int idx = 1;
+            //foreach (var item in simmList1)
+            //{
+            //    dataGridView_asm.Rows.Add(new object[9] { idx, item.SID, item.LotID, item.UID, item.Quantity, item.Date_Input, item.Productiondate, item.Manufacturer, tid });
+            //    idx++;
+            //}
+            //tid = "T0302";
+            //var simmList2 = GetSIMMMaterialList(strASM_TowerLocation3, tid);
+
+            //foreach (var item in simmList2)
+            //{
+            //    dataGridView_asm.Rows.Add(new object[9] { idx, item.SID, item.LotID, item.UID, item.Quantity, item.Date_Input, item.Productiondate, item.Manufacturer, tid });
+            //    idx++;
+            //}
+
+            //tid = "T0303";
+            //var simmList3 = GetSIMMMaterialList(strASM_TowerLocation3, tid);
+
+            //foreach (var item in simmList3)
+            //{
+            //    dataGridView_asm.Rows.Add(new object[9] { idx, item.SID, item.LotID, item.UID, item.Quantity, item.Date_Input, item.Productiondate, item.Manufacturer, tid });
+            //    idx++;
+            //}
+
+            //tid = "T0304";
+            //var simmList4 = GetSIMMMaterialList(strASM_TowerLocation3, tid);
+
+            //foreach (var item in simmList4)
+            //{
+            //    dataGridView_asm.Rows.Add(new object[9] { idx, item.SID, item.LotID, item.UID, item.Quantity, item.Date_Input, item.Productiondate, item.Manufacturer, tid });
+            //    idx++;
+            //}
         }
 
         private void button_missmatch_Click(object sender, EventArgs e)
@@ -6520,4 +6630,18 @@ public static class ExtensionMethods
 
     }
 
+}
+class DataConn
+{
+    public DataSet GetDataset(string sql, string DB_path)
+    {
+        string connStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_path + ";Jet OLEDB:Database Password=";
+
+
+        OleDbConnection conn = new System.Data.OleDb.OleDbConnection(connStr);
+        DataSet ds = new DataSet();
+        OleDbDataAdapter adp = new OleDbDataAdapter(sql, conn);
+        adp.Fill(ds);
+        return ds;
+    }
 }
