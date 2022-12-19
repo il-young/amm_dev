@@ -3739,31 +3739,43 @@ namespace Amkor_Material_Manager
         {
             DataTable dt = new DataTable();
 
-            using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+            try
             {
-                c.Open();
-
-                using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", Group), c))
+                using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
                 {
-                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    c.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", Group), c))
                     {
-                        adt.Fill(dt);
+                        using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                        {
+                            adt.Fill(dt);
+                        }
                     }
                 }
+
+                string DB_path = dt.Rows[0][0].ToString();
+                DataConn conn1 = new DataConn();
+                DataSet ds;
+
+                string sql = @"SELECT [Batch], [Carrier], [Stock], [DepotDate], [DepotTime], [CreateDate], [Manufactur], [Depot] from [Carrier] order by [Carrier]";
+
+
+                //string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
+
+                ds = conn1.GetDataset(sql, DB_path);
+                SortMDB(ds);
+                //dataGridView_asm.DataSource = ds.Tables[0];
             }
-
-            string DB_path = dt.Rows[0][0].ToString();
-            DataConn conn1 = new DataConn();
-            DataSet ds;
-
-            string sql = @"SELECT [Batch], [Carrier], [Stock], [DepotDate], [DepotTime], [CreateDate], [Manufactur], [Depot] from [Carrier] order by [Carrier]";
-
-
-            //string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
-
-            ds = conn1.GetDataset(sql, DB_path);
-            SortMDB(ds);
-            //dataGridView_asm.DataSource = ds.Tables[0];
+            catch (Exception ex)
+            {
+                if(ex.Message == "디스크 또는 네트워크 오류입니다.")
+                {
+                    MessageBox.Show("Database에 접속 할 수 없습니다.\n네트워크를 점검해 주세요");
+                }
+                
+            }
+            
         }
 
         private void SortMDB(DataSet ds)
@@ -4500,7 +4512,7 @@ namespace Amkor_Material_Manager
             foreach (var item in missmatchList)
             {
                 dataGridView_missmatch.Rows.Add(new object[12] { idx++, item.SID, item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no,
-                    item.Production_date, item.Input_date, item.Manufacturer,item.Inch, "ASM" });
+                    item.Production_date, item.Input_date, item.Manufacturer,item.Inch, "TOWER" });
                 dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.BackColor = Color.White;
                 dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.ForeColor = Color.Orange;
             }
@@ -4512,15 +4524,28 @@ namespace Amkor_Material_Manager
         {
             List<StorageData_Compare> retList = new List<StorageData_Compare>();
             List<string> compareList = new List<string>();
+            bool isCompare = false;
 
             foreach (var item in compare)
                 compareList.Add(item.UID);
 
             for (int i = 0; i < source.Count; i++)
             {
-                if (compareList.Contains(source[i].UID) == false)
+                isCompare = false;
+
+                for (int j = 0; j < compare.Count; j++)
+                {
+                    if ((source[i].UID == compare[j].UID) && source[i].Tower_no == compare[j].Tower_no)
+                    {
+                        isCompare = true;
+                        break;
+                    }
+                }
+
+                if (isCompare == false)
                     retList.Add(source[i]);
             }
+
 
             return retList;
         }
