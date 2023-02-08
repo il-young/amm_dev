@@ -464,5 +464,21 @@ namespace Amkor_Material_Manager
             else
                 comboBox_twrUse.SelectedIndex = 1;
         }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.DefaultSaftyTime = (int)numericUpDown1.Value;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Form_Set_Load(object sender, EventArgs e)
+        {
+            numericUpDown1.Value = Properties.Settings.Default.DefaultSaftyTime;
+        }
+
+        private void Form_Set_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
     }
 }

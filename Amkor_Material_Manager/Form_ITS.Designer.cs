@@ -65,6 +65,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -104,12 +110,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle78 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle79 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle80 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -136,8 +136,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView_longterm = new System.Windows.Forms.DataGridView();
             this.tabPage_match = new System.Windows.Forms.TabPage();
-            this.btn_schedule = new System.Windows.Forms.Button();
-            this.button_sync = new System.Windows.Forms.Button();
+            this.btn_MakeOutList = new System.Windows.Forms.Button();
             this.button_missmatch = new System.Windows.Forms.Button();
             this.button_dbload = new System.Windows.Forms.Button();
             this.comboBox_sel = new System.Windows.Forms.ComboBox();
@@ -148,6 +147,8 @@
             this.dataGridView_amm = new System.Windows.Forms.DataGridView();
             this.dataGridView_asm = new System.Windows.Forms.DataGridView();
             this.tabPage_inventory = new System.Windows.Forms.TabPage();
+            this.l_WaitTime = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox_find = new System.Windows.Forms.TextBox();
             this.textBox_mtlinput = new System.Windows.Forms.TextBox();
@@ -178,6 +179,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl_ITS = new System.Windows.Forms.TabControl();
             this.tabPage_capa = new System.Windows.Forms.TabPage();
+            this.dataGridView_group9 = new System.Windows.Forms.DataGridView();
+            this.label23 = new System.Windows.Forms.Label();
+            this.dataGridView_group8 = new System.Windows.Forms.DataGridView();
+            this.label22 = new System.Windows.Forms.Label();
             this.dgvCapaAll = new System.Windows.Forms.DataGridView();
             this.label17 = new System.Windows.Forms.Label();
             this.dataGridView_group7 = new System.Windows.Forms.DataGridView();
@@ -250,10 +255,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bgwSorter = new System.ComponentModel.BackgroundWorker();
-            this.dataGridView_group8 = new System.Windows.Forms.DataGridView();
-            this.label22 = new System.Windows.Forms.Label();
-            this.dataGridView_group9 = new System.Windows.Forms.DataGridView();
-            this.label23 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.tabPage_longterm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LTlist)).BeginInit();
@@ -269,6 +270,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sum)).BeginInit();
             this.tabControl_ITS.SuspendLayout();
             this.tabPage_capa.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCapaAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group6)).BeginInit();
@@ -296,8 +299,6 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group9)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -328,7 +329,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 180000;
+            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // notifyIcon1
@@ -701,8 +702,7 @@
             // 
             // tabPage_match
             // 
-            this.tabPage_match.Controls.Add(this.btn_schedule);
-            this.tabPage_match.Controls.Add(this.button_sync);
+            this.tabPage_match.Controls.Add(this.btn_MakeOutList);
             this.tabPage_match.Controls.Add(this.button_missmatch);
             this.tabPage_match.Controls.Add(this.button_dbload);
             this.tabPage_match.Controls.Add(this.comboBox_sel);
@@ -718,30 +718,20 @@
             this.tabPage_match.Name = "tabPage_match";
             this.tabPage_match.Size = new System.Drawing.Size(1232, 812);
             this.tabPage_match.TabIndex = 2;
-            this.tabPage_match.Text = "ASM 동기화";
+            this.tabPage_match.Text = "Tower 동기화";
             this.tabPage_match.UseVisualStyleBackColor = true;
             // 
-            // btn_schedule
+            // btn_MakeOutList
             // 
-            this.btn_schedule.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_schedule.BackgroundImage")));
-            this.btn_schedule.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btn_schedule.Location = new System.Drawing.Point(951, 7);
-            this.btn_schedule.Name = "btn_schedule";
-            this.btn_schedule.Size = new System.Drawing.Size(44, 34);
-            this.btn_schedule.TabIndex = 24;
-            this.btn_schedule.UseVisualStyleBackColor = true;
-            this.btn_schedule.Click += new System.EventHandler(this.btn_schedule_Click);
-            // 
-            // button_sync
-            // 
-            this.button_sync.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_sync.Location = new System.Drawing.Point(731, 7);
-            this.button_sync.Name = "button_sync";
-            this.button_sync.Size = new System.Drawing.Size(214, 34);
-            this.button_sync.TabIndex = 21;
-            this.button_sync.Text = "동기화";
-            this.button_sync.UseVisualStyleBackColor = true;
-            this.button_sync.Click += new System.EventHandler(this.button_sync_Click);
+            this.btn_MakeOutList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btn_MakeOutList.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_MakeOutList.Location = new System.Drawing.Point(670, 590);
+            this.btn_MakeOutList.Name = "btn_MakeOutList";
+            this.btn_MakeOutList.Size = new System.Drawing.Size(325, 33);
+            this.btn_MakeOutList.TabIndex = 25;
+            this.btn_MakeOutList.Text = "Sync";
+            this.btn_MakeOutList.UseVisualStyleBackColor = false;
+            this.btn_MakeOutList.Click += new System.EventHandler(this.btn_MakeOutList_Click);
             // 
             // button_missmatch
             // 
@@ -750,7 +740,7 @@
             this.button_missmatch.Name = "button_missmatch";
             this.button_missmatch.Size = new System.Drawing.Size(264, 34);
             this.button_missmatch.TabIndex = 22;
-            this.button_missmatch.Text = "Missmatch 확인";
+            this.button_missmatch.Text = "Mismatch 확인";
             this.button_missmatch.UseVisualStyleBackColor = true;
             this.button_missmatch.Click += new System.EventHandler(this.button_missmatch_Click);
             // 
@@ -773,11 +763,18 @@
             this.comboBox_sel.Items.AddRange(new object[] {
             "G1",
             "G2",
-            "G3"});
+            "G3",
+            "G4",
+            "G5",
+            "G6",
+            "G7",
+            "G8",
+            "G9"});
             this.comboBox_sel.Location = new System.Drawing.Point(10, 7);
             this.comboBox_sel.Name = "comboBox_sel";
             this.comboBox_sel.Size = new System.Drawing.Size(183, 34);
             this.comboBox_sel.TabIndex = 20;
+            this.comboBox_sel.SelectedIndexChanged += new System.EventHandler(this.comboBox_sel_SelectedIndexChanged);
             // 
             // label52
             // 
@@ -788,7 +785,7 @@
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(325, 35);
             this.label52.TabIndex = 17;
-            this.label52.Text = "Missmatch";
+            this.label52.Text = "Mismatch";
             this.label52.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label33
@@ -812,7 +809,7 @@
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(325, 35);
             this.label32.TabIndex = 19;
-            this.label32.Text = "ASM";
+            this.label32.Text = "TOWER";
             this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dataGridView_missmatch
@@ -858,7 +855,7 @@
             dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView_missmatch.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView_missmatch.RowTemplate.Height = 23;
-            this.dataGridView_missmatch.Size = new System.Drawing.Size(325, 539);
+            this.dataGridView_missmatch.Size = new System.Drawing.Size(325, 499);
             this.dataGridView_missmatch.TabIndex = 14;
             // 
             // dataGridView_amm
@@ -956,6 +953,8 @@
             // tabPage_inventory
             // 
             this.tabPage_inventory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tabPage_inventory.Controls.Add(this.l_WaitTime);
+            this.tabPage_inventory.Controls.Add(this.label25);
             this.tabPage_inventory.Controls.Add(this.pictureBox1);
             this.tabPage_inventory.Controls.Add(this.textBox_find);
             this.tabPage_inventory.Controls.Add(this.textBox_mtlinput);
@@ -991,6 +990,25 @@
             this.tabPage_inventory.Size = new System.Drawing.Size(1232, 812);
             this.tabPage_inventory.TabIndex = 0;
             this.tabPage_inventory.Text = "재고 조회";
+            // 
+            // l_WaitTime
+            // 
+            this.l_WaitTime.AutoSize = true;
+            this.l_WaitTime.Location = new System.Drawing.Point(392, 53);
+            this.l_WaitTime.Name = "l_WaitTime";
+            this.l_WaitTime.Size = new System.Drawing.Size(55, 23);
+            this.l_WaitTime.TabIndex = 15;
+            this.l_WaitTime.Text = "00:00";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(156, 53);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(230, 23);
+            this.label25.TabIndex = 14;
+            this.label25.Text = "데이터 자동 업데이트 대기 시간 :";
             // 
             // pictureBox1
             // 
@@ -1035,11 +1053,11 @@
             // label_updatedate
             // 
             this.label_updatedate.AutoSize = true;
-            this.label_updatedate.Font = new System.Drawing.Font("Calisto MT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_updatedate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_updatedate.ForeColor = System.Drawing.Color.Blue;
             this.label_updatedate.Location = new System.Drawing.Point(156, 15);
             this.label_updatedate.Name = "label_updatedate";
-            this.label_updatedate.Size = new System.Drawing.Size(310, 24);
+            this.label_updatedate.Size = new System.Drawing.Size(330, 25);
             this.label_updatedate.TabIndex = 10;
             this.label_updatedate.Text = "최근 업데이트 : 2020.03.30 00:00:00";
             // 
@@ -1085,6 +1103,7 @@
             this.comboBox_group.Size = new System.Drawing.Size(158, 41);
             this.comboBox_group.TabIndex = 8;
             this.comboBox_group.SelectedIndexChanged += new System.EventHandler(this.comboBox_group_SelectedIndexChanged);
+            this.comboBox_group.MouseDown += new System.Windows.Forms.MouseEventHandler(this.comboBox_group_MouseDown);
             // 
             // comboBox_searchtype
             // 
@@ -1111,6 +1130,8 @@
             this.comboBox_type.Size = new System.Drawing.Size(158, 41);
             this.comboBox_type.TabIndex = 8;
             this.comboBox_type.SelectedIndexChanged += new System.EventHandler(this.comboBox_type_SelectedIndexChanged);
+            this.comboBox_type.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBox_type_MouseClick);
+            this.comboBox_type.MouseDown += new System.Windows.Forms.MouseEventHandler(this.comboBox_type_MouseDown);
             // 
             // label1
             // 
@@ -1468,6 +1489,116 @@
             this.tabPage_capa.Size = new System.Drawing.Size(1232, 812);
             this.tabPage_capa.TabIndex = 4;
             this.tabPage_capa.Text = "Capa 조회";
+            // 
+            // dataGridView_group9
+            // 
+            this.dataGridView_group9.AllowUserToAddRows = false;
+            this.dataGridView_group9.AllowUserToDeleteRows = false;
+            this.dataGridView_group9.AllowUserToResizeColumns = false;
+            this.dataGridView_group9.AllowUserToResizeRows = false;
+            this.dataGridView_group9.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView_group9.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView_group9.BackgroundColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_group9.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle36;
+            this.dataGridView_group9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_group9.DefaultCellStyle = dataGridViewCellStyle37;
+            this.dataGridView_group9.Enabled = false;
+            this.dataGridView_group9.Location = new System.Drawing.Point(512, 400);
+            this.dataGridView_group9.MultiSelect = false;
+            this.dataGridView_group9.Name = "dataGridView_group9";
+            this.dataGridView_group9.ReadOnly = true;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_group9.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
+            this.dataGridView_group9.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView_group9.RowTemplate.Height = 27;
+            this.dataGridView_group9.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView_group9.Size = new System.Drawing.Size(484, 88);
+            this.dataGridView_group9.TabIndex = 35;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Calibri", 17.25F);
+            this.label23.Location = new System.Drawing.Point(514, 369);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(140, 28);
+            this.label23.TabIndex = 34;
+            this.label23.Text = "Reel Tower #9";
+            // 
+            // dataGridView_group8
+            // 
+            this.dataGridView_group8.AllowUserToAddRows = false;
+            this.dataGridView_group8.AllowUserToDeleteRows = false;
+            this.dataGridView_group8.AllowUserToResizeColumns = false;
+            this.dataGridView_group8.AllowUserToResizeRows = false;
+            this.dataGridView_group8.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView_group8.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView_group8.BackgroundColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_group8.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            this.dataGridView_group8.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_group8.DefaultCellStyle = dataGridViewCellStyle40;
+            this.dataGridView_group8.Enabled = false;
+            this.dataGridView_group8.Location = new System.Drawing.Point(512, 278);
+            this.dataGridView_group8.MultiSelect = false;
+            this.dataGridView_group8.Name = "dataGridView_group8";
+            this.dataGridView_group8.ReadOnly = true;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle41.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            dataGridViewCellStyle41.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle41.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle41.SelectionBackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle41.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_group8.RowHeadersDefaultCellStyle = dataGridViewCellStyle41;
+            this.dataGridView_group8.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dataGridView_group8.RowTemplate.Height = 27;
+            this.dataGridView_group8.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView_group8.Size = new System.Drawing.Size(484, 88);
+            this.dataGridView_group8.TabIndex = 33;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Calibri", 17.25F);
+            this.label22.Location = new System.Drawing.Point(514, 247);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(140, 28);
+            this.label22.TabIndex = 32;
+            this.label22.Text = "Reel Tower #8";
             // 
             // dgvCapaAll
             // 
@@ -1918,11 +2049,11 @@
             // label_update_capa
             // 
             this.label_update_capa.AutoSize = true;
-            this.label_update_capa.Font = new System.Drawing.Font("Calisto MT", 15.75F);
+            this.label_update_capa.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.label_update_capa.ForeColor = System.Drawing.Color.Blue;
             this.label_update_capa.Location = new System.Drawing.Point(686, 3);
             this.label_update_capa.Name = "label_update_capa";
-            this.label_update_capa.Size = new System.Drawing.Size(310, 24);
+            this.label_update_capa.Size = new System.Drawing.Size(330, 25);
             this.label_update_capa.TabIndex = 0;
             this.label_update_capa.Text = "최근 업데이트 : 2020.03.30 00:00:00";
             this.label_update_capa.Click += new System.EventHandler(this.label17_Click_1);
@@ -1988,18 +2119,18 @@
             // label_updatedate2
             // 
             this.label_updatedate2.AutoSize = true;
-            this.label_updatedate2.Font = new System.Drawing.Font("Calisto MT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_updatedate2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_updatedate2.ForeColor = System.Drawing.Color.Blue;
             this.label_updatedate2.Location = new System.Drawing.Point(618, 7);
             this.label_updatedate2.Name = "label_updatedate2";
-            this.label_updatedate2.Size = new System.Drawing.Size(0, 24);
+            this.label_updatedate2.Size = new System.Drawing.Size(0, 25);
             this.label_updatedate2.TabIndex = 17;
             // 
             // label_Value_time_ed
             // 
             this.label_Value_time_ed.BackColor = System.Drawing.Color.White;
             this.label_Value_time_ed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_time_ed.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_time_ed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_time_ed.ForeColor = System.Drawing.Color.Black;
             this.label_Value_time_ed.Location = new System.Drawing.Point(292, 47);
             this.label_Value_time_ed.Name = "label_Value_time_ed";
@@ -2011,7 +2142,7 @@
             // 
             this.label_Value_time_st.BackColor = System.Drawing.Color.White;
             this.label_Value_time_st.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_time_st.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_time_st.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_time_st.ForeColor = System.Drawing.Color.Black;
             this.label_Value_time_st.Location = new System.Drawing.Point(292, 6);
             this.label_Value_time_st.Name = "label_Value_time_st";
@@ -2023,7 +2154,7 @@
             // 
             this.label_Value_date_ed.BackColor = System.Drawing.Color.White;
             this.label_Value_date_ed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_date_ed.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_date_ed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_date_ed.ForeColor = System.Drawing.Color.Black;
             this.label_Value_date_ed.Location = new System.Drawing.Point(132, 47);
             this.label_Value_date_ed.Name = "label_Value_date_ed";
@@ -2035,7 +2166,7 @@
             // 
             this.label_Value_date_st.BackColor = System.Drawing.Color.White;
             this.label_Value_date_st.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_date_st.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_date_st.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_date_st.ForeColor = System.Drawing.Color.Black;
             this.label_Value_date_st.Location = new System.Drawing.Point(132, 6);
             this.label_Value_date_st.Name = "label_Value_date_st";
@@ -2719,116 +2850,6 @@
             // 
             this.bgwSorter.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwSorter_DoWork);
             // 
-            // dataGridView_group8
-            // 
-            this.dataGridView_group8.AllowUserToAddRows = false;
-            this.dataGridView_group8.AllowUserToDeleteRows = false;
-            this.dataGridView_group8.AllowUserToResizeColumns = false;
-            this.dataGridView_group8.AllowUserToResizeRows = false;
-            this.dataGridView_group8.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView_group8.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView_group8.BackgroundColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_group8.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle39;
-            this.dataGridView_group8.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_group8.DefaultCellStyle = dataGridViewCellStyle40;
-            this.dataGridView_group8.Enabled = false;
-            this.dataGridView_group8.Location = new System.Drawing.Point(512, 278);
-            this.dataGridView_group8.MultiSelect = false;
-            this.dataGridView_group8.Name = "dataGridView_group8";
-            this.dataGridView_group8.ReadOnly = true;
-            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle41.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle41.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle41.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle41.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle41.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_group8.RowHeadersDefaultCellStyle = dataGridViewCellStyle41;
-            this.dataGridView_group8.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView_group8.RowTemplate.Height = 27;
-            this.dataGridView_group8.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_group8.Size = new System.Drawing.Size(484, 88);
-            this.dataGridView_group8.TabIndex = 33;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Calibri", 17.25F);
-            this.label22.Location = new System.Drawing.Point(514, 247);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(140, 28);
-            this.label22.TabIndex = 32;
-            this.label22.Text = "Reel Tower #8";
-            // 
-            // dataGridView_group9
-            // 
-            this.dataGridView_group9.AllowUserToAddRows = false;
-            this.dataGridView_group9.AllowUserToDeleteRows = false;
-            this.dataGridView_group9.AllowUserToResizeColumns = false;
-            this.dataGridView_group9.AllowUserToResizeRows = false;
-            this.dataGridView_group9.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView_group9.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView_group9.BackgroundColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_group9.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle36;
-            this.dataGridView_group9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle37.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_group9.DefaultCellStyle = dataGridViewCellStyle37;
-            this.dataGridView_group9.Enabled = false;
-            this.dataGridView_group9.Location = new System.Drawing.Point(512, 400);
-            this.dataGridView_group9.MultiSelect = false;
-            this.dataGridView_group9.Name = "dataGridView_group9";
-            this.dataGridView_group9.ReadOnly = true;
-            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            dataGridViewCellStyle38.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_group9.RowHeadersDefaultCellStyle = dataGridViewCellStyle38;
-            this.dataGridView_group9.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView_group9.RowTemplate.Height = 27;
-            this.dataGridView_group9.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView_group9.Size = new System.Drawing.Size(484, 88);
-            this.dataGridView_group9.TabIndex = 35;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Calibri", 17.25F);
-            this.label23.Location = new System.Drawing.Point(514, 369);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(140, 28);
-            this.label23.TabIndex = 34;
-            this.label23.Text = "Reel Tower #9";
-            // 
             // Form_ITS
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2864,6 +2885,8 @@
             this.tabControl_ITS.ResumeLayout(false);
             this.tabPage_capa.ResumeLayout(false);
             this.tabPage_capa.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCapaAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group6)).EndInit();
@@ -2893,8 +2916,6 @@
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_group9)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2926,7 +2947,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DataGridView dataGridView_longterm;
         private System.Windows.Forms.TabPage tabPage_match;
-        private System.Windows.Forms.Button button_sync;
         private System.Windows.Forms.Button button_missmatch;
         private System.Windows.Forms.Button button_dbload;
         private System.Windows.Forms.ComboBox comboBox_sel;
@@ -3010,7 +3030,6 @@
         private System.Windows.Forms.Label label_group7;
         private System.Windows.Forms.DataGridView dgvCapaAll;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button btn_schedule;
         private System.Windows.Forms.TabPage tabPage_Sorter;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox pictureBox4;
@@ -3044,5 +3063,8 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.DataGridView dataGridView_group8;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label l_WaitTime;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btn_MakeOutList;
     }
 }

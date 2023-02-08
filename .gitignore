@@ -2,3 +2,4 @@
 .vs/
 Amkor_Material_Manager/bin/
 Amkor_Material_Manager/obj/
+*.bak

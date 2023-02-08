@@ -171,14 +171,26 @@ namespace Amkor_Material_Manager
                 data.Requestor = MtlList.Rows[i]["REQUESTOR"].ToString(); data.Requestor = data.Requestor.Trim();
                 data.Input_type = MtlList.Rows[i]["INPUT_TYPE"].ToString(); data.Input_type = data.Input_type.Trim();
                 string strStatus = MtlList.Rows[i]["STATUS"].ToString(); strStatus = strStatus.Trim();
+                string strOrderType = MtlList.Rows[i]["ORDER_TYPE"].ToString().ToUpper();
 
-                if(strStatus == "IN")
+                //data.Input_type = strStatus + "_" + data.Input_type;
+
+                if (strStatus == "IN")
                 {
                     data.Input_type = strStatus + "_" + data.Input_type;
                 }
-                else if(strStatus == "OUT")
+                else
                 {
-                    data.Input_type = "OUT";
+                    data.Input_type = strStatus + "_" + strOrderType;
+                    //if (strOrderType == "SYNC")
+                    //{
+                    //    data.Input_type = "OUT_SYNC";
+                    //}
+                    //else
+                    //{
+                    //    data.Input_type = strStatus + strOrderType;
+                    //}
+
                 }
 
                 list.Add(data);
@@ -190,7 +202,7 @@ namespace Amkor_Material_Manager
 
             foreach (var item in list)
             {
-                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity.Replace(",","")));
                 string strdate = item.Input_date;
                 strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
                     + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);

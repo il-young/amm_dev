@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using AMM;
+using System.Data.SqlClient;
 
 namespace Amkor_Material_Manager
 {
@@ -353,6 +354,7 @@ namespace Amkor_Material_Manager
 
         }
 
+       
         public void Fnc_Show_HistoryViewer()
         {
             Frm_Order.Fnc_MtlListCheck();
