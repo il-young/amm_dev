@@ -718,7 +718,7 @@
             this.tabPage_match.Name = "tabPage_match";
             this.tabPage_match.Size = new System.Drawing.Size(1232, 812);
             this.tabPage_match.TabIndex = 2;
-            this.tabPage_match.Text = "ASM 동기화";
+            this.tabPage_match.Text = "Tower 동기화";
             this.tabPage_match.UseVisualStyleBackColor = true;
             // 
             // btn_MakeOutList
@@ -729,7 +729,7 @@
             this.btn_MakeOutList.Name = "btn_MakeOutList";
             this.btn_MakeOutList.Size = new System.Drawing.Size(325, 33);
             this.btn_MakeOutList.TabIndex = 25;
-            this.btn_MakeOutList.Text = "ASM 배출 명령 생성";
+            this.btn_MakeOutList.Text = "Sync";
             this.btn_MakeOutList.UseVisualStyleBackColor = false;
             this.btn_MakeOutList.Click += new System.EventHandler(this.btn_MakeOutList_Click);
             // 
@@ -740,7 +740,7 @@
             this.button_missmatch.Name = "button_missmatch";
             this.button_missmatch.Size = new System.Drawing.Size(264, 34);
             this.button_missmatch.TabIndex = 22;
-            this.button_missmatch.Text = "Missmatch 확인";
+            this.button_missmatch.Text = "Mismatch 확인";
             this.button_missmatch.UseVisualStyleBackColor = true;
             this.button_missmatch.Click += new System.EventHandler(this.button_missmatch_Click);
             // 
@@ -774,6 +774,7 @@
             this.comboBox_sel.Name = "comboBox_sel";
             this.comboBox_sel.Size = new System.Drawing.Size(183, 34);
             this.comboBox_sel.TabIndex = 20;
+            this.comboBox_sel.SelectedIndexChanged += new System.EventHandler(this.comboBox_sel_SelectedIndexChanged);
             // 
             // label52
             // 
@@ -784,7 +785,7 @@
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(325, 35);
             this.label52.TabIndex = 17;
-            this.label52.Text = "Missmatch";
+            this.label52.Text = "Mismatch";
             this.label52.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label33
@@ -808,7 +809,7 @@
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(325, 35);
             this.label32.TabIndex = 19;
-            this.label32.Text = "ASM";
+            this.label32.Text = "TOWER";
             this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dataGridView_missmatch
@@ -1052,11 +1053,11 @@
             // label_updatedate
             // 
             this.label_updatedate.AutoSize = true;
-            this.label_updatedate.Font = new System.Drawing.Font("Calisto MT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_updatedate.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_updatedate.ForeColor = System.Drawing.Color.Blue;
             this.label_updatedate.Location = new System.Drawing.Point(156, 15);
             this.label_updatedate.Name = "label_updatedate";
-            this.label_updatedate.Size = new System.Drawing.Size(310, 24);
+            this.label_updatedate.Size = new System.Drawing.Size(330, 25);
             this.label_updatedate.TabIndex = 10;
             this.label_updatedate.Text = "최근 업데이트 : 2020.03.30 00:00:00";
             // 
@@ -2048,11 +2049,11 @@
             // label_update_capa
             // 
             this.label_update_capa.AutoSize = true;
-            this.label_update_capa.Font = new System.Drawing.Font("Calisto MT", 15.75F);
+            this.label_update_capa.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.label_update_capa.ForeColor = System.Drawing.Color.Blue;
             this.label_update_capa.Location = new System.Drawing.Point(686, 3);
             this.label_update_capa.Name = "label_update_capa";
-            this.label_update_capa.Size = new System.Drawing.Size(310, 24);
+            this.label_update_capa.Size = new System.Drawing.Size(330, 25);
             this.label_update_capa.TabIndex = 0;
             this.label_update_capa.Text = "최근 업데이트 : 2020.03.30 00:00:00";
             this.label_update_capa.Click += new System.EventHandler(this.label17_Click_1);
@@ -2118,18 +2119,18 @@
             // label_updatedate2
             // 
             this.label_updatedate2.AutoSize = true;
-            this.label_updatedate2.Font = new System.Drawing.Font("Calisto MT", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_updatedate2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_updatedate2.ForeColor = System.Drawing.Color.Blue;
             this.label_updatedate2.Location = new System.Drawing.Point(618, 7);
             this.label_updatedate2.Name = "label_updatedate2";
-            this.label_updatedate2.Size = new System.Drawing.Size(0, 24);
+            this.label_updatedate2.Size = new System.Drawing.Size(0, 25);
             this.label_updatedate2.TabIndex = 17;
             // 
             // label_Value_time_ed
             // 
             this.label_Value_time_ed.BackColor = System.Drawing.Color.White;
             this.label_Value_time_ed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_time_ed.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_time_ed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_time_ed.ForeColor = System.Drawing.Color.Black;
             this.label_Value_time_ed.Location = new System.Drawing.Point(292, 47);
             this.label_Value_time_ed.Name = "label_Value_time_ed";
@@ -2141,7 +2142,7 @@
             // 
             this.label_Value_time_st.BackColor = System.Drawing.Color.White;
             this.label_Value_time_st.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_time_st.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_time_st.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_time_st.ForeColor = System.Drawing.Color.Black;
             this.label_Value_time_st.Location = new System.Drawing.Point(292, 6);
             this.label_Value_time_st.Name = "label_Value_time_st";
@@ -2153,7 +2154,7 @@
             // 
             this.label_Value_date_ed.BackColor = System.Drawing.Color.White;
             this.label_Value_date_ed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_date_ed.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_date_ed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_date_ed.ForeColor = System.Drawing.Color.Black;
             this.label_Value_date_ed.Location = new System.Drawing.Point(132, 47);
             this.label_Value_date_ed.Name = "label_Value_date_ed";
@@ -2165,7 +2166,7 @@
             // 
             this.label_Value_date_st.BackColor = System.Drawing.Color.White;
             this.label_Value_date_st.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_Value_date_st.Font = new System.Drawing.Font("Calisto MT", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Value_date_st.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Value_date_st.ForeColor = System.Drawing.Color.Black;
             this.label_Value_date_st.Location = new System.Drawing.Point(132, 6);
             this.label_Value_date_st.Name = "label_Value_date_st";

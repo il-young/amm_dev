@@ -354,30 +354,7 @@ namespace Amkor_Material_Manager
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (SqlConnection c = new SqlConnection(@"Provider = Microsoft.Jet.OLEDB.4.0; Data Source = 10.135.230.103; Jet OLEDB:Database Password = "))
-                {
-                    c.Open();
-
-                    //using (SqlCommand cmd = new SqlCommand(queryString, c))
-                    //{
-                    //    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
-                    //    {
-                    //        adt.Fill(dt);
-                    //    }
-                    //}
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-           
-        }
-
+       
         public void Fnc_Show_HistoryViewer()
         {
             Frm_Order.Fnc_MtlListCheck();

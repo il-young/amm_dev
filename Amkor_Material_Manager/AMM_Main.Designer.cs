@@ -44,7 +44,6 @@
             this.button_request = new System.Windows.Forms.Button();
             this.button_setting = new System.Windows.Forms.Button();
             this.label_state = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +53,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1264, 54);
+            this.pictureBox1.Size = new System.Drawing.Size(1282, 54);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -81,7 +80,7 @@
             this.label_day.AutoSize = true;
             this.label_day.BackColor = System.Drawing.Color.White;
             this.label_day.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_day.Location = new System.Drawing.Point(898, 18);
+            this.label_day.Location = new System.Drawing.Point(916, 18);
             this.label_day.Name = "label_day";
             this.label_day.Size = new System.Drawing.Size(104, 23);
             this.label_day.TabIndex = 3;
@@ -93,7 +92,7 @@
             this.label_time.AutoSize = true;
             this.label_time.BackColor = System.Drawing.Color.White;
             this.label_time.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_time.Location = new System.Drawing.Point(1006, 18);
+            this.label_time.Location = new System.Drawing.Point(1024, 18);
             this.label_time.Name = "label_time";
             this.label_time.Size = new System.Drawing.Size(80, 23);
             this.label_time.TabIndex = 3;
@@ -105,9 +104,9 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.Info;
-            this.label2.Location = new System.Drawing.Point(0, 733);
+            this.label2.Location = new System.Drawing.Point(0, 738);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1264, 28);
+            this.label2.Size = new System.Drawing.Size(1282, 28);
             this.label2.TabIndex = 4;
             this.label2.Text = "Copyright 2020 - Amkor Technology Korea Automation Engineering ";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -119,7 +118,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Left;
             this.label3.Location = new System.Drawing.Point(0, 54);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(247, 679);
+            this.label3.Size = new System.Drawing.Size(247, 684);
             this.label3.TabIndex = 6;
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
@@ -216,26 +215,15 @@
             this.label_state.ForeColor = System.Drawing.SystemColors.Info;
             this.label_state.Location = new System.Drawing.Point(247, 54);
             this.label_state.Name = "label_state";
-            this.label_state.Size = new System.Drawing.Size(1017, 5);
+            this.label_state.Size = new System.Drawing.Size(1035, 5);
             this.label_state.TabIndex = 9;
             this.label_state.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(66, 422);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AMM_Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1264, 761);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1282, 766);
             this.Controls.Add(this.label_state);
             this.Controls.Add(this.button_setting);
             this.Controls.Add(this.button_request);
@@ -279,7 +267,6 @@
         private System.Windows.Forms.Button button_request;
         private System.Windows.Forms.Button button_setting;
         private System.Windows.Forms.Label label_state;
-        private System.Windows.Forms.Button button1;
     }
 }
 
