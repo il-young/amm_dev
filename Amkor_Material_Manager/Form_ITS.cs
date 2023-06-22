@@ -6586,6 +6586,7 @@ namespace Amkor_Material_Manager
                 {   
                     string strName = AMM_Main.AMM.User_check(ID);
                     strName = strName.Trim();
+                
 
                     if (strName == "NO_INFO")
                     {
@@ -6650,11 +6651,14 @@ namespace Amkor_Material_Manager
                         {
                             bool LostTower = false;
                             DataConn conn1 = new DataConn();
+                            string res = "";
 
                             int loop = dataGridView_missmatch.RowCount;
                             int AMMLostCnt = 0;
 
                             Fnc_Get_PickID(strGroup);
+
+                            bool tower = false;
 
                             for (int i = 0; i <  loop ; i++)
                             {
@@ -6662,6 +6666,8 @@ namespace Amkor_Material_Manager
                                 {
                                     if (dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "AMM")
                                     {
+                                        tower = true;
+
                                         if (dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
                                         {
                                             bool UID = false;
@@ -6676,7 +6682,7 @@ namespace Amkor_Material_Manager
 
                                             if (UID == false)
                                             {
-                                                string  res = AMM_Main.AMM.SetLoadComplete(AMM_Main.strDefault_linecode, strGroup, string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
+                                                res = AMM_Main.AMM.SetLoadComplete(AMM_Main.strDefault_linecode, strGroup, string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
                                                     dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
                                                     dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
                                                     dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
@@ -6703,6 +6709,35 @@ namespace Amkor_Material_Manager
                                     }
                                     else
                                     {
+                                        if (tower == true)
+                                        {
+                                            dataGridView_asm.Rows.Clear();
+                                            int n = comboBox_sel.SelectedIndex;
+
+                                            if (n == 0)
+                                            {
+                                                Fnc_Process_GetMaterials_Tower1();
+                                                Fnc_Process_GetAMMinfo("TWR1");
+                                            }
+                                            else if (n == 1)
+                                            {
+                                                Fnc_Process_GetMaterials_Tower2();
+                                                Fnc_Process_GetAMMinfo("TWR2");
+                                            }
+                                            else if (n == 2)
+                                            {
+                                                Fnc_Process_GetMaterials_Tower3();
+                                                Fnc_Process_GetAMMinfo("TWR3");
+                                            }
+                                            else
+                                            {
+                                                GetMycronicTower(n + 1);
+                                                Fnc_Process_GetAMMinfo("TWR" + (n + 1).ToString());
+                                            }
+
+                                            tower = false;
+                                        }
+
                                         bool UID = false;
 
                                         foreach (DataGridViewRow row in dataGridView_asm.Rows)
@@ -6718,7 +6753,7 @@ namespace Amkor_Material_Manager
                                         {
                                             LostTower = true;
 
-                                            temp = AMM_Main.AMM.SetPicking_Readyinfo(
+                                            res = AMM_Main.AMM.SetPicking_Readyinfo(
                                                 AMM_Main.strDefault_linecode, 
                                                 strGroup, label_pickid_LT.Text, 
                                                 dataGridView_missmatch.Rows[0].Cells[3].Value.ToString(), 
@@ -6737,6 +6772,7 @@ namespace Amkor_Material_Manager
                                         }
                                     }
                                     
+                                    if(res == "OK")
                                     dataGridView_missmatch.Rows.RemoveAt(0);
 
                                     dataGridView_missmatch.Update();
