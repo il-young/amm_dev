@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Windows.Input;
 using System.Data.OleDb;
 using NLog;
+using System.Xml;
 
 namespace Amkor_Material_Manager
 {
@@ -3706,6 +3707,80 @@ namespace Amkor_Material_Manager
             }
         }
 
+        private void loadXmlData()
+        { 
+            if (Directory.Exists(@"C:\Program Files (x86)\SIPLACE\SIPLACE Material Tower\Data\Storage") == false)
+            {
+                MessageBox.Show("Tower 1,2,3 그룹은 원격에서 동기화를 진행 할 수 없습니다.", "Sync Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            XmlDocument xml = new XmlDocument();
+
+            dataGridView_asm.Columns.Clear();
+            dataGridView_asm.Rows.Clear();
+
+            dataGridView_asm.Columns.Add("NO", "NO");
+            dataGridView_asm.Columns.Add("UID", "UID");
+            dataGridView_asm.Columns.Add("SID", "SID");
+            dataGridView_asm.Columns.Add("TowerID", "TowerID");
+
+
+            System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(@"C:\Program Files (x86)\SIPLACE\SIPLACE Material Tower\Data\Storage");
+
+            System.IO.FileInfo[] fileInfos = directoryInfo.GetFiles("*.xml");
+
+            XmlNodeList element;
+
+            string[] row = new string[4];
+            int tower = 0;
+
+            int cnt = 1;
+
+            foreach (System.IO.FileInfo fi in fileInfos)
+            {
+                xml.Load(fi.FullName);
+                var temp = xml["Storage"]["ListOfStacks"];
+
+                tower++;
+
+                foreach (XmlElement el in temp)
+                {
+                    foreach (XmlElement ch in el["ListOfShelfs"])
+                    {
+                        if (ch.ChildNodes.Count >= 2)
+                        {
+                            string[] a = ch.ChildNodes[1].OuterXml.Split(' ');
+                            string[] b = ch.OuterXml.Split(' ');
+
+                            row[0] = cnt.ToString();
+                            row[1] = a[1].Split('=')[1].Replace("\"", "");
+                            row[2] = a[2].Split('=')[1].Replace("\"", "");
+                            row[3] = $"T0{comboBox_sel.SelectedIndex + 1}0{tower}";
+
+                            dataGridView_asm.Rows.Add(row);
+                            //Console.WriteLine("ID : " + a[1].Split('=')[1].Replace("\"", ""));
+                            ++cnt;
+                        }
+
+                        if (ch.ChildNodes.Count == 3)
+                        {
+                            string[] a = ch.ChildNodes[2].OuterXml.Split(' ');
+                            string[] b = ch.OuterXml.Split(' ');
+
+                            row[0] = cnt.ToString();
+                            row[1] = a[1].Split('=')[1].Replace("\"", "");
+                            row[2] = a[2].Split('=')[1].Replace("\"", "");
+
+                            dataGridView_asm.Rows.Add(row);
+                            //Console.WriteLine("ID : " + a[1].Split('=')[1].Replace("\"", ""));
+                            ++cnt;
+                        }
+                    }
+                }
+            }
+        }
+
         private void button_dbload_Click(object sender, EventArgs e)
         {
             int n = comboBox_sel.SelectedIndex;
@@ -3716,17 +3791,20 @@ namespace Amkor_Material_Manager
 
                 if (n == 0)
                 {
-                    Fnc_Process_GetMaterials_Tower1();
+                    loadXmlData();
+                    //Fnc_Process_GetMaterials_Tower1();
                     Fnc_Process_GetAMMinfo("TWR1");
                 }
                 else if (n == 1)
                 {
-                    Fnc_Process_GetMaterials_Tower2();
+                    loadXmlData();
+                    //Fnc_Process_GetMaterials_Tower2();
                     Fnc_Process_GetAMMinfo("TWR2");
                 }
                 else if (n == 2)
                 {
-                    Fnc_Process_GetMaterials_Tower3();
+                    loadXmlData();
+                    //Fnc_Process_GetMaterials_Tower3();
                     Fnc_Process_GetAMMinfo("TWR3");
                 }
                 else
@@ -3952,11 +4030,74 @@ namespace Amkor_Material_Manager
             dataGridView_missmatch.Columns.Add("MISS", "MISS");
 
             int nStart = 1;
-
-            nStart = Fnc_Missmatch_ASMcompare(nStart);
-            Fnc_Missmatch_AMMcompare(nStart);
+            
+            if(comboBox_sel.SelectedIndex < 3)
+            {
+                runMissmatch();
+            }
+            else
+            {
+                nStart = Fnc_Missmatch_ASMcompare(nStart);
+                Fnc_Missmatch_AMMcompare(nStart);
+            }
+            
 
             nDbUpdate = 2;
+        }
+
+        private void runMissmatch()
+        {
+            int cnt = 0;
+
+            /*
+             dataGridView_missmatch.Columns.Add("NO", "NO");
+            dataGridView_missmatch.Columns.Add("SID", "SID");
+            dataGridView_missmatch.Columns.Add("LOTID", "LOTID#");
+            dataGridView_missmatch.Columns.Add("UID", "UID");
+            dataGridView_missmatch.Columns.Add("Qty", "Qty");
+            dataGridView_missmatch.Columns.Add("투입형태", "투입형태");
+            dataGridView_missmatch.Columns.Add("위치", "위치");
+            dataGridView_missmatch.Columns.Add("제조일", "제조일");
+            dataGridView_missmatch.Columns.Add("투입일", "투입일");
+            dataGridView_missmatch.Columns.Add("제조사", "제조사");
+            dataGridView_missmatch.Columns.Add("인치", "인치");
+            dataGridView_missmatch.Columns.Add("MISS", "MISS");
+             
+             */
+
+
+            foreach (DataGridViewRow row in dataGridView_asm.Rows)
+            {
+                if(dataGridView_amm.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString() && r.Cells["SID"].Value.ToString() == row.Cells["SID"].Value.ToString()).ToList().Count == 0)
+                {
+                    if(row.Cells["SID"].Value.ToString() != "SID_TEST")
+                        dataGridView_missmatch.Rows.Add(new object[] { ++cnt, row.Cells["SID"].Value.ToString(), "", row.Cells["UID"].Value.ToString(), "", "", row.Cells["TowerID"].Value.ToString(), "", "", "", "", "TOWER" });
+                }
+            }
+
+
+            /*
+            dataGridView_amm.Columns.Add("NO", "NO");
+            dataGridView_amm.Columns.Add("SID", "SID");
+            dataGridView_amm.Columns.Add("Batch#", "Batch#");
+            dataGridView_amm.Columns.Add("UID", "UID");
+            dataGridView_amm.Columns.Add("Qty", "Qty");
+            dataGridView_amm.Columns.Add("투입형태", "투입형태");
+            dataGridView_amm.Columns.Add("위치", "위치");
+            dataGridView_amm.Columns.Add("제조일", "제조일");
+            dataGridView_amm.Columns.Add("투입일", "투입일");
+            dataGridView_amm.Columns.Add("제조사", "제조사");
+            dataGridView_amm.Columns.Add("인치", "인치");
+             * */
+
+
+            foreach (DataGridViewRow row in dataGridView_amm.Rows)
+            {
+                if (dataGridView_asm.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString() && r.Cells["SID"].Value.ToString() == row.Cells["SID"].Value.ToString()).ToList().Count == 0)
+                {
+                    dataGridView_missmatch.Rows.Add(new object[] { ++cnt, row.Cells["SID"].Value.ToString(), "", row.Cells["UID"].Value.ToString(), row.Cells["QTY"].Value.ToString(), row.Cells["투입형태"].Value.ToString(), row.Cells["위치"].Value.ToString(), row.Cells["제조일"].Value.ToString(), row.Cells["투입일"].Value.ToString(), row.Cells["제조사"].Value.ToString(), row.Cells["인치"].Value.ToString(), "AMM" });
+                }
+            }
         }
 
         private void button_sync_Click(object sender, EventArgs e)
@@ -4485,14 +4626,8 @@ namespace Amkor_Material_Manager
             for (int i = 0; i < dataGridView_asm.Rows.Count; i++)
             {
                 StorageData_Compare data = new StorageData_Compare();
-                data.SID = dataGridView_asm.Rows[i].Cells[1].Value.ToString(); //SID
-                data.LOTID = dataGridView_asm.Rows[i].Cells[2].Value.ToString(); //LOTID
-                data.UID = dataGridView_asm.Rows[i].Cells[3].Value.ToString(); //UID
-                data.Quantity = dataGridView_asm.Rows[i].Cells[4].Value.ToString(); //QTY
-                data.Input_date = dataGridView_asm.Rows[i].Cells[5].Value.ToString(); //투입일
-                data.Production_date = dataGridView_asm.Rows[i].Cells[6].Value.ToString(); //제조일
-                data.Manufacturer = dataGridView_asm.Rows[i].Cells[7].Value.ToString(); //제조사
-                data.Tower_no = dataGridView_asm.Rows[i].Cells[8].Value.ToString(); //위치
+                data.SID = dataGridView_asm.Rows[i].Cells[2].Value.ToString(); //SID                
+                data.UID = dataGridView_asm.Rows[i].Cells[1].Value.ToString(); //UID
 
                 if (data.UID != "")
                     asmList.Add(data);
@@ -6579,9 +6714,6 @@ namespace Amkor_Material_Manager
                     return;
                 }
 
-
-
-
                 if (DialogResult.OK == InputBox("사번입력", "사번 입력 ", ref ID))
                 {   
                     string strName = AMM_Main.AMM.User_check(ID);
@@ -6612,15 +6744,72 @@ namespace Amkor_Material_Manager
                         {
                             Fnc_Get_PickID(strGroup);
 
+                            List<DataGridViewRow> willMakeReel = dataGridView_missmatch.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["miss"].Value.ToString() == "TOWER").ToList();
+
+                            /*
+                                0 dataGridView_missmatch.Columns.Add("NO", "NO");
+                                1 dataGridView_missmatch.Columns.Add("SID", "SID");
+                                2 dataGridView_missmatch.Columns.Add("LOTID", "LOTID#");
+                                3 dataGridView_missmatch.Columns.Add("UID", "UID");
+                                4 dataGridView_missmatch.Columns.Add("Qty", "Qty");
+                                5 dataGridView_missmatch.Columns.Add("투입형태", "투입형태");
+                                6 dataGridView_missmatch.Columns.Add("위치", "위치");
+                                7 dataGridView_missmatch.Columns.Add("제조일", "제조일");
+                                8 dataGridView_missmatch.Columns.Add("투입일", "투입일");
+                                9 dataGridView_missmatch.Columns.Add("제조사", "제조사");
+                                10 dataGridView_missmatch.Columns.Add("인치", "인치");
+                                11 dataGridView_missmatch.Columns.Add("MISS", "MISS");           
+                             */
+
+
+                            foreach (DataGridViewRow row in willMakeReel)
+                            {
+                                row.Cells["UID"].Value = row.Cells["UID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["UID"].Value.ToString();
+                                row.Cells["SID"].Value = row.Cells["SID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["SID"].Value.ToString();
+
+                                row.Cells["LOTID"].Value = GetRandomString(5);
+                                row.Cells["Qty"].Value = 1;
+                                row.Cells["투입형태"].Value = "SYNC";
+                                row.Cells["제조일"].Value = DateTime.Now.ToString("yyyyMMdd");
+                                row.Cells["투입일"].Value = DateTime.Now.ToString("yyyyMMdd");
+                                row.Cells["제조사"].Value = "SYNC";
+                                row.Cells["인치"].Value = "Unknown";
+
+                                AMM_Main.AMM.SyncDataInsert(
+                                    $"{nGroup}",
+                                    row.Cells["위치"].Value.ToString(),
+                                    row.Cells["UID"].Value.ToString(),
+                                    row.Cells["SID"].Value.ToString(),
+                                    row.Cells["LOTID"].Value.ToString(),
+                                    row.Cells["Qty"].Value.ToString(),
+                                    row.Cells["제조사"].Value.ToString(),
+                                    row.Cells["제조일"].Value.ToString(),
+                                    row.Cells["인치"].Value.ToString(),
+                                    row.Cells["투입형태"].Value.ToString()
+                                    );
+                            }
+
                             for (int i = 0; i < dataGridView_missmatch.RowCount; i++)
                             {
                                 //if (dataGridView_missmatch.Rows[i].DefaultCellStyle.ForeColor == Color.Blue)
                                 {
                                     //string[] MissReelInfo = dataGridView_missmatch.Rows[i].Cells[0].Value.ToString().Split(';');
                                     //ASMRows.Add(dataGridView_missmatch.Rows[i]);
-                                    temp = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text, dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), ID, dataGridView_missmatch.Rows[i].Cells[6].Value.ToString()
-                                        , dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
-                                        dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(), dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(), "SYNC");
+                                    temp = AMM_Main.AMM.SetPicking_Readyinfo(
+                                        AMM_Main.strDefault_linecode, 
+                                        strGroup, 
+                                        label_pickid_LT.Text, 
+                                        dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), 
+                                        ID, 
+                                        dataGridView_missmatch.Rows[i].Cells[6].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
+                                        dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(), 
+                                        dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(), 
+                                        "SYNC");
                                     AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[i].Cells[3].Value.ToString());
                                 }
                             }
@@ -6824,9 +7013,27 @@ namespace Amkor_Material_Manager
             
         }
 
+
+        public string GetRandomString(int digit)
+        {
+            int numDigits = digit;
+
+            StringBuilder result = new StringBuilder();
+            Random rand = new Random();
+
+            for (int i = 0; i < numDigits; i++)
+            {
+                int randNum = rand.Next(36);
+                char randChar = randNum < 10 ? (char)('0' + randNum) : (char)('a' + randNum - 10);
+                result.Append(randChar);
+            }
+
+            return result.ToString();
+        }
+
+
+
         //]210810_Sangik.choi_장기보관관리기능추가(이종명수석님)
-
-
         public List<ASM_StorageData> GetSIMMMaterialList(string TowerLocation, string tid)
         {
             List<ASM_StorageData> list = new List<ASM_StorageData>();
