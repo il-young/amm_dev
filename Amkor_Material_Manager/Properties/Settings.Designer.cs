@@ -34,5 +34,17 @@ namespace Amkor_Material_Manager.Properties {
                 this["DefaultSaftyTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SyncOutExcel {
+            get {
+                return ((bool)(this["SyncOutExcel"]));
+            }
+            set {
+                this["SyncOutExcel"] = value;
+            }
+        }
     }
 }

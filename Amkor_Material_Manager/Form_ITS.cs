@@ -19,6 +19,15 @@ using System.Windows.Input;
 using System.Data.OleDb;
 using NLog;
 using System.Xml;
+using Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
+using Action = System.Action;
+using Application = System.Windows.Forms.Application;
+using Button = System.Windows.Forms.Button;
+using TextBox = System.Windows.Forms.TextBox;
+using Label = System.Windows.Forms.Label;
+using DataTable = System.Data.DataTable;
+using Font = System.Drawing.Font;
 
 namespace Amkor_Material_Manager
 {
@@ -171,8 +180,24 @@ namespace Amkor_Material_Manager
             }
             else if (tabNo == 3)
             {
-                //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
+                cb_SyncExcel.Checked = Properties.Settings.Default.SyncOutExcel;
 
+                if(cb_SyncExcel.Checked == false)
+                {
+                    cb_SyncExcel.Invoke((MethodInvoker)delegate
+                    {
+                        cb_SyncExcel.Text = "CSV OUT";
+                    });
+                }
+                else
+                {
+                    cb_SyncExcel.Invoke((MethodInvoker)delegate
+                    {
+                        cb_SyncExcel.Text = "EXCEL OUT";
+                    });
+                }
+
+                //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
                 if (listk_count != 0)
                 {
                     AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
@@ -275,7 +300,7 @@ namespace Amkor_Material_Manager
             int Tot13InchCapa = 0;
 
 
-            for (int i = 0; i < MtlList.Rows.Count; i++)
+            for (int i = 1; i < MtlList.Rows.Count; i++)
             {
                 Inchdata data = new Inchdata();
 
@@ -287,22 +312,22 @@ namespace Amkor_Material_Manager
                 data.Inch_7_rate = MtlList.Rows[i]["INCH_7_LOAD_RATE"].ToString(); data.Inch_7_rate = data.Inch_7_rate.Trim();
                 data.Inch_13_rate = MtlList.Rows[i]["INCH_13_LOAD_RATE"].ToString(); data.Inch_13_rate = data.Inch_13_rate.Trim();
 
-                Tot7InchCnt += int.Parse(data.Inch_7_cnt=="" ? "0" : data.Inch_7_cnt);  //220823_ilyoung_타워그룹추가
+                Tot7InchCnt += int.Parse(data.Inch_7_cnt == "" ? "0" : data.Inch_7_cnt);  //220823_ilyoung_타워그룹추가
                 Tot13InchCnt += int.Parse(data.Inch_13_cnt == "" ? "0" : data.Inch_13_cnt);//220823_ilyoung_타워그룹추가
                 Tot7InchCapa += int.Parse(data.Inch_7_capa == "" ? "0" : data.Inch_7_capa);//220823_ilyoung_타워그룹추가
                 Tot13InchCapa += int.Parse(data.Inch_13_capa == "" ? "0" : data.Inch_13_capa);//220823_ilyoung_타워그룹추가
 
-                string inch_7_cal = (Int32.Parse(data.Inch_7_capa == "" ? "0" : data.Inch_7_capa) - Int32.Parse(data.Inch_7_cnt=="" ? "0" : data.Inch_7_cnt)).ToString();//220823_ilyoung_타워그룹추가
+                string inch_7_cal = (Int32.Parse(data.Inch_7_capa == "" ? "0" : data.Inch_7_capa) - Int32.Parse(data.Inch_7_cnt == "" ? "0" : data.Inch_7_cnt)).ToString();//220823_ilyoung_타워그룹추가
                 string inch_13_cal = (Int32.Parse(data.Inch_13_capa == "" ? "0" : data.Inch_13_capa) - Int32.Parse(data.Inch_13_cnt == "" ? "0" : data.Inch_13_cnt)).ToString();//220823_ilyoung_타워그룹추가
 
-                list[i].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
-                list[i].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
+                list[i - 1].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
+                list[i - 1].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
 
-                list[i].Rows[0].HeaderCell.Value = "7\"";
-                list[i].Rows[1].HeaderCell.Value = "13\"";
+                list[i - 1].Rows[0].HeaderCell.Value = "7\"";
+                list[i - 1].Rows[1].HeaderCell.Value = "13\"";
 
-                list[i].Rows[0].Cells[2].Style.ForeColor = Color.Red;
-                list[i].Rows[1].Cells[2].Style.ForeColor = Color.Red;
+                list[i - 1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
+                list[i - 1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
             }
 
             string TotInch7Cal = (Tot7InchCapa - Tot7InchCnt).ToString();
@@ -6438,6 +6463,32 @@ namespace Amkor_Material_Manager
             dgv_tower.Rows.Clear();
         }
 
+        private void RunSqlCMD(string ConnectionString, string sql)
+        {
+            int res = -1;
+            try
+            {
+                using (SqlConnection c = new SqlConnection(ConnectionString))
+                {
+                    c.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, c))
+                    {
+                        
+
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandTimeout = 300;
+
+                        res = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+        }
+
         private DataTable SearchData(string ConnectionString, string sql)
         {
             DataTable dt = new DataTable();
@@ -6738,8 +6789,29 @@ namespace Amkor_Material_Manager
 
                     Synclog.Info(string.Format("등록된 사용자 : {0}", ID));
 
+                    //if(cb_SyncExcel.Checked == true)
+                    //{
+                    //    SyncListExcelOut();                        
+                    //}
+                    //else
+                    //{
+                    //    SyncListCSVOut();
+                    //}
+
                     if (nGroup <= 3)
                     {
+                        string q = "";
+                        foreach(DataGridViewRow row in dataGridView_missmatch.Rows)
+                        {
+                            q = $"insert into [TB_SYNC_INFO] ([DATETIME], [EQUIP_ID], [TOWER_NO], [UID], [SID], [LOTID], [QTY], [INCH_INFO], [SYNC_INFO], [EMPLOYEE_NO])" +
+                                $"VALUES (GETDATE(), '{strGroup}', '{row.Cells["인치"].Value.ToString()}', '{row.Cells["UID"].Value.ToString()}', '{row.Cells["SID"].Value.ToString()}'," +
+                                $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString())}, '{row.Cells["인치"].Value.ToString()}', " +
+                                $"'배출 명령 생성','{ID}')";
+                            RunSqlCMD(AMMDBConnectionString, q);
+
+                        }
+
+
                         if (dataGridView_missmatch.RowCount > 0)
                         {
                             Fnc_Get_PickID(strGroup);
@@ -7013,6 +7085,216 @@ namespace Amkor_Material_Manager
             
         }
 
+        private void SyncListCSVOut()
+        {
+            string filepath = System.Environment.CurrentDirectory + $"\\Sync_List\\SYNC_List_{DateTime.Now.ToString("yyyyMMdd_hhmmss")}.csv";
+
+            if (Directory.Exists(System.Environment.CurrentDirectory + $"\\Sync_List") == false)
+            {
+                Directory.CreateDirectory(System.Environment.CurrentDirectory + $"\\Sync_List");
+            }
+
+            System.IO.FileStream fs = new FileStream(filepath, FileMode.Create);
+
+            fs.Write(Encoding.UTF8.GetBytes("Sync List\n"), 0, "Sync List\n".Length);
+
+            string header = "DATETIME,EQUIP_ID,TOWER_NO,UID,SID,LOTID,QTY,INCH_INFO,SYNC_INFO\n";
+
+            fs.Write(Encoding.UTF8.GetBytes(header), 0, header.Length);
+
+            for (int i = 0; i < dataGridView_missmatch.Rows.Count; i++)
+            {
+                if (dataGridView_missmatch.Rows[i].Cells["UID"].Value.ToString() == "")
+                {
+                    dataGridView_missmatch.Rows.RemoveAt(i);
+                    --i;
+                }
+            }
+
+            string wstr = "";
+
+            for (int rowNo = 0; rowNo < dataGridView_missmatch.Rows.Count; rowNo++)
+            {
+                wstr = $"{DateTime.Now.ToString("yyyyMMdd hhmmss")},TOWER{comboBox_sel.SelectedIndex + 1},{dataGridView_missmatch.Rows[rowNo].Cells["위치"].Value.ToString()},{dataGridView_missmatch.Rows[rowNo].Cells["UID"].Value.ToString()}" +
+                    $",{dataGridView_missmatch.Rows[rowNo].Cells["SID"].Value.ToString()},{dataGridView_missmatch.Rows[rowNo].Cells["LOTID"].Value.ToString()},{dataGridView_missmatch.Rows[rowNo].Cells["Qty"].Value.ToString().Replace(",", "")}," +
+                    $"{dataGridView_missmatch.Rows[rowNo].Cells["인치"].Value.ToString()},Out List Create\n";
+                fs.Write(Encoding.UTF8.GetBytes(wstr), 0, wstr.Length);
+            }
+
+            fs.Flush();
+            fs.Close();
+            fs.Dispose();
+
+            if (DialogResult.Yes == MessageBox.Show("파일을 여시겠습니까?", "file open?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                ProcessStartInfo info = new ProcessStartInfo("excel.exe", filepath);
+                Process.Start(info);
+            }
+        }
+
+        private void SyncListExcelOut()
+        {
+            string filepath = System.Environment.CurrentDirectory + $"\\Sync_Excel\\SYNC_List_{DateTime.Now.ToString("yyyyMMdd_hhmmss")}.xlsx";
+
+            if(Directory.Exists(System.Environment.CurrentDirectory + $"\\Sync_Excel") == false)
+            {
+                Directory.CreateDirectory(System.Environment.CurrentDirectory + $"\\Sync_Excel");
+            }
+
+            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
+            Workbook workbook = application.Workbooks.Add();// Filename: string.Format("{0}\\{1}", System.Environment.CurrentDirectory, @"\WaferReturn\WaferReturnOutTemp.xlsx"));
+
+            Worksheet worksheet1 = workbook.Worksheets.get_Item(1);
+            object misValue = System.Reflection.Missing.Value;
+
+            application.Visible = false;
+
+
+            worksheet1.Name = "SyncList";
+
+            //System.Data.DataTable MtlList = SearchData(temp).Tables[0];//(System.Data.DataTable)dgv_ReturnWafer.DataSource;
+
+            if (dataGridView_missmatch.Rows.Count != 0)
+            {
+                string[,] item = new string[dataGridView_missmatch.Rows.Count, 9];
+                string[] columns = new string[dataGridView_missmatch.Columns.Count];
+
+                Range rd = worksheet1.Range[worksheet1.Cells[1, 1], worksheet1.Cells[1, 12]];
+                rd.Merge();
+                rd.Value2 = "Sync List";
+                rd.Font.Bold = true;
+                rd.Font.Size = 12.0;
+                worksheet1.get_Range("A1").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+
+
+                for(int i = 0 ; i < dataGridView_missmatch.Rows.Count ; i++)
+                {
+                    if(dataGridView_missmatch.Rows[i].Cells["UID"].Value.ToString() == "")
+                    {
+                        dataGridView_missmatch.Rows.RemoveAt(i);
+                        --i;
+                    }
+                }
+
+
+                if (dataGridView_missmatch.Rows.Count > 0)
+                {
+                    for (int c = 0; c < dataGridView_missmatch.Columns.Count; c++)
+                    {
+                        //컬럼 위치값을 가져오기
+                        columns[c] = ExcelColumnIndexToName(c);
+                    }
+
+                    for (int rowNo = 0; rowNo < dataGridView_missmatch.Rows.Count; rowNo++)
+                    {
+                        item[rowNo, 0] = DateTime.Now.ToString();
+                        item[rowNo, 1] = $"TOWER{comboBox_sel.SelectedIndex + 1}";
+                        item[rowNo, 2] = dataGridView_missmatch.Rows[rowNo].Cells["위치"].Value.ToString();
+                        item[rowNo, 3] = dataGridView_missmatch.Rows[rowNo].Cells["UID"].Value.ToString();
+                        item[rowNo, 4] = dataGridView_missmatch.Rows[rowNo].Cells["SID"].Value.ToString();
+                        item[rowNo, 5] = dataGridView_missmatch.Rows[rowNo].Cells["LOTID"].Value.ToString();
+                        item[rowNo, 6] = dataGridView_missmatch.Rows[rowNo].Cells["Qty"].Value.ToString();
+                        item[rowNo, 7] = dataGridView_missmatch.Rows[rowNo].Cells["인치"].Value.ToString();
+                        item[rowNo, 8] = "배출 명령 생성 완료";
+
+
+                        //if (dataGridView_missmatch.Rows[rowNo].Cells["UID"].Value.ToString() != "")
+                        //{
+                        //    for (int colNo = 0; colNo < dataGridView_missmatch.Columns.Count; colNo++)
+                        //    {
+                        //        if (colNo == 0)
+                        //        {
+
+                        //        }
+                        //        else
+                        //        {
+                        //            item[rowNo, colNo] = dataGridView_missmatch.Rows[rowNo].Cells[colNo].Value.ToString();
+                        //        }
+                        //    }
+                        //}
+                    }
+                }
+
+
+                //해당위치에 컬럼명을 담기
+                //worksheet1.get_Range("A1", columns[MtlList.Columns.Count - 1] + "1").Value2 = headers;
+                //해당위치부터 데이터정보를 담기
+                               
+                //for(int i = 0; i < dataGridView_missmatch.Columns.Count; i++)
+                //{
+                //    worksheet1.get_Range($"{(char)(0x41 + i)}3").Value = dataGridView_missmatch.Columns[i].HeaderText.ToString();
+                //    worksheet1.get_Range($"{(char)(0x41 + i)}3").HorizontalAlignment = HorizontalAlignment.Center;
+                //}
+
+                worksheet1.get_Range("A3").Value = "DATETIME";
+                worksheet1.get_Range("A3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("B3").Value = "EQUIP_ID";
+                worksheet1.get_Range("B3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("C3").Value = "TOWER_NO";
+                worksheet1.get_Range("C3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("D3").Value = "UID";
+                worksheet1.get_Range("D3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("E3").Value = "SID";
+                worksheet1.get_Range("E3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("F3").Value = "LOTID";
+                worksheet1.get_Range("F3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("G3").Value = "QTY";
+                worksheet1.get_Range("G3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("H3").Value = "INCH_INFO";
+                worksheet1.get_Range("H3").HorizontalAlignment = HorizontalAlignment.Center;
+
+                worksheet1.get_Range("I3").Value = "동기화 처리 내역";
+                worksheet1.get_Range("I3").HorizontalAlignment = HorizontalAlignment.Center;
+
+
+                worksheet1.get_Range("A4", columns[8] + (dataGridView_missmatch.Rows.Count + 3).ToString()).Value = item;
+                worksheet1.get_Range("A4", columns[8] + (dataGridView_missmatch.Rows.Count + 3).ToString()).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                worksheet1.Cells.NumberFormat = @"@";
+                worksheet1.Columns.AutoFit();
+
+
+                if (filepath != "")
+                {                    
+                    workbook.SaveAs(filepath, Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                }
+                else
+                {
+                    filepath = string.Format("{0}\\WaferReturnOut_{1}.xlsx", System.Environment.CurrentDirectory + "\\WaferReturn", DateTime.Now.ToString("yyyyMMddhhmmss"));
+                    workbook.SaveAs(filepath, Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                }
+
+
+                workbook.Close();
+                application.Quit();
+
+                releaseObject(application);
+                releaseObject(worksheet1);
+                releaseObject(workbook);
+
+
+                if (DialogResult.Yes == MessageBox.Show("파일을 여시겠습니까?", "file open?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    ProcessStartInfo info = new ProcessStartInfo("excel.exe", filepath);
+                    Process.Start(info);
+                }
+
+
+
+            }
+            else
+            {
+                MessageBox.Show("데이터가 없습니다.");
+            }
+        }
+
 
         public string GetRandomString(int digit)
         {
@@ -7080,6 +7362,35 @@ namespace Amkor_Material_Manager
             btn_MakeOutList.Text = String.Format("Tower {0:0} 동기화", comboBox_sel.SelectedIndex + 1);
 
             Synclog.Info(string.Format("Tower group selectedm change : {0}", comboBox_sel.Text));
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SyncListCSVOut();
+        }
+
+        private void cb_SyncExcel_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_SyncExcel.Checked == false)
+            {
+                cb_SyncExcel.Invoke((MethodInvoker)delegate
+                {
+                    cb_SyncExcel.Text = "CSV OUT";
+                });
+
+                Properties.Settings.Default.SyncOutExcel = false;
+            }
+            else
+            {
+                cb_SyncExcel.Invoke((MethodInvoker)delegate
+                {
+                    cb_SyncExcel.Text = "EXCEL OUT";
+                });
+
+                Properties.Settings.Default.SyncOutExcel = true;
+            }
+
+            Properties.Settings.Default.Save();
         }
 
         public string GetMaterialListSIMMQuery(string towerLocation, string tid)
