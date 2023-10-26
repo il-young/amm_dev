@@ -199,6 +199,12 @@
     <Compile Include="Form_Timeset.Designer.cs">
       <DependentUpon>Form_Timeset.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_SyncHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_SyncHistory.Designer.cs">
+      <DependentUpon>frm_SyncHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="MSSqlDB.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -249,6 +255,9 @@
     <EmbeddedResource Include="Form_Timeset.resx">
       <DependentUpon>Form_Timeset.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_SyncHistory.resx">
+      <DependentUpon>frm_SyncHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -257,6 +266,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -279,6 +289,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AMM6.ico" />
+    <None Include="Resources\스크린샷 2023-10-26 114443.png" />
+    <None Include="Resources\스크린샷 2023-10-26 101523.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

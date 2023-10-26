@@ -180,22 +180,7 @@ namespace Amkor_Material_Manager
             }
             else if (tabNo == 3)
             {
-                cb_SyncExcel.Checked = Properties.Settings.Default.SyncOutExcel;
-
-                if(cb_SyncExcel.Checked == false)
-                {
-                    cb_SyncExcel.Invoke((MethodInvoker)delegate
-                    {
-                        cb_SyncExcel.Text = "CSV OUT";
-                    });
-                }
-                else
-                {
-                    cb_SyncExcel.Invoke((MethodInvoker)delegate
-                    {
-                        cb_SyncExcel.Text = "EXCEL OUT";
-                    });
-                }
+                
 
                 //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
                 if (listk_count != 0)
@@ -7369,28 +7354,13 @@ namespace Amkor_Material_Manager
             SyncListCSVOut();
         }
 
-        private void cb_SyncExcel_CheckedChanged(object sender, EventArgs e)
+        
+
+        private void button5_Click_1(object sender, EventArgs e)
         {
-            if (cb_SyncExcel.Checked == false)
-            {
-                cb_SyncExcel.Invoke((MethodInvoker)delegate
-                {
-                    cb_SyncExcel.Text = "CSV OUT";
-                });
+            frm_SyncHistory _SyncHistory = new frm_SyncHistory();
 
-                Properties.Settings.Default.SyncOutExcel = false;
-            }
-            else
-            {
-                cb_SyncExcel.Invoke((MethodInvoker)delegate
-                {
-                    cb_SyncExcel.Text = "EXCEL OUT";
-                });
-
-                Properties.Settings.Default.SyncOutExcel = true;
-            }
-
-            Properties.Settings.Default.Save();
+            _SyncHistory.ShowDialog();
         }
 
         public string GetMaterialListSIMMQuery(string towerLocation, string tid)

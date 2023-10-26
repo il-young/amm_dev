@@ -46,5 +46,17 @@ namespace Amkor_Material_Manager.Properties {
                 this["SyncOutExcel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SyncOUtExcelPath {
+            get {
+                return ((string)(this["SyncOUtExcelPath"]));
+            }
+            set {
+                this["SyncOUtExcelPath"] = value;
+            }
+        }
     }
 }

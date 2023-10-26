@@ -136,7 +136,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView_longterm = new System.Windows.Forms.DataGridView();
             this.tabPage_match = new System.Windows.Forms.TabPage();
-            this.cb_SyncExcel = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.btn_MakeOutList = new System.Windows.Forms.Button();
             this.button_missmatch = new System.Windows.Forms.Button();
             this.button_dbload = new System.Windows.Forms.Button();
@@ -703,7 +703,7 @@
             // 
             // tabPage_match
             // 
-            this.tabPage_match.Controls.Add(this.cb_SyncExcel);
+            this.tabPage_match.Controls.Add(this.button5);
             this.tabPage_match.Controls.Add(this.btn_MakeOutList);
             this.tabPage_match.Controls.Add(this.button_missmatch);
             this.tabPage_match.Controls.Add(this.button_dbload);
@@ -723,16 +723,16 @@
             this.tabPage_match.Text = "Tower 동기화";
             this.tabPage_match.UseVisualStyleBackColor = true;
             // 
-            // cb_SyncExcel
+            // button5
             // 
-            this.cb_SyncExcel.AutoSize = true;
-            this.cb_SyncExcel.Location = new System.Drawing.Point(735, 14);
-            this.cb_SyncExcel.Name = "cb_SyncExcel";
-            this.cb_SyncExcel.Size = new System.Drawing.Size(77, 19);
-            this.cb_SyncExcel.TabIndex = 27;
-            this.cb_SyncExcel.Text = "Excel Out";
-            this.cb_SyncExcel.UseVisualStyleBackColor = true;
-            this.cb_SyncExcel.CheckedChanged += new System.EventHandler(this.cb_SyncExcel_CheckedChanged);
+            this.button5.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold);
+            this.button5.Location = new System.Drawing.Point(903, 3);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(92, 38);
+            this.button5.TabIndex = 28;
+            this.button5.Text = "Sync History";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
             // btn_MakeOutList
             // 
@@ -2887,7 +2887,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_longterm)).EndInit();
             this.tabPage_match.ResumeLayout(false);
-            this.tabPage_match.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_missmatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_amm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_asm)).EndInit();
@@ -3080,6 +3079,6 @@
         private System.Windows.Forms.Label l_WaitTime;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button btn_MakeOutList;
-        private System.Windows.Forms.CheckBox cb_SyncExcel;
+        private System.Windows.Forms.Button button5;
     }
 }
