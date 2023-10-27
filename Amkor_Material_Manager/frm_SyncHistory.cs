@@ -196,7 +196,7 @@ namespace Amkor_Material_Manager
 
                     
 
-                    worksheet1.get_Range("A4", columns[dgv_SyncHistory.ColumnCount-1] + (dgv_SyncHistory.Rows.Count + 3).ToString()).Value = item;
+                    worksheet1.get_Range("A4", columns[dgv_SyncHistory.ColumnCount-1] + (dgv_SyncHistory.Rows.Count + 3).ToString()).Value = item;                   
                     worksheet1.get_Range("A4", columns[dgv_SyncHistory.ColumnCount-1] + (dgv_SyncHistory.Rows.Count + 3).ToString()).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                     worksheet1.Cells.NumberFormat = @"@";
                     worksheet1.Columns.AutoFit();

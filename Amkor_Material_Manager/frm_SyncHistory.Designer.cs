@@ -31,11 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_SyncHistory));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgv_SyncHistory = new System.Windows.Forms.DataGridView();
-            this.dtp_from = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtp_to = new System.Windows.Forms.DateTimePicker();
-            this.btn_search = new System.Windows.Forms.Button();
-            this.btn_Excel = new System.Windows.Forms.Button();
             this.DATETIME = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EQUIP_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TOWER_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +42,11 @@
             this.SYNC_INFO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EMPLOYEE_NO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_directory = new System.Windows.Forms.Button();
+            this.btn_Excel = new System.Windows.Forms.Button();
+            this.btn_search = new System.Windows.Forms.Button();
+            this.dtp_to = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dtp_from = new System.Windows.Forms.DateTimePicker();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -102,59 +102,6 @@
             this.dgv_SyncHistory.RowTemplate.Height = 23;
             this.dgv_SyncHistory.Size = new System.Drawing.Size(1021, 409);
             this.dgv_SyncHistory.TabIndex = 0;
-            // 
-            // dtp_from
-            // 
-            this.dtp_from.CalendarFont = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.dtp_from.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dtp_from.Location = new System.Drawing.Point(0, 0);
-            this.dtp_from.Name = "dtp_from";
-            this.dtp_from.Size = new System.Drawing.Size(200, 21);
-            this.dtp_from.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(200, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "->";
-            // 
-            // dtp_to
-            // 
-            this.dtp_to.CalendarFont = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.dtp_to.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dtp_to.Location = new System.Drawing.Point(229, 0);
-            this.dtp_to.Name = "dtp_to";
-            this.dtp_to.Size = new System.Drawing.Size(200, 21);
-            this.dtp_to.TabIndex = 2;
-            // 
-            // btn_search
-            // 
-            this.btn_search.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btn_search.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_search.Location = new System.Drawing.Point(429, 0);
-            this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(75, 37);
-            this.btn_search.TabIndex = 3;
-            this.btn_search.Text = "Search";
-            this.btn_search.UseVisualStyleBackColor = true;
-            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
-            // 
-            // btn_Excel
-            // 
-            this.btn_Excel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btn_Excel.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btn_Excel.Image = ((System.Drawing.Image)(resources.GetObject("btn_Excel.Image")));
-            this.btn_Excel.Location = new System.Drawing.Point(969, 0);
-            this.btn_Excel.Name = "btn_Excel";
-            this.btn_Excel.Size = new System.Drawing.Size(52, 37);
-            this.btn_Excel.TabIndex = 4;
-            this.btn_Excel.UseVisualStyleBackColor = true;
-            this.btn_Excel.Click += new System.EventHandler(this.btn_Excel_Click);
             // 
             // DATETIME
             // 
@@ -226,6 +173,59 @@
             this.btn_directory.TabIndex = 5;
             this.btn_directory.UseVisualStyleBackColor = true;
             this.btn_directory.Click += new System.EventHandler(this.btn_directory_Click);
+            // 
+            // btn_Excel
+            // 
+            this.btn_Excel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btn_Excel.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Excel.Image = ((System.Drawing.Image)(resources.GetObject("btn_Excel.Image")));
+            this.btn_Excel.Location = new System.Drawing.Point(969, 0);
+            this.btn_Excel.Name = "btn_Excel";
+            this.btn_Excel.Size = new System.Drawing.Size(52, 37);
+            this.btn_Excel.TabIndex = 4;
+            this.btn_Excel.UseVisualStyleBackColor = true;
+            this.btn_Excel.Click += new System.EventHandler(this.btn_Excel_Click);
+            // 
+            // btn_search
+            // 
+            this.btn_search.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btn_search.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_search.Location = new System.Drawing.Point(429, 0);
+            this.btn_search.Name = "btn_search";
+            this.btn_search.Size = new System.Drawing.Size(75, 37);
+            this.btn_search.TabIndex = 3;
+            this.btn_search.Text = "Search";
+            this.btn_search.UseVisualStyleBackColor = true;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
+            // 
+            // dtp_to
+            // 
+            this.dtp_to.CalendarFont = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.dtp_to.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtp_to.Location = new System.Drawing.Point(229, 0);
+            this.dtp_to.Name = "dtp_to";
+            this.dtp_to.Size = new System.Drawing.Size(200, 21);
+            this.dtp_to.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(200, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "->";
+            // 
+            // dtp_from
+            // 
+            this.dtp_from.CalendarFont = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.dtp_from.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dtp_from.Location = new System.Drawing.Point(0, 0);
+            this.dtp_from.Name = "dtp_from";
+            this.dtp_from.Size = new System.Drawing.Size(200, 21);
+            this.dtp_from.TabIndex = 0;
             // 
             // frm_SyncHistory
             // 

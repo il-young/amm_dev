@@ -242,7 +242,7 @@
             this.MaximizeBox = false;
             this.Name = "AMM_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Amkor Material Manager";
+            this.Text = "S/W Version:20.11.01.02";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AMM_Main_FormClosing);
             this.Load += new System.EventHandler(this.AMM_Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

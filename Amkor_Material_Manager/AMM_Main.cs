@@ -82,7 +82,8 @@ namespace Amkor_Material_Manager
             string strPath = Application.StartupPath + "\\Versioninfo.ini";
             
             Version = System.IO.File.ReadAllLines(strPath)[0];
-            Text = "S/W Version:" + Version;
+
+           
 
             Frm_Order.MdiParent = this;
             Frm_Order.Location = new Point(0, 0);
@@ -110,6 +111,16 @@ namespace Amkor_Material_Manager
             strSMSearchEnable = ConfigurationManager.AppSettings["SM_Enable"];
             strMatchTab = ConfigurationManager.AppSettings["Match_Tab"];
             strNumberPad = ConfigurationManager.AppSettings["Number_Pad"];
+
+            if(strDefault_Group == "1" || strDefault_Group == "2" || strDefault_Group == "3")
+            {
+                Text = Version;
+            }
+            else
+            {
+                Text = "S/W Version:20.11.01.02";
+            }
+            
 
 
             if (strDefault_linecode == "")
@@ -351,7 +362,7 @@ namespace Amkor_Material_Manager
 
         private void AMM_Main_Load(object sender, EventArgs e)
         {
-
+            
         }
 
        

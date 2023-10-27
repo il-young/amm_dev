@@ -285,7 +285,7 @@ namespace Amkor_Material_Manager
             int Tot13InchCapa = 0;
 
 
-            for (int i = 1; i < MtlList.Rows.Count; i++)
+            for (int i = 0; i < MtlList.Rows.Count; i++)
             {
                 Inchdata data = new Inchdata();
 
@@ -305,14 +305,18 @@ namespace Amkor_Material_Manager
                 string inch_7_cal = (Int32.Parse(data.Inch_7_capa == "" ? "0" : data.Inch_7_capa) - Int32.Parse(data.Inch_7_cnt == "" ? "0" : data.Inch_7_cnt)).ToString();//220823_ilyoung_타워그룹추가
                 string inch_13_cal = (Int32.Parse(data.Inch_13_capa == "" ? "0" : data.Inch_13_capa) - Int32.Parse(data.Inch_13_cnt == "" ? "0" : data.Inch_13_cnt)).ToString();//220823_ilyoung_타워그룹추가
 
-                list[i - 1].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
-                list[i - 1].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
 
-                list[i - 1].Rows[0].HeaderCell.Value = "7\"";
-                list[i - 1].Rows[1].HeaderCell.Value = "13\"";
-
-                list[i - 1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
-                list[i - 1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
+                if (MtlList.Rows[i]["EQUIP_ID"].ToString().Contains("TWR") == true)
+                {
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
+                         
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[0].HeaderCell.Value = "7\"";
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[1].HeaderCell.Value = "13\"";
+                                                                                             
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
+                }
             }
 
             string TotInch7Cal = (Tot7InchCapa - Tot7InchCnt).ToString();
@@ -6790,7 +6794,7 @@ namespace Amkor_Material_Manager
                         {
                             q = $"insert into [TB_SYNC_INFO] ([DATETIME], [EQUIP_ID], [TOWER_NO], [UID], [SID], [LOTID], [QTY], [INCH_INFO], [SYNC_INFO], [EMPLOYEE_NO])" +
                                 $"VALUES (GETDATE(), '{strGroup}', '{row.Cells["인치"].Value.ToString()}', '{row.Cells["UID"].Value.ToString()}', '{row.Cells["SID"].Value.ToString()}'," +
-                                $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString())}, '{row.Cells["인치"].Value.ToString()}', " +
+                                $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString().Replace(",", ""))}, '{row.Cells["인치"].Value.ToString()}', " +
                                 $"'배출 명령 생성','{ID}')";
                             RunSqlCMD(AMMDBConnectionString, q);
 
@@ -6821,10 +6825,10 @@ namespace Amkor_Material_Manager
 
                             foreach (DataGridViewRow row in willMakeReel)
                             {
-                                row.Cells["UID"].Value = row.Cells["UID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["UID"].Value.ToString();
-                                row.Cells["SID"].Value = row.Cells["SID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["SID"].Value.ToString();
+                                //row.Cells["UID"].Value = row.Cells["UID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["UID"].Value.ToString();
+                                //row.Cells["SID"].Value = row.Cells["SID"].Value.ToString() == "" ? GetRandomString(10) : row.Cells["SID"].Value.ToString();
 
-                                row.Cells["LOTID"].Value = GetRandomString(5);
+                                //row.Cells["LOTID"].Value = GetRandomString(5);
                                 row.Cells["Qty"].Value = 1;
                                 row.Cells["투입형태"].Value = "SYNC";
                                 row.Cells["제조일"].Value = DateTime.Now.ToString("yyyyMMdd");
@@ -6832,7 +6836,9 @@ namespace Amkor_Material_Manager
                                 row.Cells["제조사"].Value = "SYNC";
                                 row.Cells["인치"].Value = "Unknown";
 
-                                AMM_Main.AMM.SyncDataInsert(
+                                if (row.Cells["MISS"].Value.ToString() != "AMM" && row.Cells["UID"].Value.ToString() != "")
+                                {
+                                    AMM_Main.AMM.SyncDataInsert(
                                     $"{nGroup}",
                                     row.Cells["위치"].Value.ToString(),
                                     row.Cells["UID"].Value.ToString(),
@@ -6844,7 +6850,10 @@ namespace Amkor_Material_Manager
                                     row.Cells["인치"].Value.ToString(),
                                     row.Cells["투입형태"].Value.ToString()
                                     );
+                                }
                             }
+
+                            bool ListSend = false;
 
                             for (int i = 0; i < dataGridView_missmatch.RowCount; i++)
                             {
@@ -6852,26 +6861,34 @@ namespace Amkor_Material_Manager
                                 {
                                     //string[] MissReelInfo = dataGridView_missmatch.Rows[i].Cells[0].Value.ToString().Split(';');
                                     //ASMRows.Add(dataGridView_missmatch.Rows[i]);
-                                    temp = AMM_Main.AMM.SetPicking_Readyinfo(
-                                        AMM_Main.strDefault_linecode, 
-                                        strGroup, 
-                                        label_pickid_LT.Text, 
-                                        dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(), 
-                                        ID, 
-                                        dataGridView_missmatch.Rows[i].Cells[6].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
-                                        dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(), 
-                                        dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(), 
-                                        "SYNC");
-                                    AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[i].Cells[3].Value.ToString());
+
+                                    if ((dataGridView_missmatch.Rows[i].Cells["MISS"].Value.ToString() == "TOWER" && dataGridView_missmatch.Rows[i].Cells["UID"].Value.ToString() != ""))
+                                    {
+                                        temp = AMM_Main.AMM.SetPicking_Readyinfo(
+                                            AMM_Main.strDefault_linecode,
+                                            strGroup,
+                                            label_pickid_LT.Text,
+                                            dataGridView_missmatch.Rows[i].Cells[3].Value.ToString(),
+                                            ID,
+                                            dataGridView_missmatch.Rows[i].Cells[6].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[1].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[2].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[4].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[9].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[7].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[10].Value.ToString(),
+                                            dataGridView_missmatch.Rows[i].Cells[5].Value.ToString(),
+                                            "SYNC");
+
+                                        AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[i].Cells[3].Value.ToString());
+
+                                        ListSend = true;
+                                    }
+                                    
                                 }
                             }
 
-                            if (label_pickid_LT.Text != "")
+                            if (label_pickid_LT.Text != "" &&  ListSend == true) 
                             {
                                 Fnc_Picklist_Comfirm();
                                 //Fnc_Save_TowerUseInfo();
@@ -6882,14 +6899,24 @@ namespace Amkor_Material_Manager
                                 Fnc_Picklist_Send(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text);
                             }
 
-                            Form_Progress frm = new Form_Progress();
-                            frm.Form_Show("배출 명령이 생성 되었습니다.", 0);
+                            if (ListSend == true)
+                            {
+                                Form_Progress frm = new Form_Progress();
+                                frm.Form_Show("배출 명령이 생성 되었습니다.", 0);
+                            }
+                            else
+                            {
+                                Form_Progress frm = new Form_Progress();
+                                frm.Form_Show("Sync 로그 기록 되어 있습니다.", 0);
+                            }
                         }
                         else
                         {
                             Form_Progress frm = new Form_Progress();
                             frm.Form_Show("목록이 비어 있습니다.", 0);
                         }
+
+                        dataGridView_missmatch.Rows.Clear();
                     }
                     else
                     {
