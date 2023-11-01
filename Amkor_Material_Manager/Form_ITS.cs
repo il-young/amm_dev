@@ -930,7 +930,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list[i].SID;
                             strinch = list[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list[i].Quantity);
+                            nQty = Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -938,14 +938,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list[i].SID;
                             strinch = list[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list[i].Quantity);
+                            nQty = Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list[i].Quantity);
+                        nQty = nQty + Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                     }
 
                     if (i == nMtlCount - 1)
@@ -1045,7 +1045,7 @@ namespace Amkor_Material_Manager
                             strLocation_before = list[i].Equipid;
                             //strInch = list[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list[i].Quantity);
+                            nQty = Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1065,14 +1065,14 @@ namespace Amkor_Material_Manager
                             strLocation_before = list[i].Equipid;
                             //strInch = list[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list[i].Quantity);
+                            nQty = Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list[i].Quantity);
+                        nQty = nQty + Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
 
                         if (strLocation_before != list[i].Equipid)
                         {
@@ -1344,7 +1344,7 @@ namespace Amkor_Material_Manager
 
             for (int i = 0; i < list.Count; i++)
             {
-                nQty = nQty + Int32.Parse(list[i].Quantity);
+                nQty = nQty + Int32.Parse(list[i].Quantity == "" ? "0" : list[i].Quantity);
                 if (strLocation != list[i].Equipid)
                 {
                     if (strLocation == "")
@@ -1468,7 +1468,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "" : list_input[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1476,14 +1476,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "" : list_input[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_input[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_input[i].Quantity == "" ? "" : list_input[i].Quantity);
                     }
 
                     if (i == list_input.Count - 1)
@@ -1511,7 +1511,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == "" ? "0" : list_return[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1519,14 +1519,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == "" ? "0" : list_return[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_return[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_return[i].Quantity == "" ? "0" : list_return[i].Quantity);
                     }
 
                     if (i == list_return.Count - 1)
@@ -1554,7 +1554,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity.Replace(",",""));
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                         else
@@ -1562,14 +1562,15 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity.Replace(",",""));
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_out[i].Quantity.Replace(",", ""));
+                        nQty = nQty + Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
+
                     }
 
                     if (i == list_out.Count - 1)
@@ -1585,7 +1586,7 @@ namespace Amkor_Material_Manager
                 nIndex = 1;
                 foreach (var item in list_input)
                 {
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
@@ -1598,7 +1599,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
                     dataGridView_return.Rows.Add(new object[12] { nIndex++, strDate, strTime, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, item.Manufacturer, item.Inch });
                 }
@@ -1609,7 +1610,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
 
                     string strType = "자동";
@@ -1699,7 +1700,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1707,14 +1708,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_input[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                     }
 
                     if (i == list_input.Count - 1)
@@ -1742,7 +1743,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == "0" ? "" : list_return[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1750,14 +1751,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == "0" ? "" : list_return[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_return[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_return[i].Quantity == "0" ? "" : list_return[i].Quantity);
                     }
 
                     if (i == list_return.Count - 1)
@@ -1785,7 +1786,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity);
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                         else
@@ -1793,14 +1794,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity);
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_out[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                     }
 
                     if (i == list_out.Count - 1)
@@ -1816,7 +1817,7 @@ namespace Amkor_Material_Manager
                 nIndex = 1;
                 foreach (var item in list_input)
                 {
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
@@ -1829,7 +1830,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
                     dataGridView_return.Rows.Add(new object[12] { nIndex++, strDate, strTime, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, item.Manufacturer, item.Inch });
                 }
@@ -1840,7 +1841,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
 
                     string strType = "자동";
@@ -1930,7 +1931,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1938,14 +1939,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_input[i].SID;
                             strInch = list_input[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_input[i].Quantity);
+                            nQty = Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_input[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_input[i].Quantity == "" ? "0" : list_input[i].Quantity);
                     }
 
                     if (i == list_input.Count - 1)
@@ -1973,7 +1974,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == ""  ? "0" : list_return[i].Quantity);
                             nIdx++;
                         }
                         else
@@ -1981,14 +1982,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_return[i].SID;
                             strInch = list_return[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_return[i].Quantity);
+                            nQty = Int32.Parse(list_return[i].Quantity == "" ? "0" : list_return[i].Quantity);
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_return[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_return[i].Quantity == "" ? "0" : list_return[i].Quantity);
                     }
 
                     if (i == list_return.Count - 1)
@@ -2016,7 +2017,7 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity);
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                         else
@@ -2024,14 +2025,14 @@ namespace Amkor_Material_Manager
                             strSetSID = list_out[i].SID;
                             strInch = list_out[i].Inch;
                             nReelcount = 1;
-                            nQty = Int32.Parse(list_out[i].Quantity);
+                            nQty = Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                             nIdx++;
                         }
                     }
                     else
                     {
                         nReelcount++;
-                        nQty = nQty + Int32.Parse(list_out[i].Quantity);
+                        nQty = nQty + Int32.Parse(list_out[i].Quantity == "" ? "0" : list_out[i].Quantity.Replace(",", ""));
                     }
 
                     if (i == list_out.Count - 1)
@@ -2047,7 +2048,7 @@ namespace Amkor_Material_Manager
                 nIndex = 1;
                 foreach (var item in list_input)
                 {
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
@@ -2060,7 +2061,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
                     dataGridView_return.Rows.Add(new object[12] { nIndex++, strDate, strTime, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, item.Manufacturer, item.Inch });
                 }
@@ -2071,7 +2072,7 @@ namespace Amkor_Material_Manager
                 {
                     string strDate = item.Creation_date.Substring(0, 8);
                     string strTime = item.Creation_date.Substring(8, 6);
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", item.Quantity);
                     strTime = strTime.Substring(0, 2) + ":" + strTime.Substring(2, 2) + ":" + strTime.Substring(4, 2);
 
                     string strType = "자동";
@@ -3707,7 +3708,7 @@ namespace Amkor_Material_Manager
                 if (cell.ColumnIndex == 2)
                 {
                     var Value = dataGridView_info.Rows[cell.RowIndex].Cells[cell.ColumnIndex].Value.ToString();
-                    nSum = nSum + Int32.Parse(Value);
+                    nSum = nSum + Int32.Parse(Value == "" ? "0" : Value);
                 }
             }
         }
@@ -4460,12 +4461,20 @@ namespace Amkor_Material_Manager
 
             foreach (var item in list)
             {
-                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
-                string strdate = item.Input_date;
-                strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
-                    + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);
+                try
+                {
+                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity == "" ? "0" : item.Quantity));
+                    string strdate = item.Input_date;
+                    strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
+                        + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);
 
-                dataGridView_amm.Rows.Add(new object[11] { nIndex++, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, strdate, item.Manufacturer, item.Inch });
+                    dataGridView_amm.Rows.Add(new object[11] { nIndex++, item.SID, item.LOTID, item.UID, strnQty, item.Input_type, item.Tower_no, item.Production_date, strdate, item.Manufacturer, item.Inch });
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
             }
 
             return nMtlCount;
@@ -4640,8 +4649,10 @@ namespace Amkor_Material_Manager
             for (int i = 0; i < dataGridView_asm.Rows.Count; i++)
             {
                 StorageData_Compare data = new StorageData_Compare();
-                data.SID = dataGridView_asm.Rows[i].Cells[2].Value.ToString(); //SID                
-                data.UID = dataGridView_asm.Rows[i].Cells[1].Value.ToString(); //UID
+                data.SID = dataGridView_asm.Rows[i].Cells["SID"].Value.ToString(); //SID                
+                data.UID = dataGridView_asm.Rows[i].Cells["UID"].Value.ToString(); //UID
+                data.Tower_no = dataGridView_asm.Rows[i].Cells["위치"].Value.ToString();
+                data.Quantity = dataGridView_asm.Rows[i].Cells["Qty"].Value.ToString();
 
                 if (data.UID != "")
                     asmList.Add(data);
@@ -6787,20 +6798,18 @@ namespace Amkor_Material_Manager
                     //    SyncListCSVOut();
                     //}
 
+                    string q = "";
+                    foreach (DataGridViewRow row in dataGridView_missmatch.Rows)
+                    {
+                        q = $"insert into [TB_SYNC_INFO] ([DATETIME], [EQUIP_ID], [TOWER_NO], [UID], [SID], [LOTID], [QTY], [INCH_INFO], [SYNC_INFO], [EMPLOYEE_NO])" +
+                            $"VALUES (GETDATE(), '{strGroup}', '{row.Cells["인치"].Value.ToString()}', '{row.Cells["UID"].Value.ToString()}', '{row.Cells["SID"].Value.ToString()}'," +
+                            $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString().Replace(",", ""))}, '{row.Cells["인치"].Value.ToString()}', " +
+                            $"'배출 명령 생성','{ID}')";
+                        RunSqlCMD(AMMDBConnectionString, q);
+                    }
+
                     if (nGroup <= 3)
                     {
-                        string q = "";
-                        foreach(DataGridViewRow row in dataGridView_missmatch.Rows)
-                        {
-                            q = $"insert into [TB_SYNC_INFO] ([DATETIME], [EQUIP_ID], [TOWER_NO], [UID], [SID], [LOTID], [QTY], [INCH_INFO], [SYNC_INFO], [EMPLOYEE_NO])" +
-                                $"VALUES (GETDATE(), '{strGroup}', '{row.Cells["인치"].Value.ToString()}', '{row.Cells["UID"].Value.ToString()}', '{row.Cells["SID"].Value.ToString()}'," +
-                                $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString().Replace(",", ""))}, '{row.Cells["인치"].Value.ToString()}', " +
-                                $"'배출 명령 생성','{ID}')";
-                            RunSqlCMD(AMMDBConnectionString, q);
-
-                        }
-
-
                         if (dataGridView_missmatch.RowCount > 0)
                         {
                             Fnc_Get_PickID(strGroup);
@@ -6920,6 +6929,10 @@ namespace Amkor_Material_Manager
                     }
                     else
                     {
+                        int update = 0;
+                        int ok = 0;
+                        int fail = 0;
+
                         if(dataGridView_missmatch.RowCount > 0)
                         {
                             bool LostTower = false;
@@ -6933,51 +6946,63 @@ namespace Amkor_Material_Manager
 
                             bool tower = false;
 
-                            for (int i = 0; i <  loop ; i++)
+
+                            foreach(DataGridViewRow mrow in dataGridView_missmatch.Rows)
                             {
+                                Thread.Sleep(100);
+
                                 try
                                 {
-                                    if (dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "AMM")
+                                    if (mrow.Cells["MISS"].Value.ToString() == "AMM")
                                     {
                                         tower = true;
 
-                                        if (dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
+                                        if (mrow.Cells["위치"].Value.ToString().Contains("T0") == true)
                                         {
-                                            bool UID = false;
-                                            foreach (DataGridViewRow row in dataGridView_amm.Rows)
-                                            {
-                                                if (row.Cells["UID"].Value.ToString().Equals(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()))
-                                                {
-                                                    UID = true;
-                                                    break;
-                                                }
-                                            }
+                                            //bool UID = false;
+                                            //foreach (DataGridViewRow row in dataGridView_amm.Rows)
+                                            //{
+                                            //    if (row.Cells["UID"].Value.ToString() == mrow.Cells["UID"].Value.ToString())
+                                            //    {
+                                            //        UID = true;
+                                            //        break;
+                                            //    }
+                                            //}
 
-                                            if (UID == false)
+                                            //if (UID == false)
                                             {
                                                 res = AMM_Main.AMM.SetLoadComplete(AMM_Main.strDefault_linecode, strGroup, string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
-                                                    dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["LOTID"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["Qty"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["제조사"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["제조일"].Value.ToString(),
-                                                    dataGridView_missmatch.Rows[0].Cells["인치"].Value.ToString(),
+                                                    mrow.Cells["위치"].Value.ToString(),
+                                                    mrow.Cells["UID"].Value.ToString(),
+                                                    mrow.Cells["SID"].Value.ToString(),
+                                                    mrow.Cells["LOTID"].Value.ToString(),
+                                                    mrow.Cells["Qty"].Value.ToString(),
+                                                    mrow.Cells["제조사"].Value.ToString(),
+                                                    mrow.Cells["제조일"].Value.ToString(),
+                                                    mrow.Cells["인치"].Value.ToString(),
                                                     "SYNC"
                                                     ), true
                                                     );
-                                            }
-                                            else
-                                            {
-                                                AMM_Main.AMM.AddSqlQuery(string.Format("Update [TB_MTL_INFO] set [TOWER_NO]='{0}' where [UID]='{1}'", dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(), dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
+
+                                                if (res.ToUpper() == "UPDATE")
+                                                {
+                                                    ++update;
+                                                }
+                                                else if (res.ToUpper() == "OK")
+                                                {
+                                                    ++ok;
+                                                }
+                                                else if (res.ToUpper().Contains("FAIL") == true)
+                                                {
+                                                    ++fail;
+                                                }
                                             }
                                         }
                                         else
                                         {
                                             Synclog.Info(string.Format("{0} Databse Delete UID : {1}", strGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
 
-                                            DeleteMycronicTower(nGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+                                            DeleteMycronicTower(nGroup, mrow.Cells["UID"].Value.ToString());
                                         }
                                     }
                                     else
@@ -7015,7 +7040,7 @@ namespace Amkor_Material_Manager
 
                                         foreach (DataGridViewRow row in dataGridView_asm.Rows)
                                         {
-                                            if (row.Cells["UID"].Value.ToString().Equals(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()))
+                                            if (row.Cells["UID"].Value.ToString() == mrow.Cells["UID"].Value.ToString())
                                             {
                                                 UID = true;
                                                 break;
@@ -7026,34 +7051,43 @@ namespace Amkor_Material_Manager
                                         {
                                             LostTower = true;
 
+                                            RunSqlCMD(AMMDBConnectionString, $"update [TB_MTL_INFO] set [INPUT_TYPE]='SYNC' where UID='{mrow.Cells["UID"].Value.ToString()}'");
+                                            Thread.Sleep(10);
+
                                             res = AMM_Main.AMM.SetPicking_Readyinfo(
-                                                AMM_Main.strDefault_linecode, 
-                                                strGroup, label_pickid_LT.Text, 
-                                                dataGridView_missmatch.Rows[0].Cells[3].Value.ToString(), 
-                                                ID, 
-                                                dataGridView_missmatch.Rows[0].Cells[6].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[1].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[2].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[4].Value.ToString().Replace(",",""),
-                                                dataGridView_missmatch.Rows[0].Cells[9].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[7].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[10].Value.ToString(),
-                                                dataGridView_missmatch.Rows[0].Cells[5].Value.ToString(), "SYNC");
+                                                AMM_Main.strDefault_linecode,
+                                                strGroup, label_pickid_LT.Text,
+                                                mrow.Cells[3].Value.ToString(),
+                                                ID,
+                                                mrow.Cells[6].Value.ToString(),
+                                                mrow.Cells[1].Value.ToString(),
+                                                mrow.Cells[2].Value.ToString(),
+                                                mrow.Cells[4].Value.ToString().Replace(",", ""),
+                                                mrow.Cells[9].Value.ToString(),
+                                                mrow.Cells[7].Value.ToString(),
+                                                mrow.Cells[10].Value.ToString(),
+                                                mrow.Cells[5].Value.ToString(), "SYNC");
                                             //AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[0].Cells[3].Value.ToString());
 
                                             AMMLostCnt++;
                                         }
                                     }
-                                    
-                                    if(res == "OK")
-                                    dataGridView_missmatch.Rows.RemoveAt(0);
 
+                                    if (res == "OK")
+                                        dataGridView_missmatch.Rows.RemoveAt(0);
+
+                                    Application.DoEvents();
                                     dataGridView_missmatch.Update();
                                 }
                                 catch (Exception ex)
                                 {
 
                                 }
+                            }
+
+                            for (int i = 0; i <  loop ; i++)
+                            {
+                                
                                 
                             }
 
@@ -7078,7 +7112,9 @@ namespace Amkor_Material_Manager
                                 Synclog.Info(string.Format("{0} Database에서 삭제가 완료 되었습니다.", strGroup));
 
                                 Form_Progress frm = new Form_Progress();
-                                frm.Form_Show(string.Format("{0} Database에서 삭제가 완료 되었습니다.", strGroup), 0);
+                                //frm.Form_Show($"Insert : {ok}, Update : {update}, Fail : {fail}", 0);
+                                frm.Form_Show(string.Format("{0} Database에서 삭제가 완료 되었습니다.", strGroup),0);
+
                             }
                            
 
