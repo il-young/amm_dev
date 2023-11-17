@@ -66,6 +66,10 @@ namespace Amkor_Material_Manager
         string strASM_TowerLocation1 = "", strASM_TowerLocation2 = "", strASM_TowerLocation3 = "";
         int nDbUpdate = -1;
 
+        Dictionary<int, string> Dec2Alpa = new Dictionary<int, string>();
+        
+
+
         public Form_ITS()
         {
             InitializeComponent();
@@ -95,11 +99,31 @@ namespace Amkor_Material_Manager
             strASM_TowerLocation1 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower";
             strASM_TowerLocation2 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower2";
             strASM_TowerLocation3 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower3";
+            
+            init_Dic();
 
             if (AMM_Main.strMatchTab == "TRUE")
             {
                 Fnc_InitMSSql();
             }
+        }
+
+        private void init_Dic()
+        {
+            Dec2Alpa.Clear();
+            Dec2Alpa.Add(1, "A");
+            Dec2Alpa.Add(2, "B");
+            Dec2Alpa.Add(3, "C");
+            Dec2Alpa.Add(4, "D");
+            Dec2Alpa.Add(5, "E");
+            Dec2Alpa.Add(6, "F");
+            Dec2Alpa.Add(7, "G");
+            Dec2Alpa.Add(8, "H");
+            Dec2Alpa.Add(9, "I");
+            Dec2Alpa.Add(10, "J");
+            Dec2Alpa.Add(11, "K");
+            Dec2Alpa.Add(12, "L");
+            Dec2Alpa.Add(13, "M");
         }
 
         private void tabControl_ITS_SelectedIndexChanged(object sender, EventArgs e)
@@ -112,8 +136,6 @@ namespace Amkor_Material_Manager
             int listk_count = dataGridView_LTlist.Rows.Count;
             string strPickingID = label_pickid_LT.Text;
             //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-
-
 
             if (tabNo == 0)
             {
@@ -133,8 +155,6 @@ namespace Amkor_Material_Manager
                     AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
                 }
                 //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-
-
             }
             //[210818_Sangik.choi_capa 조회 탭 추가 by이종명수석님
             else if (tabNo == 1)
@@ -218,9 +238,6 @@ namespace Amkor_Material_Manager
                 SDTTower.Value = DateTime.Now.Date.AddDays(-1);
                 EDTTower.Value = DateTime.Now.Date;
             }
-
-
-
         }
 
         //[210818_Sangik.choi_capa 조회 탭 추가 by이종명수석님
@@ -228,8 +245,6 @@ namespace Amkor_Material_Manager
         private void Fnc_Init_datagrid_capa()
         {
             List<DataGridView> list = new List<DataGridView>();
-
-
 
             list.Add(dataGridView_group1);
             list.Add(dataGridView_group2);
@@ -960,7 +975,7 @@ namespace Amkor_Material_Manager
             {
                 foreach (var item in list)
                 {
-                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                    string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity == "" ? "0" : item.Quantity));
                     string strdate = item.Input_date;
                     strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
                         + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);
@@ -1210,7 +1225,7 @@ namespace Amkor_Material_Manager
 
             foreach (var item in list)
             {
-                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));
+                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity == "" ? "0" : item.Quantity));
                 string strdate = item.Input_date;
                 strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
                     + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);
@@ -1311,7 +1326,7 @@ namespace Amkor_Material_Manager
                     {
                         if (data.UID == strMtl)
                         {
-                            strnQty = string.Format("{0:0,0}", Int32.Parse(data.Quantity));
+                            strnQty = string.Format("{0:0,0}", Int32.Parse(data.Quantity == "" ? "0" : data.Quantity));
 
                             label_info1.Text = data.SID;
                             label_info2.Text = strEquipid + j.ToString();
@@ -3824,7 +3839,9 @@ namespace Amkor_Material_Manager
                 }
                 else
                 {
-                    GetMycronicTower(n + 1);
+                    MDBConn = null;
+                    GetMycronicTowerLocal(n + 1);
+                    GetMycronicTowerBackup();
                     Fnc_Process_GetAMMinfo("TWR" + (n + 1).ToString());
                 }
 
@@ -3846,17 +3863,30 @@ namespace Amkor_Material_Manager
         }
 
 
-        private void GetMycronicTower(int Group)
+        private void GetMycronicTowerBackup()
         {
-            DataTable dt = new DataTable();
-
             try
             {
+                dgv_backup.Rows.Clear();
+                dgv_backup.Columns.Clear(); 
+
+                dgv_backup.Columns.Add("NO", "NO");
+                dgv_backup.Columns.Add("SID", "SID");
+                dgv_backup.Columns.Add("LOTID", "LOTID");
+                dgv_backup.Columns.Add("UID", "UID");
+                dgv_backup.Columns.Add("Qty", "Qty");
+                dgv_backup.Columns.Add("투입일", "투입일");
+                dgv_backup.Columns.Add("제조일", "제조일");
+                dgv_backup.Columns.Add("제조사", "제조사");
+                dgv_backup.Columns.Add("위치", "위치");
+                dgv_backup.Columns.Add("인치", "인치");
+
+                DataTable dt = new DataTable();
                 using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
                 {
                     c.Open();
 
-                    using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", Group), c))
+                    using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where NAME='TOWER{comboBox_sel.SelectedIndex + 1}_PATH'", c))
                     {
                         using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
                         {
@@ -3865,17 +3895,90 @@ namespace Amkor_Material_Manager
                     }
                 }
 
-                string DB_path = dt.Rows[0][0].ToString();
+                string path = dt.Rows[0][1].ToString();
+
+
+
                 DataConn conn1 = new DataConn();
-                DataSet ds;
+                //              0 UID     1 제조일       2 위치     3 입고날짜   4 Qty    5 인치       6 제조사       7 LOTID
+                DataSet ds = conn1.GetDataset("select [Carrier], [CreateDate], [Depot], [DepotDate], [Stock], [Diameter], [Manufactur], [Custom1] from Carrier ", @"C:\SMDTowerSQL\BackupDB.MDB");// path);
 
-                string sql = @"SELECT [Custom1], [Carrier], [Stock], [DepotDate], [DepotTime], [CreateDate], [Manufactur], [Depot] from [Carrier] order by [Carrier]";
+                int rowcnt = 1;
 
+                foreach(DataRow row in ds.Tables[0].Rows)
+                {
+                    dgv_backup.Rows.Add(
+                        rowcnt++,
+                        "",
+                        row[7].ToString(),
+                        row[0].ToString(),
+                        row[4].ToString(),
+                        row[3].ToString(),
+                        row[1].ToString(),
+                        row[6].ToString(),
+                        row[2].ToString().Contains(",") == false ? row[2].ToString() : row[2].ToString().Split(',')[0].Split(' ')[1],
+                        row[5].ToString()
+                    );
+                }
 
+            }
+            catch (Exception ex)
+            {
+                Synclog.Error(ex.StackTrace);
+                Synclog.Error(ex.Message);
+
+                if (ex.Message == "디스크 또는 네트워크 오류입니다.")
+                {
+                    MessageBox.Show("Database에 접속 할 수 없습니다.\n네트워크를 점검해 주세요");
+                }
+
+            }
+            
+        }
+
+        private DataSet GetMycronicData(int Group, string query)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+            {
+                c.Open();
+
+                using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where NAME='TOWER{Group}_IP'", c))
+                {
+                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    {
+                        adt.Fill(dt);
+                    }
+                }
+            }
+
+            string IP = dt.Rows[0][1].ToString();
+            DataSet ds = new DataSet();
+
+            using (SqlConnection c = new SqlConnection($"server={IP};database=stsys; user id=amm;password=amm@123"))
+            {
+                c.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, c))// "SELECT [Carrier],[CreateDate],[ArticleName],[Depot],[DepotDate],[Stock],[Diameter],[Manufactur],[Custom1],[Custom2],[Diameter] FROM [stsys].[dbo].[TCarrier] with(nolock) order by [Carrier]", c))
+                {
+                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    {
+                        adt.Fill(ds);
+                    }
+                }
+            }
+
+            return ds;
+        }
+
+        private void GetMycronicTowerLocal(int Group)
+        {
+            try 
+            { 
                 //string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
 
-                ds = conn1.GetDataset(sql, DB_path);
-                SortMDB(ds);
+                
+                SortMDB(GetMycronicData(Group, "SELECT [Carrier],[CreateDate],[ArticleName],[Depot],[DepotDate],[Stock],[Diameter],[Manufactur],[Custom1],[Custom2],[Diameter] FROM [stsys].[dbo].[TCarrier] with(nolock) order by [Carrier]"));
                 //dataGridView_asm.DataSource = ds.Tables[0];
             }
             catch (Exception ex)
@@ -3892,37 +3995,71 @@ namespace Amkor_Material_Manager
             
         }
 
+        string MycronicTowerIP = "";
+
         private void DeleteMycronicTower(int Group, string UID)
         {
             DataTable dt = new DataTable();
 
             try
             {
-                using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+                if (MycronicTowerIP == "")
+                {
+                    using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+                    {
+                        c.Open();
+
+                        using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where NAME='TOWER{Group}_IP'", c))
+                        {
+                            using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                            {
+                                adt.Fill(dt);
+                            }
+                        }
+                    }
+
+                    MycronicTowerIP= dt.Rows[0][1].ToString();
+                }
+
+                DataSet ds = new DataSet();
+
+                using (SqlConnection c = new SqlConnection($"server={MycronicTowerIP};database=stsys; user id=amm;password=amm@123"))
                 {
                     c.Open();
-
-                    using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", Group), c))
+                    
+                    using (SqlCommand cmd = new SqlCommand($"select  * FROM [stsys].[dbo].[TCarrier] where Carrier='{UID}'", c))
                     {
                         using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
                         {
-                            adt.Fill(dt);
+                            adt.Fill(ds);
                         }
                     }
                 }
 
-                string DB_path = dt.Rows[0][0].ToString();
-                DataConn conn1 = new DataConn();
+                int res = ds.Tables[0].Rows.Count;
                 
-                int res = conn1.DeleteData(UID, DB_path);
 
-                if(res == 0)
+                if(res == 1)
                 {
-                    Synclog.Info("Delete Fail UID : {0}", UID);
+                    using (SqlConnection c = new SqlConnection($"server={MycronicTowerIP};database=stsys; user id=amm;password=amm@123"))
+                    {
+                        c.Open();
+
+                        using (SqlCommand cmd = new SqlCommand($"delete FROM [stsys].[dbo].[TCarrier] where Carrier='{UID}'", c))
+                        {
+                            using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                            {
+                                adt.Fill(ds);
+                            }
+                        }
+                    }
+
+                    Synclog.Info("Delete Success UID : {0}", UID);
                 }
                 else
                 {
-                    Synclog.Info("Delete Success UID : {0}", UID);
+                    Synclog.Info($"Delete Fail UID : {UID}, res : {res}");
+                    
                 }
                 
             }
@@ -3937,6 +4074,44 @@ namespace Amkor_Material_Manager
                 }
             }
 
+        }
+
+
+
+        Dictionary<string, string> Tower_serial = new Dictionary<string, string>();
+
+        private void GetTowerSerial()
+        {
+            try
+            {
+                DataSet dt = new DataSet();
+                
+
+                using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+                {
+                    c.Open();
+
+                    using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where TYPE='TOWER_SERIAL'", c))
+                    {
+                        using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                        {
+                            adt.Fill(dt);
+                        }
+                    }
+                }
+
+
+                for (int i = 0; i < dt.Tables[0].Rows.Count; i++)
+                {
+                    Tower_serial.Add(dt.Tables[0].Rows[i]["VALUE"].ToString(), dt.Tables[0].Rows[i]["NAME"].ToString());
+                }
+            }
+            catch (Exception ex )
+            {
+
+                throw;
+            }
+            
         }
 
         private void SortMDB(DataSet ds)
@@ -3954,21 +4129,26 @@ namespace Amkor_Material_Manager
             dataGridView_asm.Columns.Add("제조일", "제조일");
             dataGridView_asm.Columns.Add("제조사", "제조사");
             dataGridView_asm.Columns.Add("위치", "위치");
+            dataGridView_asm.Columns.Add("인치", "인치");
 
             try
             {
+                if(Tower_serial.Count == 0)
+                    GetTowerSerial();
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     dataGridView_asm.Rows.Add(
                         (i + 1).ToString(),
-                        "",
-                        ds.Tables[0].Rows[i]["Custom1"].ToString(),
-                        ds.Tables[0].Rows[i]["Carrier"].ToString(),
-                        ds.Tables[0].Rows[i]["Stock"].ToString(),
-                        ds.Tables[0].Rows[i]["DepotDate"].ToString() + " " + ds.Tables[0].Rows[i]["DepotTime"].ToString(),
-                        ds.Tables[0].Rows[i]["CreateDate"].ToString(),
-                        ds.Tables[0].Rows[i]["Manufactur"].ToString(),
-                        ds.Tables[0].Rows[i]["Depot"].ToString().Length < 10 ? ds.Tables[0].Rows[i]["Depot"].ToString() : ds.Tables[0].Rows[i]["Depot"].ToString().Substring(6, 5)
+                        ds.Tables[0].Rows[i]["ArticleName"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["Custom1"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["Carrier"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["Stock"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["DepotDate"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["CreateDate"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["Manufactur"].ToString().Trim(),
+                        ds.Tables[0].Rows[i]["Depot"].ToString().Contains(".") == true ? Tower_serial[ds.Tables[0].Rows[i]["Depot"].ToString().Split('.')[0]] : ds.Tables[0].Rows[i]["Depot"].ToString(),
+                        ds.Tables[0].Rows[i]["Diameter"].ToString().Trim()
                     );
 
                 }
@@ -4054,6 +4234,7 @@ namespace Amkor_Material_Manager
             {
                 nStart = Fnc_Missmatch_ASMcompare(nStart);
                 Fnc_Missmatch_AMMcompare(nStart);
+                MissmatchDB2Backup();
             }
             
 
@@ -4642,8 +4823,308 @@ namespace Amkor_Material_Manager
                 idx++;
             }
         }
+
+        public void MissmatchDB2Backup()
+        {
+            /*
+            0 dataGridView_missmatch.Columns.Add("NO", "NO");
+            1 dataGridView_missmatch.Columns.Add("SID", "SID");
+            2 dataGridView_missmatch.Columns.Add("LOTID", "LOTID#");
+            3 dataGridView_missmatch.Columns.Add("UID", "UID");
+            4 dataGridView_missmatch.Columns.Add("Qty", "Qty");
+            5 dataGridView_missmatch.Columns.Add("투입형태", "투입형태");
+            6 dataGridView_missmatch.Columns.Add("위치", "위치");
+            7 dataGridView_missmatch.Columns.Add("제조일", "제조일");
+            8 dataGridView_missmatch.Columns.Add("투입일", "투입일");
+            9 dataGridView_missmatch.Columns.Add("제조사", "제조사");
+            10 dataGridView_missmatch.Columns.Add("인치", "인치");
+            11 dataGridView_missmatch.Columns.Add("MISS", "MISS");           
+            */
+
+
+            List<DataGridViewRow> rowList = new List<DataGridViewRow>();
+
+            foreach(DataGridViewRow row in dataGridView_asm.Rows)
+            {
+                rowList = dgv_backup.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString()).ToList();
+
+                if(rowList.Count == 0)
+                {
+                    dataGridView_missmatch.Rows.Add(
+                        dataGridView_missmatch.RowCount + 1,
+                        row.Cells["SID"].Value.ToString(),
+                        row.Cells["LOTID"].Value.ToString(),
+                        row.Cells["UID"].Value.ToString(),
+                        row.Cells["Qty"].Value.ToString(),
+                        "",
+                        row.Cells["위치"].Value.ToString(),
+                        row.Cells["제조일"].Value.ToString(),
+                        row.Cells["투입일"].Value.ToString(),                        
+                        row.Cells["제조사"].Value.ToString(),
+                        row.Cells["인치"].Value.ToString(),
+                        "Backup"                        
+                        );
+
+                    dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].DefaultCellStyle.BackColor = Color.LimeGreen;
+                }
+                else if(rowList.Count == 1)
+                {
+                    bool isIt = false;
+                    int a = 0x00;
+
+                    if (row.Cells["SID"].Value.ToString() != rowList[0].Cells["SID"].Value.ToString())
+                    {
+                        //rowList[0].Cells["SID"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                    }
+
+                    if (row.Cells["LOTID"].Value.ToString() != rowList[0].Cells["LOTID"].Value.ToString())
+                    {
+                        rowList[0].Cells["LOTID"].Style.BackColor = Color.LimeGreen;
+                        isIt = true;
+                        a |= 0x01;
+                    }
+
+                    if (row.Cells["UID"].Value.ToString() != rowList[0].Cells["UID"].Value.ToString())
+                    {
+                        rowList[0].Cells["UID"].Style.BackColor = Color.LimeGreen;
+                        isIt = true;
+                        a |= 0x02;
+                    }
+
+                    if (row.Cells["Qty"].Value.ToString() != rowList[0].Cells["Qty"].Value.ToString())
+                    {
+                        rowList[0].Cells["Qty"].Style.BackColor = Color.LimeGreen;
+                        isIt = true;
+                        a |= 0x04;
+                    }
+
+                    if (row.Cells["위치"].Value.ToString() != rowList[0].Cells["위치"].Value.ToString())
+                    {
+                        rowList[0].Cells["위치"].Style.BackColor = Color.LimeGreen;
+                        isIt = true;
+                        a |= 0x10;
+                    }
+
+
+                    if (row.Cells["제조일"].Value.ToString() != rowList[0].Cells["제조일"].Value.ToString())
+                    {
+                        rowList[0].Cells["제조일"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                        a |= 0x20;
+                    }
+
+
+                    if (row.Cells["투입일"].Value.ToString() != rowList[0].Cells["투입일"].Value.ToString())
+                    {
+                        rowList[0].Cells["투입일"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                        a |= 0x30;
+                    }
+
+                    
+                    if (row.Cells["제조사"].Value.ToString() != rowList[0].Cells["제조사"].Value.ToString())
+                    {
+                        rowList[0].Cells["제조사"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                        a |= 0x40;
+                    }
+
+                    if (row.Cells["인치"].Value.ToString() != rowList[0].Cells["인치"].Value.ToString())
+                    {
+                        rowList[0].Cells["인치"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                        a |= 0x80;
+                    }
+
+
+                    if (isIt == true)
+                    {
+                        dataGridView_missmatch.Rows.Add(
+                        dataGridView_missmatch.RowCount + 1,
+                        row.Cells["SID"].Value.ToString(),
+                        row.Cells["LOTID"].Value.ToString(),
+                        row.Cells["UID"].Value.ToString(),
+                        row.Cells["Qty"].Value.ToString(),
+                        "",
+                        row.Cells["위치"].Value.ToString(),
+                        row.Cells["제조일"].Value.ToString(),
+                        row.Cells["투입일"].Value.ToString(),
+                        row.Cells["제조사"].Value.ToString(),
+                        row.Cells["인치"].Value.ToString(),
+                        "Backup"
+                        );
+
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["LOTID"].Style.BackColor = ((a) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["UID"].Style.BackColor = ((a >> 1) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["Qty"].Style.BackColor = ((a >> 2) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["위치"].Style.BackColor = ((a >> 3) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["제조일"].Style.BackColor = ((a >> 4) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["투입일"].Style.BackColor = ((a >> 5) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["제조사"].Style.BackColor = ((a >> 6) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["인치"].Style.BackColor = ((a >> 7) & 0x01) == 0x01 ? Color.LimeGreen : Color.FromArgb(255, 255, 192);
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
+
+            foreach(DataGridViewRow row in dgv_backup.Rows)
+            {
+                /*
+                 dataGridView_asm.Columns.Add("NO", "NO");
+                dataGridView_asm.Columns.Add("SID", "SID");
+                dataGridView_asm.Columns.Add("LOTID", "LOTID");
+                dataGridView_asm.Columns.Add("UID", "UID");
+                dataGridView_asm.Columns.Add("Qty", "Qty");
+                dataGridView_asm.Columns.Add("투입일", "투입일");
+                dataGridView_asm.Columns.Add("제조일", "제조일");
+                dataGridView_asm.Columns.Add("제조사", "제조사");
+                dataGridView_asm.Columns.Add("위치", "위치");
+                 */
+
+                rowList = dataGridView_asm.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString()).ToList();
+
+                if(rowList.Count == 0 && row.Cells["위치"].Value.ToString().Contains("T0") == true)
+                {
+                    dataGridView_missmatch.Rows.Add(
+                        dataGridView_missmatch.RowCount + 1,
+                        row.Cells["SID"].Value.ToString(),
+                        row.Cells["LOTID"].Value.ToString(),
+                        row.Cells["UID"].Value.ToString(),
+                        row.Cells["Qty"].Value.ToString(),
+                        "",
+                        row.Cells["위치"].Value.ToString(),
+                        row.Cells["제조일"].Value.ToString(),
+                        row.Cells["투입일"].Value.ToString(),
+                        row.Cells["제조사"].Value.ToString(),
+                        row.Cells["인치"].Value.ToString(),
+                        "SQL_DB");
+
+                    dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].DefaultCellStyle.BackColor = Color.Lime;
+                }
+                else if(rowList.Count == 1)
+                {
+                    bool isIt = false;
+                    int a = 0x00;
+
+                    if (row.Cells["SID"].Value.ToString() != rowList[0].Cells["SID"].Value.ToString())
+                    {
+                        //rowList[0].Cells["SID"].Style.BackColor = Color.LimeGreen;
+                        //isIt = true;
+                    }
+
+                    if (row.Cells["LOTID"].Value.ToString() != rowList[0].Cells["LOTID"].Value.ToString())
+                    {
+                        rowList[0].Cells["LOTID"].Style.BackColor = Color.Lime;
+                        isIt = true;
+                        a |= 0x01;
+                    }
+
+                    if (row.Cells["UID"].Value.ToString() != rowList[0].Cells["UID"].Value.ToString())
+                    {
+                        rowList[0].Cells["UID"].Style.BackColor = Color.Lime;
+                        isIt = true;
+                        a |= 0x02;
+                    }
+
+                    if (row.Cells["Qty"].Value.ToString() != rowList[0].Cells["Qty"].Value.ToString())
+                    {
+                        rowList[0].Cells["Qty"].Style.BackColor = Color.Lime;
+                        isIt = true;
+                        a |= 0x04;
+                    }
+
+                    if (row.Cells["위치"].Value.ToString() != rowList[0].Cells["위치"].Value.ToString())
+                    {
+                        rowList[0].Cells["위치"].Style.BackColor = Color.Lime;
+                        isIt = true;
+                        a |= 0x10;
+                    }
+
+
+                    if (row.Cells["제조일"].Value.ToString() != rowList[0].Cells["제조일"].Value.ToString())
+                    {
+                        rowList[0].Cells["제조일"].Style.BackColor = Color.Lime;
+                        //isIt = true;
+                        a |= 0x20;
+                    }
+
+
+                    if (row.Cells["투입일"].Value.ToString() != rowList[0].Cells["투입일"].Value.ToString())
+                    {
+                        rowList[0].Cells["투입일"].Style.BackColor = Color.Lime;
+                        //isIt = true;
+                        a |= 0x30;
+                    }
+
+
+                    if (row.Cells["제조사"].Value.ToString() != rowList[0].Cells["제조사"].Value.ToString())
+                    {
+                        rowList[0].Cells["제조사"].Style.BackColor = Color.Lime;
+                        //isIt = true;
+                        a |= 0x40;
+                    }
+
+                    if (row.Cells["인치"].Value.ToString() != rowList[0].Cells["인치"].Value.ToString())
+                    {
+                        rowList[0].Cells["인치"].Style.BackColor = Color.Lime;
+                        //isIt = true;
+                        a |= 0x80;
+                    }
+
+
+                    if (isIt == true)
+                    {
+                        dataGridView_missmatch.Rows.Add(
+                        dataGridView_missmatch.RowCount + 1,
+                        rowList[0].Cells["SID"].Value.ToString(),
+                        rowList[0].Cells["LOTID"].Value.ToString(),
+                        rowList[0].Cells["UID"].Value.ToString(),
+                        rowList[0].Cells["Qty"].Value.ToString(),
+                        "",
+                        rowList[0].Cells["위치"].Value.ToString(),
+                        rowList[0].Cells["제조일"].Value.ToString(),
+                        rowList[0].Cells["투입일"].Value.ToString(),
+                        rowList[0].Cells["제조사"].Value.ToString(),
+                        rowList[0].Cells["인치"].Value.ToString(),
+                        "SQL_DB"
+                        );
+
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["LOTID"].Style.BackColor = ((a) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["UID"].Style.BackColor = ((a >> 1) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["Qty"].Style.BackColor = ((a >> 2) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["위치"].Style.BackColor = ((a >> 3) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["제조일"].Style.BackColor = ((a >> 4) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["투입일"].Style.BackColor = ((a >> 5) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["제조사"].Style.BackColor = ((a >> 6) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                        dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].Cells["인치"].Style.BackColor = ((a >> 7) & 0x01) == 0x01 ? Color.Lime : Color.FromArgb(255, 255, 192);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        }
+
         public int Fnc_Missmatch_ASMcompare(int idx)
         {
+            /*
+             dataGridView_asm.Columns.Add("NO", "NO");
+            dataGridView_asm.Columns.Add("SID", "SID");
+            dataGridView_asm.Columns.Add("LOTID", "LOTID");
+            dataGridView_asm.Columns.Add("UID", "UID");
+            dataGridView_asm.Columns.Add("Qty", "Qty");
+            dataGridView_asm.Columns.Add("투입일", "투입일");
+            dataGridView_asm.Columns.Add("제조일", "제조일");
+            dataGridView_asm.Columns.Add("제조사", "제조사");
+            dataGridView_asm.Columns.Add("위치", "위치");
+             */
+
             List<StorageData_Compare> asmList = new List<StorageData_Compare>();
 
             for (int i = 0; i < dataGridView_asm.Rows.Count; i++)
@@ -4653,6 +5134,12 @@ namespace Amkor_Material_Manager
                 data.UID = dataGridView_asm.Rows[i].Cells["UID"].Value.ToString(); //UID
                 data.Tower_no = dataGridView_asm.Rows[i].Cells["위치"].Value.ToString();
                 data.Quantity = dataGridView_asm.Rows[i].Cells["Qty"].Value.ToString();
+                data.LOTID = dataGridView_asm.Rows[i].Cells["LOTID"].Value.ToString();
+                data.Manufacturer = dataGridView_asm.Rows[i].Cells["제조사"].Value.ToString();
+                data.Input_date = dataGridView_asm.Rows[i].Cells["투입일"].Value.ToString();
+                data.Production_date = dataGridView_asm.Rows[i].Cells["제조일"].Value.ToString();
+                data.Inch = dataGridView_asm.Rows[i].Cells["인치"].Value.ToString();
+
 
                 if (data.UID != "")
                     asmList.Add(data);
@@ -4689,42 +5176,42 @@ namespace Amkor_Material_Manager
 
             if(comboBox_sel.SelectedIndex > 3)
             { 
-            DataTable dt = new DataTable();
+                //DataTable dt = new DataTable();
 
-            using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
-            {
-                c.Open();
+                //using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+                //{
+                //    c.Open();
 
-                using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", comboBox_sel.SelectedIndex + 1), c))
-                {
-                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
-                    {
-                        adt.Fill(dt);
-                    }
-                }
-            }
+                //    using (SqlCommand cmd = new SqlCommand(string.Format("select VALUE from PUBLIC_SETTINGS with(nolock) where [NAME] = 'TOWER{0}_PATH' and [TYPE] ='AMM_SYNC'", comboBox_sel.SelectedIndex + 1), c))
+                //    {
+                //        using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                //        {
+                //            adt.Fill(dt);
+                //        }
+                //    }
+                //}
 
-            string DB_path = dt.Rows[0][0].ToString();
+                    //string DB_path = dt.Rows[0][0].ToString();
 
                 foreach (var item in missmatchList)
                 {
                     try
                     {
-                        DataConn conn1 = new DataConn();
-                        DataSet ds;
+                        //DataConn conn1 = new DataConn();
+                        //DataSet ds;
 
-                        string sql = string.Format("SELECT [Article] from [Carrier] where [Carrier]='{0}'", item.UID);
+                        //string sql = string.Format("SELECT [Article] from [Carrier] where [Carrier]='{0}'", item.UID);
 
 
-                        //string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
+                        ////string sql = @"SELECT ROW_NUMBER() OVER(order by(select 1)) as [NO], ROW_NUMBER() OVER(order by(select 1)) as [SID], [Batch],  [Carrier], [Stock], [DepotDate], [CreateDate], [Manufactur], SUBSTRING(Depot,7,5) from [Carrier]";
 
-                        ds = conn1.GetDataset(sql, DB_path);
+                        //ds = conn1.GetDataset(sql, DB_path);
 
-                        ds = conn1.GetDataset(string.Format("SELECT [Article] from [Article] where [ID]={0}", ds.Tables[0].Rows[0]["Article"]), DB_path);
+                        //ds = conn1.GetDataset(string.Format("SELECT [Article] from [Article] where [ID]={0}", ds.Tables[0].Rows[0]["Article"]), DB_path);
 
-                        if (ds.Tables[0].Rows.Count != 0)
+                        //if (ds.Tables[0].Rows.Count != 0)
                         {
-                            dataGridView_missmatch.Rows.Add(new object[12] { idx++, ds.Tables[0].Rows[0]["Article"], item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no,
+                            dataGridView_missmatch.Rows.Add(new object[12] { idx++, item.SID, item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no,
                     item.Production_date, item.Input_date, item.Manufacturer,item.Inch, "AMM" });
 
                             dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.BackColor = Color.White;
@@ -4732,16 +5219,16 @@ namespace Amkor_Material_Manager
 
                             Synclog.Info(string.Format("Tower missmatch data added : {0}", item.UID));
                         }
-                        else
-                        {
-                            dataGridView_missmatch.Rows.Add(new object[12] { idx++, "", item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no,
-                    item.Production_date, item.Input_date, item.Manufacturer,item.Inch, "AMM" });
+                    //    else
+                    //    {
+                    //        dataGridView_missmatch.Rows.Add(new object[12] { idx++, "", item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no,
+                    //item.Production_date, item.Input_date, item.Manufacturer,item.Inch, "AMM" });
 
-                            dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.BackColor = Color.White;
-                            dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.ForeColor = Color.Blue;
+                    //        dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.BackColor = Color.White;
+                    //        dataGridView_missmatch.Rows[idx - 2].DefaultCellStyle.ForeColor = Color.Blue;
 
-                            Synclog.Info(string.Format("Tower missmatch data added : {0}", item.UID));
-                        }
+                    //        Synclog.Info(string.Format("Tower missmatch data added : {0}", item.UID));
+                    //    }
                     }
                     catch (Exception ex)
                     {
@@ -5310,6 +5797,7 @@ namespace Amkor_Material_Manager
                 AMM_Main.strAMM_Connect = "NG";
                 return;
             }
+            
 
             string strLog = string.Format("PICK LIST 생성 완료 - 사번:{0}, PICKID:{1}, 수량:{2}", textBox_badge.Text, strPickID, nCount.ToString());
         }
@@ -5353,7 +5841,7 @@ namespace Amkor_Material_Manager
                 data.Inch = dt.Rows[i]["INCH_INFO"].ToString(); data.Inch = data.Inch.Trim();
                 data.Input_type = dt.Rows[i]["INPUT_TYPE"].ToString(); data.Input_type = data.Input_type.Trim();
 
-                strJudge = AMM_Main.AMM.SetPicking_Listinfo(strlincode, strequip, strPickID, data.UID, textBox_badge.Text, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "Sync");
+                strJudge = AMM_Main.AMM.SetPicking_Listinfo(strlincode, strequip, strPickID, data.UID, textBox_badge.Text, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "SYNC");
 
                 if (strJudge == "NG")
                 {
@@ -5381,7 +5869,7 @@ namespace Amkor_Material_Manager
             }
             ///Pick ID Info
             ///
-            strJudge = AMM_Main.AMM.SetPickingID(strlincode, strequip, strPickID, label_count.Text, textBox_badge.Text);
+            strJudge = AMM_Main.AMM.SetPickingID(strlincode, strequip, strPickID, nCount.ToString(), textBox_badge.Text);
 
             if (strJudge == "NG")
             {
@@ -6709,6 +7197,35 @@ namespace Amkor_Material_Manager
             isClick = true;
         }
 
+        DataConn MDBConn = null;
+        string MDBPath = "";
+
+        private void getMDBConn()
+        {
+            if (MDBConn == null)
+            {
+                MDBConn = new DataConn();
+
+                DataTable dt = new DataTable();
+                using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+                {
+                    c.Open();
+
+                    using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where NAME='TOWER{comboBox_sel.SelectedIndex + 1}_PATH'", c))
+                    {
+                        using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                        {
+                            adt.Fill(dt);
+                        }
+                    }
+                }
+                MDBPath = dt.Rows[0][1].ToString();
+            }
+
+            if (Tower_serial.Count == 0)
+                GetTowerSerial();
+        }
+
         private void btn_MakeOutList_Click(object sender, EventArgs e)
         {
             try
@@ -6927,7 +7444,7 @@ namespace Amkor_Material_Manager
 
                         dataGridView_missmatch.Rows.Clear();
                     }
-                    else
+                    else    // Tower Group #3 이상
                     {
                         int update = 0;
                         int ok = 0;
@@ -6935,8 +7452,10 @@ namespace Amkor_Material_Manager
 
                         if(dataGridView_missmatch.RowCount > 0)
                         {
+                            
+
                             bool LostTower = false;
-                            DataConn conn1 = new DataConn();
+                            
                             string res = "";
 
                             int loop = dataGridView_missmatch.RowCount;
@@ -6945,139 +7464,200 @@ namespace Amkor_Material_Manager
                             Fnc_Get_PickID(strGroup);
 
                             bool tower = false;
+                            int MissRows = dataGridView_missmatch.RowCount;
 
+                            Debug.WriteLine($"total miss = {dataGridView_missmatch.RowCount}");
 
-                            foreach(DataGridViewRow mrow in dataGridView_missmatch.Rows)
+                            for(int i = 0; i < MissRows; i++)
                             {
-                                Thread.Sleep(100);
-
+                                //Thread.Sleep(100);
+                                Debug.WriteLine($"cnt = {i}");
+                                
                                 try
                                 {
-                                    if (mrow.Cells["MISS"].Value.ToString() == "AMM")
+                                    if (dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "AMM")
                                     {
                                         tower = true;
 
-                                        if (mrow.Cells["위치"].Value.ToString().Contains("T0") == true)
+                                        if (dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
                                         {
-                                            //bool UID = false;
-                                            //foreach (DataGridViewRow row in dataGridView_amm.Rows)
-                                            //{
-                                            //    if (row.Cells["UID"].Value.ToString() == mrow.Cells["UID"].Value.ToString())
-                                            //    {
-                                            //        UID = true;
-                                            //        break;
-                                            //    }
-                                            //}
+                                            //res = AMM_Main.AMM.SetLoadComplete(AMM_Main.strDefault_linecode, strGroup, string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
+                                            //dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["LOTID"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["Qty"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["제조사"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["제조일"].Value.ToString(),
+                                            //dataGridView_missmatch.Rows[0].Cells["인치"].Value.ToString(),
+                                            //"SYNC"
+                                            //), true
+                                            //);
 
-                                            //if (UID == false)
-                                            {
-                                                res = AMM_Main.AMM.SetLoadComplete(AMM_Main.strDefault_linecode, strGroup, string.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}",
-                                                    mrow.Cells["위치"].Value.ToString(),
-                                                    mrow.Cells["UID"].Value.ToString(),
-                                                    mrow.Cells["SID"].Value.ToString(),
-                                                    mrow.Cells["LOTID"].Value.ToString(),
-                                                    mrow.Cells["Qty"].Value.ToString(),
-                                                    mrow.Cells["제조사"].Value.ToString(),
-                                                    mrow.Cells["제조일"].Value.ToString(),
-                                                    mrow.Cells["인치"].Value.ToString(),
-                                                    "SYNC"
-                                                    ), true
-                                                    );
+                                            AMM_Main.AMM.SyncDataInsert(
+                                                strGroup,
+                                                dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["LOTID"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["Qty"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["제조사"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["제조일"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["인치"].Value.ToString(),
+                                                "SYNC"
+                                                );
 
-                                                if (res.ToUpper() == "UPDATE")
-                                                {
-                                                    ++update;
-                                                }
-                                                else if (res.ToUpper() == "OK")
-                                                {
-                                                    ++ok;
-                                                }
-                                                else if (res.ToUpper().Contains("FAIL") == true)
-                                                {
-                                                    ++fail;
-                                                }
-                                            }
+                                            BackUpInsert(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+
+                                            AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text,
+                                                dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
+                                                ID,
+                                                dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["LOTID"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["Qty"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["제조사"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["제조일"].Value.ToString(),
+                                                dataGridView_missmatch.Rows[0].Cells["인치"].Value.ToString(),
+                                                "SYNC",
+                                                "SYNC");
+
+                                            AMMLostCnt++;
+                                            dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
+                                            LostTower = true;
                                         }
                                         else
                                         {
                                             Synclog.Info(string.Format("{0} Databse Delete UID : {1}", strGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
 
-                                            DeleteMycronicTower(nGroup, mrow.Cells["UID"].Value.ToString());
+                                            DeleteMycronicTower(nGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+
+                                            dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
+                                        }
+                                    }
+                                    else if(dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "Backup")
+                                    {                                        
+                                        getMDBConn();    
+
+                                        int cnt = MDBConn.TouchRow($"select * from Carrier where Carrier='{dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()}'", MDBPath);
+
+                                        if (cnt == 0)
+                                        {//insert
+                                            BackUpInsert(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+                                        }
+                                        else
+                                        {//update
+                                            BackupUpdate(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+                                        }
+
+                                        AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strGroup, label_pickid_LT.Text,
+                                               dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(),
+                                               ID,
+                                               dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["SID"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["LOTID"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["Qty"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["제조사"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["제조일"].Value.ToString(),
+                                               dataGridView_missmatch.Rows[0].Cells["인치"].Value.ToString(),
+                                               "SYNC",
+                                               "SYNC");
+
+                                        AMMLostCnt++;
+                                        dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
+                                        LostTower = true;
+
+                                    }
+                                    else if(dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "SQL_DB")
+                                    {
+                                        if(dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
+                                        {
+                                            dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
+                                        }
+                                        else
+                                        {
+                                            Synclog.Info(string.Format("{0} Databse Delete UID : {1}", strGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
+
+                                            MDBConn.DeleteData(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(), MDBPath);
+
+                                            dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
                                         }
                                     }
                                     else
                                     {
-                                        if (tower == true)
-                                        {
-                                            dataGridView_asm.Rows.Clear();
-                                            int n = comboBox_sel.SelectedIndex;
+                                        //if (tower == true)
+                                        //{
+                                        //    dataGridView_asm.Rows.Clear();
+                                        //    int n = comboBox_sel.SelectedIndex;
 
-                                            if (n == 0)
-                                            {
-                                                Fnc_Process_GetMaterials_Tower1();
-                                                Fnc_Process_GetAMMinfo("TWR1");
-                                            }
-                                            else if (n == 1)
-                                            {
-                                                Fnc_Process_GetMaterials_Tower2();
-                                                Fnc_Process_GetAMMinfo("TWR2");
-                                            }
-                                            else if (n == 2)
-                                            {
-                                                Fnc_Process_GetMaterials_Tower3();
-                                                Fnc_Process_GetAMMinfo("TWR3");
-                                            }
-                                            else
-                                            {
-                                                GetMycronicTower(n + 1);
-                                                Fnc_Process_GetAMMinfo("TWR" + (n + 1).ToString());
-                                            }
+                                        //    if (n == 0)
+                                        //    {
+                                        //        Fnc_Process_GetMaterials_Tower1();
+                                        //        Fnc_Process_GetAMMinfo("TWR1");
+                                        //    }
+                                        //    else if (n == 1)
+                                        //    {
+                                        //        Fnc_Process_GetMaterials_Tower2();
+                                        //        Fnc_Process_GetAMMinfo("TWR2");
+                                        //    }
+                                        //    else if (n == 2)
+                                        //    {
+                                        //        Fnc_Process_GetMaterials_Tower3();
+                                        //        Fnc_Process_GetAMMinfo("TWR3");
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        GetMycronicTower(n + 1);
+                                        //        Fnc_Process_GetAMMinfo("TWR" + (n + 1).ToString());
+                                        //    }
 
-                                            tower = false;
-                                        }
+                                        //    tower = false;
+                                        //}
 
-                                        bool UID = false;
+                                        //bool UID = false;
 
-                                        foreach (DataGridViewRow row in dataGridView_asm.Rows)
-                                        {
-                                            if (row.Cells["UID"].Value.ToString() == mrow.Cells["UID"].Value.ToString())
-                                            {
-                                                UID = true;
-                                                break;
-                                            }
-                                        }
+                                        //foreach (DataGridViewRow row in dataGridView_asm.Rows)
+                                        //{
+                                        //    if (row.Cells["UID"].Value.ToString() == mrow.Cells["UID"].Value.ToString())
+                                        //    {
+                                        //        UID = true;
+                                        //        break;
+                                        //    }
+                                        //}
 
-                                        if (UID == false)
-                                        {
-                                            LostTower = true;
+                                        //if (UID == false)
+                                        //{
+                                        //    LostTower = true;
 
-                                            RunSqlCMD(AMMDBConnectionString, $"update [TB_MTL_INFO] set [INPUT_TYPE]='SYNC' where UID='{mrow.Cells["UID"].Value.ToString()}'");
-                                            Thread.Sleep(10);
+                                        //    RunSqlCMD(AMMDBConnectionString, $"update [TB_MTL_INFO] set [INPUT_TYPE]='SYNC' where UID='{mrow.Cells["UID"].Value.ToString()}'");
+                                        //    Thread.Sleep(10);
 
-                                            res = AMM_Main.AMM.SetPicking_Readyinfo(
-                                                AMM_Main.strDefault_linecode,
-                                                strGroup, label_pickid_LT.Text,
-                                                mrow.Cells[3].Value.ToString(),
-                                                ID,
-                                                mrow.Cells[6].Value.ToString(),
-                                                mrow.Cells[1].Value.ToString(),
-                                                mrow.Cells[2].Value.ToString(),
-                                                mrow.Cells[4].Value.ToString().Replace(",", ""),
-                                                mrow.Cells[9].Value.ToString(),
-                                                mrow.Cells[7].Value.ToString(),
-                                                mrow.Cells[10].Value.ToString(),
-                                                mrow.Cells[5].Value.ToString(), "SYNC");
-                                            //AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[0].Cells[3].Value.ToString());
+                                        //    res = AMM_Main.AMM.SetPicking_Readyinfo(
+                                        //        AMM_Main.strDefault_linecode,
+                                        //        strGroup, label_pickid_LT.Text,
+                                        //        mrow.Cells[3].Value.ToString(),
+                                        //        ID,
+                                        //        mrow.Cells[6].Value.ToString(),
+                                        //        mrow.Cells[1].Value.ToString(),
+                                        //        mrow.Cells[2].Value.ToString(),
+                                        //        mrow.Cells[4].Value.ToString().Replace(",", ""),
+                                        //        mrow.Cells[9].Value.ToString(),
+                                        //        mrow.Cells[7].Value.ToString(),
+                                        //        mrow.Cells[10].Value.ToString(),
+                                        //        mrow.Cells[5].Value.ToString(), "SYNC");
+                                        //    //AMM_Main.AMM.GetPickingListinfo(dataGridView_missmatch.Rows[0].Cells[3].Value.ToString());
 
-                                            AMMLostCnt++;
-                                        }
+                                        //    AMMLostCnt++;
+                                        //}
                                     }
 
-                                    if (res == "OK")
-                                        dataGridView_missmatch.Rows.RemoveAt(0);
+                                    //if (res == "OK")
+                                    //    dataGridView_missmatch.Rows.RemoveAt(0);
 
-                                    Application.DoEvents();
+                                    
                                     dataGridView_missmatch.Update();
+                                    Application.DoEvents();
+
                                 }
                                 catch (Exception ex)
                                 {
@@ -7085,11 +7665,7 @@ namespace Amkor_Material_Manager
                                 }
                             }
 
-                            for (int i = 0; i <  loop ; i++)
-                            {
-                                
-                                
-                            }
+                            
 
                             if (LostTower == true)
                             {
@@ -7114,10 +7690,7 @@ namespace Amkor_Material_Manager
                                 Form_Progress frm = new Form_Progress();
                                 //frm.Form_Show($"Insert : {ok}, Update : {update}, Fail : {fail}", 0);
                                 frm.Form_Show(string.Format("{0} Database에서 삭제가 완료 되었습니다.", strGroup),0);
-
                             }
-                           
-
                         }
                         else
                         {
@@ -7130,6 +7703,189 @@ namespace Amkor_Material_Manager
             {
 
             }
+            
+        }
+
+        private void BackupUpdate(string UID)
+        {
+            getMDBConn();
+
+            DataSet LocalData = GetMycronicData(comboBox_sel.SelectedIndex + 1, $"select * from TCarrier with(nolock) where Carrier='{UID}'");
+
+            int cnt = MDBConn.TouchRow($"select * from Carrier where Carrier='{UID}'", MDBPath);
+
+            if (cnt == 1)//Backup DB에 있으면 update
+            {
+                string q1 = "Update Carrier set";              
+                string val = " values(";
+
+                for (int i = 0; i < LocalData.Tables[0].Columns.Count; i++)
+                {                    
+                    if (LocalData.Tables[0].Columns[i].ColumnName == "Depot")
+                    {
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName}=";
+                        val += $"'Tower {Tower_serial[LocalData.Tables[0].Rows[0][i].ToString().Split('.')[0]]}, " +
+                            $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(1, 1))}, " +
+                            $"Slot {LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(2, 2)}',";
+                    }
+                    else if (LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true)
+                    {
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName}=";
+                        val += $"{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("yyyy-MM-dd")},";
+
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName.Replace("Date", "") + "Time,"}=";
+                        val += $"'{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("hh:mm")}',";
+                    }
+                    else if (LocalData.Tables[0].Columns[i].ColumnName == "Article" || LocalData.Tables[0].Columns[i].ColumnName == "Stock" || LocalData.Tables[0].Columns[i].ColumnName == "StockMin" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "StockNew" || LocalData.Tables[0].Columns[i].ColumnName == "StockUsed" || LocalData.Tables[0].Columns[i].ColumnName == "StockTPSys" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "OutTime" || LocalData.Tables[0].Columns[i].ColumnName == "Duration" || LocalData.Tables[0].Columns[i].ColumnName == "Frequency" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "Amplitude" || LocalData.Tables[0].Columns[i].ColumnName == "Core" || LocalData.Tables[0].Columns[i].ColumnName == "TapeHeight" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "Guessed" || LocalData.Tables[0].Columns[i].ColumnName == "Unleaded" || LocalData.Tables[0].Columns[i].ColumnName == "PriceP" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "Cycles" || LocalData.Tables[0].Columns[i].ColumnName == "Height" || LocalData.Tables[0].Columns[i].ColumnName == "HCode" ||
+                        LocalData.Tables[0].Columns[i].ColumnName == "Diameter" || LocalData.Tables[0].Columns[i].ColumnName == "StepWidth" || LocalData.Tables[0].Columns[i].ColumnName == "MSLWatch"
+                        )
+                    {
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName}=";
+                        val += $"{LocalData.Tables[0].Rows[0][i].ToString()},";
+                    }
+                    else if (LocalData.Tables[0].Columns[i].ColumnName == "ID" || LocalData.Tables[0].Columns[i].ColumnName == "ArticleName" || LocalData.Tables[0].Columns[i].ColumnName == "Enabled" || LocalData.Tables[0].Columns[i].ColumnName == "InitialOuttime")
+                    {
+
+                    }
+                    else if (LocalData.Tables[0].Columns[i].ColumnName == "Expiry")
+                    {
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName}=";
+                        val += $"1900-01-01,";
+                    }
+                    else
+                    {
+                        val += $"{LocalData.Tables[0].Columns[i].ColumnName}=";
+                        val += $"'{LocalData.Tables[0].Rows[0][i].ToString().Trim()}',";
+                    }
+                }
+                
+                val = val.Substring(0, val.LastIndexOf(',')) + ")";
+
+                q1 += val + $" where Carrier='{UID}'";
+
+                MDBConn.RunQuary(
+                // $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][7].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][7].ToString().Split('.')[1].Substring(1, 1))}, " +
+                //$"Slot {LocalData.Tables[0].Rows[0][7].ToString().Split('.')[1].Substring(2, 2)}'," +
+                q1
+                ,
+                MDBPath);
+            }
+        }
+
+        private void BackUpInsert(string UID)
+        {
+            getMDBConn();
+            
+            DataSet LocalData = GetMycronicData(comboBox_sel.SelectedIndex + 1, $"select * from TCarrier with(nolock) where Carrier='{UID}'");
+                        
+            string q1 = "INSERT INTO Carrier";
+            string col = "(";
+            string val = " values(";
+
+            for (int i = 0; i < LocalData.Tables[0].Columns.Count; i++)
+            {
+                if (LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true)
+                {
+                    col += $"{LocalData.Tables[0].Columns[i].ColumnName},{LocalData.Tables[0].Columns[i].ColumnName.Replace("Date", "") + "Time,"}";
+                }
+                else if (LocalData.Tables[0].Columns[i].ColumnName == "ID" || LocalData.Tables[0].Columns[i].ColumnName == "ArticleName" || LocalData.Tables[0].Columns[i].ColumnName == "Enabled" || LocalData.Tables[0].Columns[i].ColumnName == "InitialOuttime")
+                {
+                }
+                else
+                {
+                    col += $"{LocalData.Tables[0].Columns[i].ColumnName},";
+                }
+
+
+                switch (LocalData.Tables[0].Columns[i].ColumnName)
+                {
+                    case "Depot":
+                        val += $"'Tower {Tower_serial[LocalData.Tables[0].Rows[0][i].ToString().Split('.')[0]]}, " +
+                        $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(1, 1))}, " +
+                        $"Slot {LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(2, 2)}',";
+                        break;
+                    case var _ when LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true:
+                        val += $"{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("yyyy-MM-dd")},";
+                        val += $"'{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("hh:mm")}',";
+                        break;
+                    case "Expiry":
+                        val += $"1900-01-01,";
+                        break;
+                    case "InitialOuttime":
+                    case "Enabled":
+                    case "ArticleName":
+                    case "ID":
+                        break;
+                    case "Stock":
+                    case "StockUsed":
+                    case "Duration":
+                    case "Core":
+                    case "Unleaded":
+                    case "Height":
+                    case "StepWidth":
+                    case "StockMin":
+                    case "StockTPSys":
+                    case "Frequency":
+                    case "TapeHeight":
+                    case "PriceP":
+                    case "HCode":
+                    case "MSLWatch":
+                        val += $"{LocalData.Tables[0].Rows[0][i].ToString()},";
+                        break;
+                    default:
+                        val += $"'{LocalData.Tables[0].Rows[0][i].ToString().Trim()}',";
+                        break;
+                }
+
+                #region column if else
+                //if (LocalData.Tables[0].Columns[i].ColumnName == "Depot")
+                //{
+                //    val += $"'Tower {Tower_serial[LocalData.Tables[0].Rows[0][i].ToString().Split('.')[0]]}, " +
+                //        $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(1, 1))}, " +
+                //        $"Slot {LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(2, 2)}',";
+                //}
+                //else if(LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true)
+                //{
+                //    val += $"{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("yyyy-MM-dd")},";
+                //    val += $"'{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("hh:mm")}',";
+                //}
+                //else if (LocalData.Tables[0].Columns[i].ColumnName == "Article" || LocalData.Tables[0].Columns[i].ColumnName == "Stock" || LocalData.Tables[0].Columns[i].ColumnName == "StockMin" ||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "StockNew" || LocalData.Tables[0].Columns[i].ColumnName == "StockUsed" || LocalData.Tables[0].Columns[i].ColumnName == "StockTPSys" ||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "OutTime" || LocalData.Tables[0].Columns[i].ColumnName == "Duration" || LocalData.Tables[0].Columns[i].ColumnName == "Frequency" ||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "Amplitude" || LocalData.Tables[0].Columns[i].ColumnName == "Core" || LocalData.Tables[0].Columns[i].ColumnName == "TapeHeight" ||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "Guessed" || LocalData.Tables[0].Columns[i].ColumnName == "Unleaded" || LocalData.Tables[0].Columns[i].ColumnName == "PriceP" ||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "Cycles" || LocalData.Tables[0].Columns[i].ColumnName == "Height" || LocalData.Tables[0].Columns[i].ColumnName == "HCode"||
+                //    LocalData.Tables[0].Columns[i].ColumnName == "Diameter" || LocalData.Tables[0].Columns[i].ColumnName == "StepWidth" || LocalData.Tables[0].Columns[i].ColumnName == "MSLWatch" 
+                //    )
+                //{
+                //    val += $"{LocalData.Tables[0].Rows[0][i].ToString()},";
+                //}
+                //else if(LocalData.Tables[0].Columns[i].ColumnName == "ID" || LocalData.Tables[0].Columns[i].ColumnName == "ArticleName" || LocalData.Tables[0].Columns[i].ColumnName == "Enabled" || LocalData.Tables[0].Columns[i].ColumnName == "InitialOuttime")
+                //{
+
+                //}
+                //else if(LocalData.Tables[0].Columns[i].ColumnName == "Expiry")
+                //{
+                //    val += $"1900-01-01,";
+                //}
+                //else
+                //{
+                //    val += $"'{LocalData.Tables[0].Rows[0][i].ToString().Trim()}',";
+                //}
+                #endregion
+            }
+
+            col = col.Substring(0, col.LastIndexOf(',')) + ")";
+            val = val.Substring(0, val.LastIndexOf(',')) + ")";
+
+            q1 += col + val;
+
+            MDBConn.RunQuary(q1, MDBPath);
             
         }
 
@@ -7406,6 +8162,21 @@ namespace Amkor_Material_Manager
             dataGridView_asm.Rows.Clear();
             dataGridView_amm.Rows.Clear();
             dataGridView_missmatch.Rows.Clear();
+            dgv_backup.Rows.Clear();
+            MycronicTowerIP = "";
+
+            if(comboBox_sel.SelectedIndex < 3)
+            {
+                dataGridView_asm.Size = new Size(325, 539);
+                l_backUp.Visible = false;
+                dgv_backup.Visible = false;
+            }
+            else
+            {
+                dataGridView_asm.Size = new Size(325, 294);
+                l_backUp.Visible = true;
+                dgv_backup.Visible = true;
+            }
 
             btn_MakeOutList.Text = String.Format("Tower {0:0} 동기화", comboBox_sel.SelectedIndex + 1);
 
@@ -7631,16 +8402,51 @@ public static class ExtensionMethods
 }
 class DataConn
 {
-    public DataSet GetDataset(string sql, string DB_path)
+    public DataSet GetDataset(string quary, string DBpath)
     {
-        string connStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DB_path + ";Jet OLEDB:Database Password=";
+        string connStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DBpath + ";Jet OLEDB:Database Password=";
 
 
         OleDbConnection conn = new System.Data.OleDb.OleDbConnection(connStr);
         DataSet ds = new DataSet();
-        OleDbDataAdapter adp = new OleDbDataAdapter(sql, conn);
+        OleDbDataAdapter adp = new OleDbDataAdapter(quary, conn);
         adp.Fill(ds);
         return ds;
+    }
+
+    public int TouchRow(string quary, string DBPath)
+    {
+        int res = -1;
+
+        string connStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DBPath + ";Jet OLEDB:Database Password=";
+        
+        OleDbConnection conn = new System.Data.OleDb.OleDbConnection(connStr);
+        DataSet ds = new DataSet();
+        OleDbDataAdapter adp = new OleDbDataAdapter(quary, conn);
+        adp.Fill(ds);
+
+        return ds.Tables[0].Rows.Count;
+    }
+
+    public int RunQuary(string quary, string DBPath)
+    {
+        try
+        {
+            string connStr = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DBPath + ";Jet OLEDB:Database Password=";
+
+            OleDbConnection conn = new System.Data.OleDb.OleDbConnection(connStr);
+            DataSet ds = new DataSet();
+            OleDbDataAdapter adp = new OleDbDataAdapter(quary, conn);
+            adp.Fill(ds);
+
+            return ds.Tables.Count> 0 ? ds.Tables[0].Rows.Count : 1;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        
     }
 
     public int  DeleteData(string UID, string DBPath)

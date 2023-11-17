@@ -202,7 +202,7 @@ namespace Amkor_Material_Manager
 
             foreach (var item in list)
             {
-                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity.Replace(",","")));
+                string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity == "" ? "0" : item.Quantity.Replace(",","")));
                 string strdate = item.Input_date;
                 strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
                     + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);

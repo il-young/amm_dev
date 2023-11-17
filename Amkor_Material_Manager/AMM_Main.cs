@@ -112,14 +112,14 @@ namespace Amkor_Material_Manager
             strMatchTab = ConfigurationManager.AppSettings["Match_Tab"];
             strNumberPad = ConfigurationManager.AppSettings["Number_Pad"];
 
-            if(strDefault_Group == "1" || strDefault_Group == "2" || strDefault_Group == "3")
+            //if(strDefault_Group == "1" || strDefault_Group == "2" || strDefault_Group == "3")
             {
-                Text = Version;
+                Text = "S/W Version:"+Version;
             }
-            else
-            {
-                Text = "S/W Version:20.11.01.02";
-            }
+            //else
+            //{
+            //    Text = "S/W Version:20.11.01.02";
+            //}
             
 
 

@@ -434,7 +434,7 @@ namespace Amkor_Material_Manager
                     else
                     {
                         string newLocation = strLoc;
-                        int orderqty = Int32.Parse(strQty);
+                        int orderqty = Int32.Parse(strQty == "" ? "0" : strQty);
 
                         int nGroup = Int32.Parse(newLocation);
 
