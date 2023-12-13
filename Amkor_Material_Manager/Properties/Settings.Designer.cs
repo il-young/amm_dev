@@ -58,5 +58,125 @@ namespace Amkor_Material_Manager.Properties {
                 this["SyncOUtExcelPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int LongTimeReelReportMonth {
+            get {
+                return ((int)(this["LongTimeReelReportMonth"]));
+            }
+            set {
+                this["LongTimeReelReportMonth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("true,byeongun.choi@amkor.co.kr;")]
+        public string LongTimeReelReportMail {
+            get {
+                return ((string)(this["LongTimeReelReportMail"]));
+            }
+            set {
+                this["LongTimeReelReportMail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LongTimeReelReportInterval1 {
+            get {
+                return ((int)(this["LongTimeReelReportInterval1"]));
+            }
+            set {
+                this["LongTimeReelReportInterval1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int LongTimeReelReportInterval2 {
+            get {
+                return ((int)(this["LongTimeReelReportInterval2"]));
+            }
+            set {
+                this["LongTimeReelReportInterval2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("안녕하세요.")]
+        public string LongTimeReelReporthead {
+            get {
+                return ((string)(this["LongTimeReelReporthead"]));
+            }
+            set {
+                this["LongTimeReelReporthead"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("감사합니다.")]
+        public string LongTimeReelReportTail {
+            get {
+                return ((string)(this["LongTimeReelReportTail"]));
+            }
+            set {
+                this["LongTimeReelReportTail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LongTermReelReportPath {
+            get {
+                return ((string)(this["LongTermReelReportPath"]));
+            }
+            set {
+                this["LongTermReelReportPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public int LongTimeReelReportHour {
+            get {
+                return ((int)(this["LongTimeReelReportHour"]));
+            }
+            set {
+                this["LongTimeReelReportHour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WWnn 주 장기보관 Reel Report 입니다.")]
+        public string LongTimeReelReportSubject {
+            get {
+                return ((string)(this["LongTimeReelReportSubject"]));
+            }
+            set {
+                this["LongTimeReelReportSubject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LongTermReelReportEN {
+            get {
+                return ((bool)(this["LongTermReelReportEN"]));
+            }
+            set {
+                this["LongTermReelReportEN"] = value;
+            }
+        }
     }
 }

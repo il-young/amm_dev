@@ -12,6 +12,8 @@ using System.Threading;
 using System.Diagnostics;
 using AMM;
 using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Globalization;
 
 namespace Amkor_Material_Manager
 {
@@ -23,7 +25,7 @@ namespace Amkor_Material_Manager
         public static string strAMM_Connect = "NG";
 
         //기본 정보        
-        public static string strDefault_linecode = "", strDefault_Group = "", strDefault_Start = "", strSMSearchEnable = "", strMatchTab = "", strNumberPad = "";
+        public static string strDefault_linecode = "", strDefault_Group = "", strDefault_Start = "", strSMSearchEnable = "", strMatchTab = "", strNumberPad = "", strLongTimeReport = "";
         public static string strRequestor_id = "", strRequestor_name = "", strLogfilePath = "";
         public static string strAdminID = "", strAdminPW = "";
         public static bool bAdminLogin = false, bProcessing = false, IsExit = false;
@@ -35,6 +37,8 @@ namespace Amkor_Material_Manager
         // ]210805_Sangik.choi_타워그룹추가 //220823_ilyoung_타워그룹추가
 
         int nColorindex = 0;
+
+        
 
         Form_Order Frm_Order = new Form_Order();
         Form_ITS Frm_ITS = new Form_ITS();
@@ -88,22 +92,28 @@ namespace Amkor_Material_Manager
             Frm_Order.MdiParent = this;
             Frm_Order.Location = new Point(0, 0);
             Frm_Order.Size = new Size(1013, 390);
+            //Frm_Order.Dock = DockStyle.Fill;
 
             Frm_ITS.MdiParent = this;
             Frm_ITS.Location = new Point(0, 0);
-            Frm_ITS.Size = new Size(1013, 669);
+            //Frm_ITS.Size = new Size(1013, 669);
+            Frm_ITS.Dock = DockStyle.Fill;
+            
 
             Frm_History.MdiParent = this;
             Frm_History.Location = new Point(0, 0);
-            Frm_History.Size = new Size(1013, 669);
+            //rm_History.Size = new Size(1013, 669);
+            Frm_History.Dock = DockStyle.Fill;
 
             Frm_Monitor.MdiParent = this;
             Frm_Monitor.Location = new Point(0, 390);
             Frm_Monitor.Size = new Size(1013, 279);
+            //Frm_Monitor.Dock = DockStyle.Fill;
 
             Frm_Set.MdiParent = this;
             Frm_Set.Location = new Point(0, 0);
-            Frm_Set.Size = new Size(1013, 669);
+            //Frm_Set.Size = new Size(1013, 669);
+            Frm_Set.Dock = DockStyle.Fill;
 
             strDefault_linecode = ConfigurationManager.AppSettings["Lincode"];
             strDefault_Group = ConfigurationManager.AppSettings["Group"];
@@ -206,9 +216,9 @@ namespace Amkor_Material_Manager
             label_day.Text = strToday;
             label_time.Text = strHead;
 
-            if(strAMM_Connect == "OK")
+            if (strAMM_Connect == "OK")
             {
-                if(nColorindex == 0)
+                if (nColorindex == 0)
                 {
                     label_state.BackColor = System.Drawing.Color.Green;
                     nColorindex = 1;
@@ -223,6 +233,113 @@ namespace Amkor_Material_Manager
             {
                 label_state.BackColor = System.Drawing.Color.Red;
             }
+
+            SendLongTermReportMail();
+        }
+
+        bool ExcelExportComp = false;
+
+        public void MakeLongTermReport()
+        {
+            ExcelExportComp = false;
+            Thread th = new Thread(LongTermReportThread);
+            th.Start();
+        }
+
+        private void LongTermReportThread()
+        {
+            Form_ITS its = new Form_ITS();
+
+            ExcelExportComp = its.SetLongTermReport();
+        }
+
+
+        bool longTermReport = false;
+
+        private void SendLongTermReportMail()
+        {
+            DateTime ExportStartTime = new DateTime();
+
+            try
+            {
+
+                if (Properties.Settings.Default.LongTermReelReportEN == false)
+                    return;
+
+                if (Properties.Settings.Default.LongTimeReelReportInterval1 == 0 && (Properties.Settings.Default.LongTimeReelReportInterval2 != (int)DateTime.Now.DayOfWeek))
+                    return;
+
+                if (Properties.Settings.Default.LongTimeReelReportInterval1 == 1 && (Properties.Settings.Default.LongTimeReelReportInterval2 != DateTime.Now.Day))
+                    return;
+
+                if (Properties.Settings.Default.LongTimeReelReportHour != DateTime.Now.Hour)
+                {
+                    longTermReport = false;
+                    return;
+                }
+
+                if (longTermReport == true)
+                    return;
+                              longTermReport = true;
+
+                ExportStartTime = DateTime.Now;
+                MakeLongTermReport();
+                
+                while(!ExcelExportComp)
+                {
+                    if ((DateTime.Now - ExportStartTime).TotalSeconds > 60)
+                    {
+                        MessageBox.Show("Excel 파일을 생성하지 못했습니다.");
+                        return;
+                    }
+                    Application.DoEvents();
+                    Thread.Sleep(10);
+                }
+
+                MailMessage message = new MailMessage();
+
+                CultureInfo ciCurr = CultureInfo.CurrentCulture;
+                int weekNum = ciCurr.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
+
+                for (int i = 0; i < Properties.Settings.Default.LongTimeReelReportMail.Split(';').Length - 1; i++)
+                {
+                    message.To.Add(Properties.Settings.Default.LongTimeReelReportMail.Split(';')[i].Split(',')[1]);
+                }
+
+                message.Subject = Properties.Settings.Default.LongTimeReelReportSubject.Replace("nn", weekNum.ToString("D2"));
+                message.From = new System.Net.Mail.MailAddress("Amkor.Skynet@amkor.co.kr");
+                message.Body = Properties.Settings.Default.LongTimeReelReporthead.Replace("nn", weekNum.ToString("D2")) + Environment.NewLine +
+                    Properties.Settings.Default.LongTimeReelReportTail.Replace("nn", weekNum.ToString("D2"));
+
+                if (Properties.Settings.Default.LongTermReelReportPath == "")
+                {
+                    Properties.Settings.Default.LongTermReelReportPath = System.Environment.CurrentDirectory + "\\LongTermReel";
+                    Properties.Settings.Default.Save();
+                }
+
+                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Properties.Settings.Default.LongTermReelReportPath);
+
+                System.IO.FileInfo[] fi = di.GetFiles("*.xlsx", System.IO.SearchOption.TopDirectoryOnly);
+
+                Array.Sort<System.IO.FileInfo>(fi, delegate (System.IO.FileInfo x, System.IO.FileInfo y) { return x.CreationTime.CompareTo(y.CreationTime); });
+
+                fi.Reverse();
+                System.Net.Mail.Attachment attachment = new Attachment(fi[fi.Count() -1].FullName);
+
+                message.Attachments.Add(attachment);
+                System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("10.101.10.6");
+                smtp.Credentials = new System.Net.NetworkCredential("Amkor.Skynet@amkor.co.kr", "");
+                smtp.Port = 25;
+
+                smtp.Send(message);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
         }
 
         private void AMM_Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -358,6 +475,12 @@ namespace Amkor_Material_Manager
             Form_ITS.bUpdate_Timer = true;
 
             Fnc_SaveLog("재고 조회 창 이동.", 0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MakeLongTermReport();
+            SendLongTermReportMail();
         }
 
         private void AMM_Main_Load(object sender, EventArgs e)

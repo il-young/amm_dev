@@ -29,6 +29,11 @@ using Label = System.Windows.Forms.Label;
 using DataTable = System.Data.DataTable;
 using Font = System.Drawing.Font;
 
+using SmartXLS;
+
+
+
+
 namespace Amkor_Material_Manager
 {
     public partial class Form_ITS : Form
@@ -67,8 +72,8 @@ namespace Amkor_Material_Manager
         int nDbUpdate = -1;
 
         Dictionary<int, string> Dec2Alpa = new Dictionary<int, string>();
-        
 
+        SharedAPI sharedAPI = new SharedAPI();
 
         public Form_ITS()
         {
@@ -90,7 +95,6 @@ namespace Amkor_Material_Manager
             comboBox_group.SelectedIndex = AMM_Main.nDefaultGroup - 1;
 
             comboBox_type2.SelectedIndex = 0;
-            comboBox_all.SelectedIndex = 0;
 
             comboBox_group2.SelectedIndex = AMM_Main.nDefaultGroup - 1;
 
@@ -99,7 +103,7 @@ namespace Amkor_Material_Manager
             strASM_TowerLocation1 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower";
             strASM_TowerLocation2 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower2";
             strASM_TowerLocation3 = "Amkor.B-Line.S10-2_Kitting.20_Material_Tower3";
-            
+
             init_Dic();
 
             if (AMM_Main.strMatchTab == "TRUE")
@@ -132,10 +136,6 @@ namespace Amkor_Material_Manager
 
             nnTabIndex = tabNo;
 
-            //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-            int listk_count = dataGridView_LTlist.Rows.Count;
-            string strPickingID = label_pickid_LT.Text;
-            //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
 
             if (tabNo == 0)
             {
@@ -146,25 +146,13 @@ namespace Amkor_Material_Manager
 
                 bUpdate_Timer = true;
 
-                //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-                textBox_badge.Text = "";
-
-
-                if (listk_count != 0)
-                {
-                    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
-                }
-                //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
             }
             //[210818_Sangik.choi_capa 조회 탭 추가 by이종명수석님
             else if (tabNo == 1)
             {
                 bUpdate_Timer = true;
 
-                if (listk_count != 0)
-                {
-                    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
-                }
+
                 Fnc_Init_datagrid_capa();
 
 
@@ -175,12 +163,12 @@ namespace Amkor_Material_Manager
             {
                 //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
 
-                if (listk_count != 0)
-                {
-                    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
-                }
+                //if (listk_count != 0)
+                //{
+                //    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
+                //}
                 //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-                textBox_badge.Text = "";
+
 
                 comboBox_type2.SelectedIndex = 0;
                 comboBox_group2.SelectedIndex = AMM_Main.nDefaultGroup - 1;
@@ -200,13 +188,13 @@ namespace Amkor_Material_Manager
             }
             else if (tabNo == 3)
             {
-                
+
 
                 //[210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
-                if (listk_count != 0)
-                {
-                    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
-                }
+                //if (listk_count != 0)
+                //{
+                //    AMM_Main.AMM.Delete_PickReadyinfo(AMM_Main.strDefault_linecode, strPickingID);
+                //}
                 textBox_badge.Text = "";
 
                 //]210813_Sangik.choi_장기보관관리기능추가 by이종명수석님
@@ -323,14 +311,14 @@ namespace Amkor_Material_Manager
 
                 if (MtlList.Rows[i]["EQUIP_ID"].ToString().Contains("TWR") == true)
                 {
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
-                         
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[0].HeaderCell.Value = "7\"";
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[1].HeaderCell.Value = "13\"";
-                                                                                             
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
-                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", ""))-1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows.Add(new object[4] { data.Inch_7_capa, data.Inch_7_cnt, inch_7_cal, data.Inch_7_rate });
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows.Add(new object[4] { data.Inch_13_capa, data.Inch_13_cnt, inch_13_cal, data.Inch_13_rate });
+
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows[0].HeaderCell.Value = "7\"";
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows[1].HeaderCell.Value = "13\"";
+
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows[0].Cells[2].Style.ForeColor = Color.Red;
+                    list[int.Parse(MtlList.Rows[i]["EQUIP_ID"].ToString().Replace("TWR", "")) - 1].Rows[1].Cells[2].Style.ForeColor = Color.Red;
                 }
             }
 
@@ -520,24 +508,7 @@ namespace Amkor_Material_Manager
             dataGridView_longterm.Columns.Add("제조사", "제조사");
             dataGridView_longterm.Columns.Add("인치", "인치");
 
-            dataGridView_LTlist.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridView_LTlist.Columns.Clear();
-            dataGridView_LTlist.Rows.Clear();
-            dataGridView_LTlist.Refresh();
 
-            dataGridView_LTlist.Columns.Add("SID", "SID");
-            dataGridView_LTlist.Columns.Add("Batch#", "Batch#");
-            dataGridView_LTlist.Columns.Add("UID", "UID");
-            dataGridView_LTlist.Columns.Add("Qty", "Qty");
-            dataGridView_LTlist.Columns.Add("투입형태", "투입형태");
-            dataGridView_LTlist.Columns.Add("위치", "위치");
-            dataGridView_LTlist.Columns.Add("제조일", "제조일");
-            dataGridView_LTlist.Columns.Add("투입일", "투입일");
-            dataGridView_LTlist.Columns.Add("제조사", "제조사");
-            dataGridView_LTlist.Columns.Add("인치", "인치");
-
-            label_pickid_LT.Text = "";
-            label_count.Text = "";
         }
         //]210806_Sangik.choi_장기보관관리기능추가 by이종명수석님
 
@@ -559,7 +530,7 @@ namespace Amkor_Material_Manager
             int nGroup = comboBox_L_group.SelectedIndex + 1;
 
             string strEquipid = "TWR" + nGroup.ToString();
-            textBox_badge.Text = "";
+
 
             /*           if (nGroup != 7)
                            Fnc_Process_GetMaterialinfo_longterm(1, strEquipid);
@@ -641,7 +612,7 @@ namespace Amkor_Material_Manager
                     {
                         try
                         {
-                            int nCal = Int32.Parse(dataGridView_sum.Rows[i].Cells[j + 1].Value.ToString().Replace(",",""));
+                            int nCal = Int32.Parse(dataGridView_sum.Rows[i].Cells[j + 1].Value.ToString().Replace(",", ""));
                             nSum[j] = nSum[j] + nCal;
                         }
                         catch (Exception ex)
@@ -649,7 +620,7 @@ namespace Amkor_Material_Manager
 
                             throw;
                         }
-                        
+
                     }
 
                     strSum[j] = string.Format("{0:0,0}", nSum[j]);
@@ -691,19 +662,156 @@ namespace Amkor_Material_Manager
             catch (Exception ex)
             {
 
-                
+
             }
 
-            
+
         }
 
+        private int Fnc_Process_GetMaterialinfo_longterm_All(int month)
+        {
+            /**
+            *dataGridView_longterm.Columns.Add("SID", "SID");
+            *dataGridView_longterm.Columns.Add("Batch#", "Batch#");
+            *dataGridView_longterm.Columns.Add("UID", "UID");
+            *dataGridView_longterm.Columns.Add("Qty", "Qty");
+            *dataGridView_longterm.Columns.Add("투입형태", "투입형태");
+            *dataGridView_longterm.Columns.Add("위치", "위치");
+            *dataGridView_longterm.Columns.Add("제조일", "제조일");
+            *dataGridView_longterm.Columns.Add("투입일", "투입일");
+            *dataGridView_longterm.Columns.Add("제조사", "제조사");
+            *dataGridView_longterm.Columns.Add("인치", "인치");
+             */
+            dataGridView_longterm.Rows.Clear();
+
+            DataTable dt = AMM_Main.AMM.MSSql.GetData($"Select [DATETIME],[LINE_CODE],[EQUIP_ID],[TOWER_NO],[UID],[SID],[LOTID],[QTY],[MANUFACTURER],[PRODUCTION_DATE]" +
+                $",[INCH_INFO],[INPUT_TYPE],[AMKOR_BATCH] from TB_MTL_INFO with(nolock) " +
+                $"where  [DATETIME] < REPLACE(REPLACE(REPLACE(CONVERT(varchar, dateadd(MONTH, -{month}, getdate()), 20), '-', ''), ' ', ''), ':', '') " +
+                $"and (EQUIP_ID = 'TWR1' OR EQUIP_ID = 'TWR2' OR EQUIP_ID = 'TWR3') order by TOWER_NO");
+
+            foreach (DataRow row in dt.Rows)
+            {
+                dataGridView_longterm.Rows.Add(new object[] {row["SID"].ToString(), row["AMKOR_BATCH"].ToString(), row["UID"].ToString(), row["QTY"].ToString(),
+                    row["INPUT_TYPE"].ToString(), row["TOWER_NO"].ToString(), row["PRODUCTION_DATE"].ToString(), row["DATETIME"].ToString(), row["MANUFACTURER"].ToString(), row["INCH_INFO"].ToString() });
+            }
+
+
+            GetTowerSerial();
+
+            DataSet ds = new DataSet();
+
+            for (int i = 4; i <= 9; i++)
+            {
+                ds = GetMycronicData(i, $"Select [Carrier],[ArticleName],[DepotDate],[Depot],[Custom1],[Manufactur],[CreateDate],[Diameter],[Stock] from TCarrier with(nolock) where [DepotDate] <= DATEADD(MONTH, -{month},GETDATE()) order by Depot");
+
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    dataGridView_longterm.Rows.Add(new object[]{row["ArticleName"].ToString(), "", row["Carrier"].ToString(), row["Stock"],
+                    "", Tower_serial[row["Depot"].ToString().Split('.')[0]], row["CreateDate"].ToString(), row["DepotDate"].ToString(), row["Manufactur"].ToString(), row["Diameter"].ToString()});
+                }
+            }
+
+            return 0;
+            //DataSet ds = new DataSet();
+
+            //for(int  i = 4; i <= 9; i++)
+            //{
+            //    ds = GetMycronicData(i, $"Select [Carrier],[ArticleName],[DepotDate],[Depot],[Custom1],[Manufactur],[CreateDate],[Diameter] form TCarrier with(nolock) where [DeportDate] <= DATEADD(MONTH,-{comboBox_month.SelectedIndex + 1})");
+
+            //    for(int j = 0; ds.Tables[0].)
+            //}
+
+            //var MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquipid);
+
+            //var today = DateTime.Now;
+
+            //int month = comboBox_month.SelectedIndex + 1;
+
+            //string format = "yyyyMMddHHmmss";
+
+            //strEquipid = strEquipid.Replace("TWR", "G"); //20200529
+
+            //int nMtlCount = MtlList.Rows.Count;
+
+            //if (MtlList.Rows.Count == 0)
+            //{
+            //    return nMtlCount;
+            //}
+
+            //List<StorageData> list = new List<StorageData>();
+
+            //for (int i = 0; i < MtlList.Rows.Count; i++)
+            //{
+            //    StorageData data = new StorageData();
+
+            //    data.UID = MtlList.Rows[i]["UID"].ToString(); data.UID = data.UID.Trim();
+            //    data.SID = MtlList.Rows[i]["SID"].ToString(); data.SID = data.SID.Trim();
+            //    data.Input_date = MtlList.Rows[i]["DATETIME"].ToString(); data.Input_date = data.Input_date.Trim();
+            //    data.Tower_no = MtlList.Rows[i]["TOWER_NO"].ToString(); data.Tower_no = data.Tower_no.Trim();
+            //    data.LOTID = MtlList.Rows[i]["LOTID"].ToString(); data.LOTID = data.LOTID.Trim();
+            //    data.Quantity = MtlList.Rows[i]["QTY"].ToString(); data.Quantity = data.Quantity.Trim();
+            //    data.Manufacturer = MtlList.Rows[i]["MANUFACTURER"].ToString(); data.Manufacturer = data.Manufacturer.Trim();
+            //    data.Production_date = MtlList.Rows[i]["PRODUCTION_DATE"].ToString(); data.Production_date = data.Production_date.Trim();
+            //    data.Inch = MtlList.Rows[i]["INCH_INFO"].ToString(); data.Inch = data.Inch.Trim();
+            //    data.Input_type = MtlList.Rows[i]["INPUT_TYPE"].ToString(); data.Input_type = data.Input_type.Trim();
+
+            //    //[2108011_Sangik.choi_장기보관관리기능추가 by이종명수석님
+
+            //    DateTime dt = DateTime.ParseExact(data.Input_date, format, null);
+            //    DateTime dt_temp = today.AddMonths(-month);
+
+            //    int result = DateTime.Compare(dt, dt_temp);
+
+
+            //    if (result < 0)
+            //    {
+            //        list.Add(data);
+
+            //    }
+            //    //]2108011_Sangik.choi_장기보관관리기능추가 by이종명수석님
+
+
+            //}
+
+            //list.Sort(sortlist_date);
+
+            //foreach (var item in list)
+            //{
+            //    //string strnQty = string.Format("{0:0,0}", Int32.Parse(item.Quantity));  //210818_Sangik_choi_입출고 조회중 DB 오류로 삭제
+            //    string strdate = item.Input_date;
+            //    strdate = strdate.Substring(0, 4) + "-" + strdate.Substring(4, 2) + "-" + strdate.Substring(6, 2) + " "
+            //        + strdate.Substring(8, 2) + ":" + strdate.Substring(10, 2) + ":" + strdate.Substring(12, 2);
+
+            //    dataGridView_longterm.Rows.Add(new object[10] { item.SID, item.LOTID, item.UID, item.Quantity, item.Input_type, item.Tower_no, item.Production_date, strdate, item.Manufacturer, item.Inch });
+            //}
+
+            //return nMtlCount;
+
+
+        }
+
+
+        private void Fnc_Process_GetMycronicinfo_longterm(int month, int strEquipid)
+        {
+            GetTowerSerial();
+
+            DataSet ds = new DataSet();
+            
+            ds = GetMycronicData(strEquipid, $"Select [Carrier],[ArticleName],[DepotDate],[Depot],[Custom1],[Manufactur],[CreateDate],[Diameter],[Stock] from TCarrier with(nolock) where [DepotDate] <= DATEADD(MONTH, -{month},GETDATE()) order by Depot");
+
+            foreach(DataRow row in ds.Tables[0].Rows)
+            {
+                dataGridView_longterm.Rows.Add(new object[]{row["Custom1"].ToString(), "", row["Carrier"].ToString(), row["Stock"],
+                row["Diameter"].ToString(), Tower_serial[row["Depot"].ToString().Split('.')[0]], row["CreateDate"].ToString(), row["DepotDate"].ToString(), row["Manufactur"].ToString(), row["Diameter"].ToString()});
+            }
+            
+        }
 
         //[2108010_Sangik.choi_장기보관관리기능추가 by이종명수석님
 
 
         private int Fnc_Process_GetMaterialinfo_longterm(int nType, string strEquipid)
         {
-
             var MtlList = AMM_Main.AMM.GetMTLInfo(AMM_Main.strDefault_linecode, strEquipid);
 
             var today = DateTime.Now;
@@ -822,9 +930,9 @@ namespace Amkor_Material_Manager
                 //[20210805_Sangik.choi_타워그룹추가
                 /*                else if (strGroupinfo == "7")
                                     label_pickid_LT.Text = "PK0000001";*/
-                //]20210805_Sangik.choi_타워그룹추가
+            //]20210805_Sangik.choi_타워그룹추가
 
-            }
+        }
             else
             {
                 string strprefix = tableList.Rows[0]["PICK_PREFIX"].ToString();
@@ -4084,6 +4192,9 @@ namespace Amkor_Material_Manager
         {
             try
             {
+                if (Tower_serial.Count != 0)
+                    return;
+
                 DataSet dt = new DataSet();
                 
 
@@ -4848,7 +4959,7 @@ namespace Amkor_Material_Manager
             {
                 rowList = dgv_backup.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString()).ToList();
 
-                if(rowList.Count == 0 && row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true) 
+                if(rowList.Count == 0 && (row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true )) 
                 {
                     dataGridView_missmatch.Rows.Add(
                         dataGridView_missmatch.RowCount + 1,
@@ -4867,7 +4978,7 @@ namespace Amkor_Material_Manager
 
                     dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].DefaultCellStyle.BackColor = Color.LimeGreen;
                 }
-                else if(rowList.Count == 1 && row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true)
+                else if(rowList.Count == 1 && row.Cells["위치"].Value.ToString().Contains("T0") == true )
                 {
                     bool isIt = false;
                     int a = 0x00;
@@ -4990,7 +5101,7 @@ namespace Amkor_Material_Manager
 
                 rowList = dataGridView_asm.Rows.Cast<DataGridViewRow>().Where(r => r.Cells["UID"].Value.ToString() == row.Cells["UID"].Value.ToString()).ToList();
 
-                if(rowList.Count == 0 && row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true)
+                if(rowList.Count == 0 && (row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true))
                 {
                     dataGridView_missmatch.Rows.Add(
                         dataGridView_missmatch.RowCount + 1,
@@ -5008,7 +5119,7 @@ namespace Amkor_Material_Manager
 
                     dataGridView_missmatch.Rows[dataGridView_missmatch.RowCount - 1].DefaultCellStyle.BackColor = Color.Lime;
                 }
-                else if(rowList.Count == 1 && row.Cells["위치"].Value.ToString().Contains("T0") == true || cb_visible.Checked == true)
+                else if(rowList.Count == 1 && row.Cells["위치"].Value.ToString().Contains("T0") == true)
                 {
                     bool isIt = false;
                     int a = 0x00;
@@ -5040,7 +5151,7 @@ namespace Amkor_Material_Manager
                         a |= 0x04;
                     }
 
-                    if (row.Cells["위치"].Value.ToString() != rowList[0].Cells["위치"].Value.ToString() || cb_visible.Checked == true)
+                    if (row.Cells["위치"].Value.ToString() != rowList[0].Cells["위치"].Value.ToString())
                     {
                         rowList[0].Cells["위치"].Style.BackColor = Color.Lime;
                         isIt = true;
@@ -5449,172 +5560,12 @@ namespace Amkor_Material_Manager
 
 
 
-        //[210809_Sangik.choi_장기보관관리기능추가(이종명수석님)
-        private void dataGridView_longterm_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            int current_count = dataGridView_LTlist.Rows.Count;
-            string Judge_ready_insert = "";
-            int nGroup = comboBox_L_group.SelectedIndex + 1;
-            string strEquipid = "TWR" + nGroup.ToString();
-            string strPickingid = label_pickid_LT.Text;
-
-            string badge = textBox_badge.Text;
-
-            if (current_count >= 20)
-            {
-                MessageBox.Show("배출 수량이 너무 많습니다.20개 초과!\n한 개 리스트에 자재 20개 까지 담을 수 있습니다.");
-                return;
-            }
-
-            if (badge == "")
-            {
-                MessageBox.Show("사번을 입력해주세요");
-                return;
-
-            }
-
-            string user_check = AMM_Main.AMM.Check_LT_User(badge);
-
-
-            if (user_check == "OK")
-            {
-                StorageData_Compare data = new StorageData_Compare();
-
-                data.SID = dataGridView_longterm.Rows[e.RowIndex].Cells["SID"].Value.ToString(); //SID
-                data.LOTID = dataGridView_longterm.Rows[e.RowIndex].Cells["Batch#"].Value.ToString(); //LOTOD
-                data.UID = dataGridView_longterm.Rows[e.RowIndex].Cells["UID"].Value.ToString(); //UID
-                data.Quantity = dataGridView_longterm.Rows[e.RowIndex].Cells["Qty"].Value.ToString(); //QTY
-                data.Input_type = dataGridView_longterm.Rows[e.RowIndex].Cells["투입형태"].Value.ToString(); //투입 형태
-                data.Tower_no = dataGridView_longterm.Rows[e.RowIndex].Cells["위치"].Value.ToString(); //위치
-                data.Production_date = dataGridView_longterm.Rows[e.RowIndex].Cells["제조일"].Value.ToString(); //제조일
-                data.Input_date = dataGridView_longterm.Rows[e.RowIndex].Cells["투입일"].Value.ToString(); //투입일
-                data.Manufacturer = dataGridView_longterm.Rows[e.RowIndex].Cells["제조사"].Value.ToString(); //제조사
-                data.Inch = dataGridView_longterm.Rows[e.RowIndex].Cells["인치"].Value.ToString(); //인치
-
-                string strJudge = AMM_Main.AMM.GetPickingReadyinfo(data.UID);
-                string strJudge2 = AMM_Main.AMM.GetPickingListinfo(data.UID);
-                string strJudge3 = "OK";
-                string strTowerNo = data.Tower_no.Substring(4, 1);
-
-                if (bTowerUse[0] != true)
-                {
-                    if (strTowerNo == "1")
-                        strJudge3 = "NG";
-                }
-                if (bTowerUse[1] != true)
-                {
-                    if (strTowerNo == "2")
-                        strJudge3 = "NG";
-                }
-                if (bTowerUse[2] != true)
-                {
-                    if (strTowerNo == "3")
-                        strJudge3 = "NG";
-                }
-                if (bTowerUse[3] != true)
-                {
-                    if (strTowerNo == "4")
-                        strJudge3 = "NG";
-                }
-
-
-                if (strJudge == "OK" && strJudge2 == "OK" && strJudge3 == "OK")
-                {
-
-                    try //[210817_Sangik.choi_예외처리추가
-                    {
-                        Judge_ready_insert = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strEquipid, strPickingid, data.UID, textBox_badge.Text, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "AMM_SID");
-                        if (Judge_ready_insert == "NG")
-                        {
-                            MessageBox.Show("DB 저장 실패");
-
-                        }
-                        dataGridView_LTlist.Rows.Add(new object[10] { data.SID, data.LOTID, data.UID, data.Quantity, data.Input_type, data.Tower_no, data.Production_date, data.Input_date, data.Manufacturer, data.Inch });
-                        dataGridView_longterm.Rows.Remove(dataGridView_longterm.Rows[e.RowIndex]);
-                    }
-
-                    catch (Exception ex)
-                    {
-                        string strex = ex.ToString();
-                        MessageBox.Show(strex);
-
-                    }
-                    //]210817_Sangik.choi_예외처리추가
-
-                }
-
-                else
-                {
-                    string str = string.Format("UID# {0} 를 배출 할 수 없습니다.\n", data.UID);
-                    MessageBox.Show(str);
-                }
-
-            }
-
-            else
-            {
-                string str = string.Format("등록된 사번이 아닙니다.\n");
-                MessageBox.Show(str);
-                return;
-            }
-
-
-            label_count.Text = dataGridView_LTlist.Rows.Count.ToString();
-
-        }
-        //]210809_Sangik.choi_장기보관관리기능추가(이종명수석님)
 
 
 
         //[210813_Sangik.choi_장기보관관리기능추가(이종명수석님)
 
-        private void button_out_Click(object sender, EventArgs e)
-        {
-            int nGroup = comboBox_L_group.SelectedIndex + 1;
-            string strEquipid = "TWR" + nGroup.ToString();
-            string strPickingID = label_pickid_LT.Text;
-            string badge = textBox_badge.Text;
-            string user_check = AMM_Main.AMM.Check_LT_User(badge);
-            int count = dataGridView_LTlist.Rows.Count;
-
-
-            try
-            {
-                if (count > 0 && user_check == "OK")
-                {
-                    Fnc_Picklist_Comfirm();  //raw data tower 위치랑 pid 타워 prefix 랑 같은지 확인
-                    Fnc_Picklist_Send(AMM_Main.strDefault_linecode, strEquipid, strPickingID);  // ready info table 에서 pick list info 로 데이터 이동
-                    Fnc_Process_LongtermInfo();
-                }
-                else if (user_check == "NG")
-                {
-                    string str = string.Format("등록된 사번이 아닙니다.\n");
-                    MessageBox.Show(str);
-                    return;
-                }
-                else
-                {
-                    string str = string.Format("청구할 수 없습니다. 청구리스트를 확인해주세요.\n");
-                    MessageBox.Show(str);
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                string strex = ex.ToString();
-
-                string strLog = string.Format("배출 실패 {0}", strex);
-                Fnc_SaveLog(strLog, 1);
-
-                MessageBox.Show(strex);
-
-
-                return;
-            }
-
-        }
-
+        
         //[210819_Sangik.choi_로그함수추가
 
         public void Fnc_SaveLog(string strLog, int nType) ///설비별 개별 로그 저장
@@ -6003,22 +5954,52 @@ namespace Amkor_Material_Manager
             string strEquipid = "TWR" + nGroup.ToString();
 
             if (idx <= 12 && idx >= 1)
-
-                Fnc_Process_GetMaterialinfo_longterm(idx, strEquipid);
+            {
+                if (comboBox_L_group.Text != "ALL")
+                {
+                    if (comboBox_L_group.SelectedIndex < 3)
+                        Fnc_Process_GetMaterialinfo_longterm(idx, strEquipid);
+                    else
+                    {
+                        Fnc_Process_GetMycronicinfo_longterm(idx, nGroup);
+                    }
+                }
+                else
+                {
+                    Fnc_Process_GetMaterialinfo_longterm_All(comboBox_month.SelectedIndex + 1);
+                }
+            }
             else
             {
                 Fnc_Process_GetMaterialinfo_All(1);
             }
 
 
-
-            Fnc_Get_PickID(strEquipid);
-
-
-
-
+            //Fnc_Get_PickID(strEquipid);
         }
         //]210810_Sangik.choi_장기보관관리기능추가(이종명수석님)
+        
+
+      
+
+        public string GetTowerPath(int TowerNum)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection c = new SqlConnection("server=10.135.200.35;database=ATK4-AMM-DBv1;user id=amm;password=amm@123"))
+            {
+                c.Open();
+
+                using (SqlCommand cmd = new SqlCommand($"SELECT [NAME],[VALUE],[TYPE] from [PUBLIC_SETTINGS] with(nolock) where NAME='TOWER{TowerNum}_PATH'", c))
+                {
+                    using (SqlDataAdapter adt = new SqlDataAdapter(cmd))
+                    {
+                        adt.Fill(dt);
+                    }
+                }
+            }
+
+            return dt.Rows[0][1].ToString();
+        }
 
 
         //[210810_Sangik.choi_장기보관관리기능추가(이종명수석님)
@@ -6139,7 +6120,7 @@ namespace Amkor_Material_Manager
                 return;
             }
 
-            string list_idx = comboBox_all.SelectedItem.ToString();
+            
 
             int longterm_row_count = dataGridView_longterm.Rows.Count;
 
@@ -6147,372 +6128,8 @@ namespace Amkor_Material_Manager
 
             int nGroup = comboBox_L_group.SelectedIndex + 1;
             string strEquipid = "TWR" + nGroup.ToString();
-
-            string strPickingid = label_pickid_LT.Text;
-
-            string badge = textBox_badge.Text;
-            string user_check = "";
-
-
-
-            if (badge != "")
-            {
-                user_check = AMM_Main.AMM.Check_LT_User(badge);
-                if (user_check != "OK")
-                {
-                    string strLog = string.Format("등록된 사번이 아닙니다.");
-                    Fnc_SaveLog(strLog, 1);
-                    MessageBox.Show(strLog);
-
-                    return;
-                }
-
-            }
-
-
-            string current_longterm_sid = dataGridView_longterm.Rows[current_longterm_index].Cells[0].Value.ToString();
-            string current_longterm_batch = dataGridView_longterm.Rows[current_longterm_index].Cells[1].Value.ToString();
-            string Judge_ready_insert = "";
-
-            List<int> idx_list = new List<int>();
-
-            if (list_idx == "동일 Sid 선택")
-            {
-                for (int i = 0; i < longterm_row_count; i++)
-                {
-                    string sid = dataGridView_longterm.Rows[i].Cells[0].Value.ToString();
-
-                    if (sid == current_longterm_sid)
-                    {
-
-                        StorageData_Compare data = new StorageData_Compare();
-
-                        data.SID = dataGridView_longterm.Rows[i].Cells["SID"].Value.ToString(); //SID
-                        data.LOTID = dataGridView_longterm.Rows[i].Cells["Batch#"].Value.ToString(); //LOTOD
-                        data.UID = dataGridView_longterm.Rows[i].Cells["UID"].Value.ToString(); //UID
-                        data.Quantity = dataGridView_longterm.Rows[i].Cells["Qty"].Value.ToString(); //QTY
-                        data.Input_type = dataGridView_longterm.Rows[i].Cells["투입형태"].Value.ToString(); //투입 형태
-                        data.Tower_no = dataGridView_longterm.Rows[i].Cells["위치"].Value.ToString(); //위치
-                        data.Production_date = dataGridView_longterm.Rows[i].Cells["제조일"].Value.ToString(); //제조일
-                        data.Input_date = dataGridView_longterm.Rows[i].Cells["투입일"].Value.ToString(); //투입일
-                        data.Manufacturer = dataGridView_longterm.Rows[i].Cells["제조사"].Value.ToString(); //제조사
-                        data.Inch = dataGridView_longterm.Rows[i].Cells["인치"].Value.ToString(); //인치
-
-
-                        if (dataGridView_LTlist.Rows.Count >= 20)
-                        {
-                            MessageBox.Show("최대 20개 까지 청구 가능합니다. 다시 조회 후 청구해주세요");
-                            break;
-                        }
-                        else
-                        {
-                            string strJudge = AMM_Main.AMM.GetPickingReadyinfo(data.UID);
-                            string strJudge2 = AMM_Main.AMM.GetPickingListinfo(data.UID);
-                            string strJudge3 = "OK";
-                            string strTowerNo = data.Tower_no.Substring(4, 1);
-
-                            if (bTowerUse[0] != true)
-                            {
-                                if (strTowerNo == "1")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[1] != true)
-                            {
-                                if (strTowerNo == "2")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[2] != true)
-                            {
-                                if (strTowerNo == "3")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[3] != true)
-                            {
-                                if (strTowerNo == "4")
-                                    strJudge3 = "NG";
-                            }
-
-
-                            if (strJudge == "OK" && strJudge2 == "OK" && strJudge3 == "OK")
-                            {
-                                try
-                                {
-                                    Judge_ready_insert = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strEquipid, strPickingid, data.UID, badge, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "AMM_SID");
-                                    if (Judge_ready_insert == "OK")
-                                    {
-                                        dataGridView_LTlist.Rows.Add(new object[10] { data.SID, data.LOTID, data.UID, data.Quantity, data.Input_type, data.Tower_no, data.Production_date, data.Input_date, data.Manufacturer, data.Inch });
-                                        idx_list.Add(i);
-                                        label_count.Text = dataGridView_LTlist.Rows.Count.ToString();
-
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("DB 저장 실패");
-                                        break;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    string strex = ex.ToString();
-
-                                    string strLog = string.Format("청구 리스트 추가 실패 {0}", strex);
-                                    Fnc_SaveLog(strLog, 1);
-
-                                    MessageBox.Show(strex);
-
-
-                                    break;
-                                }
-
-                            }
-
-                            else
-                            {
-                                string str = string.Format("UID# {0} 를 배출 할 수 없습니다.\n 배출 상태 및 타워 상태를 확인해주세요", data.UID);
-                                MessageBox.Show(str);
-                                break;
-                            }
-
-
-                        }
-
-                    }
-
-                }
-
-                idx_list.Reverse();
-
-                for (int j = 0; j < idx_list.Count; j++)
-                {
-                    int temp = idx_list[j];
-                    dataGridView_longterm.Rows.Remove(dataGridView_longterm.Rows[temp]);
-
-                }
-
-            }
-            else if (list_idx == "동일 Batch 선택")
-            {
-                for (int i = 0; i < longterm_row_count; i++)
-                {
-                    string batch = dataGridView_longterm.Rows[i].Cells[1].Value.ToString();
-
-                    if (batch == current_longterm_batch)
-                    {
-
-                        StorageData_Compare data = new StorageData_Compare();
-
-                        data.SID = dataGridView_longterm.Rows[i].Cells["SID"].Value.ToString(); //SID
-                        data.LOTID = dataGridView_longterm.Rows[i].Cells["Batch#"].Value.ToString(); //LOTOD
-                        data.UID = dataGridView_longterm.Rows[i].Cells["UID"].Value.ToString(); //UID
-                        data.Quantity = dataGridView_longterm.Rows[i].Cells["Qty"].Value.ToString(); //QTY
-                        data.Input_type = dataGridView_longterm.Rows[i].Cells["투입형태"].Value.ToString(); //투입 형태
-                        data.Tower_no = dataGridView_longterm.Rows[i].Cells["위치"].Value.ToString(); //위치
-                        data.Production_date = dataGridView_longterm.Rows[i].Cells["제조일"].Value.ToString(); //제조일
-                        data.Input_date = dataGridView_longterm.Rows[i].Cells["투입일"].Value.ToString(); //투입일
-                        data.Manufacturer = dataGridView_longterm.Rows[i].Cells["제조사"].Value.ToString(); //제조사
-                        data.Inch = dataGridView_longterm.Rows[i].Cells["인치"].Value.ToString(); //인치
-
-
-                        if (dataGridView_LTlist.Rows.Count >= 20)
-                        {
-                            MessageBox.Show("최대 20개 까지 청구 가능합니다. 다시 조회 후 청구해주세요");
-                            break;
-                        }
-                        else
-                        {
-
-                            string strJudge = AMM_Main.AMM.GetPickingReadyinfo(data.UID);
-                            string strJudge2 = AMM_Main.AMM.GetPickingListinfo(data.UID);
-                            string strJudge3 = "OK";
-                            string strTowerNo = data.Tower_no.Substring(4, 1);
-
-                            if (bTowerUse[0] != true)
-                            {
-                                if (strTowerNo == "1")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[1] != true)
-                            {
-                                if (strTowerNo == "2")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[2] != true)
-                            {
-                                if (strTowerNo == "3")
-                                    strJudge3 = "NG";
-                            }
-                            if (bTowerUse[3] != true)
-                            {
-                                if (strTowerNo == "4")
-                                    strJudge3 = "NG";
-                            }
-
-
-                            if (strJudge == "OK" && strJudge2 == "OK" && strJudge3 == "OK")
-                            {
-                                try
-                                {
-                                    Judge_ready_insert = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strEquipid, strPickingid, data.UID, badge, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "AMM_SID");
-                                    if (Judge_ready_insert == "OK")
-                                    {
-                                        dataGridView_LTlist.Rows.Add(new object[10] { data.SID, data.LOTID, data.UID, data.Quantity, data.Input_type, data.Tower_no, data.Production_date, data.Input_date, data.Manufacturer, data.Inch });
-                                        idx_list.Add(i);
-                                        label_count.Text = dataGridView_LTlist.Rows.Count.ToString();
-
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("DB 저장 실패");
-                                        break;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    string strex = ex.ToString();
-
-                                    string strLog = string.Format("청구리스트 추가 실패 {0}", strex);
-                                    Fnc_SaveLog(strLog, 1);
-
-                                    MessageBox.Show(strex);
-                                    break;
-                                }
-
-                            }
-
-                            else
-                            {
-                                string str = string.Format("UID# {0} 를 배출 할 수 없습니다.\n 배출 상태 및 타워 상태를 확인해주세요", data.UID);
-                                MessageBox.Show(str);
-                                break;
-                            }
-
-
-                        }
-                    }
-
-                }
-
-                idx_list.Reverse();
-
-                for (int j = 0; j < idx_list.Count; j++)
-                {
-                    int temp = idx_list[j];
-                    dataGridView_longterm.Rows.Remove(dataGridView_longterm.Rows[temp]);
-
-                }
-            }
-            else if (list_idx == "전체 선택")
-            {
-                for (int i = 0; i < longterm_row_count; i++)
-                {
-                    StorageData_Compare data = new StorageData_Compare();
-
-                    data.SID = dataGridView_longterm.Rows[i].Cells["SID"].Value.ToString(); //SID
-                    data.LOTID = dataGridView_longterm.Rows[i].Cells["Batch#"].Value.ToString(); //LOTOD
-                    data.UID = dataGridView_longterm.Rows[i].Cells["UID"].Value.ToString(); //UID
-                    data.Quantity = dataGridView_longterm.Rows[i].Cells["Qty"].Value.ToString(); //QTY
-                    data.Input_type = dataGridView_longterm.Rows[i].Cells["투입형태"].Value.ToString(); //투입 형태
-                    data.Tower_no = dataGridView_longterm.Rows[i].Cells["위치"].Value.ToString(); //위치
-                    data.Production_date = dataGridView_longterm.Rows[i].Cells["제조일"].Value.ToString(); //제조일
-                    data.Input_date = dataGridView_longterm.Rows[i].Cells["투입일"].Value.ToString(); //투입일
-                    data.Manufacturer = dataGridView_longterm.Rows[i].Cells["제조사"].Value.ToString(); //제조사
-                    data.Inch = dataGridView_longterm.Rows[i].Cells["인치"].Value.ToString(); //인치
-
-                    if (dataGridView_LTlist.Rows.Count >= 20)
-                    {
-                        MessageBox.Show("최대 20개 까지 청구 가능합니다. 청구 완료 후 다시 조회해주세요");
-                        break;
-                    }
-                    else
-                    {
-
-                        string strJudge = AMM_Main.AMM.GetPickingReadyinfo(data.UID);
-                        string strJudge2 = AMM_Main.AMM.GetPickingListinfo(data.UID);
-                        string strJudge3 = "OK";
-                        string strTowerNo = data.Tower_no.Substring(4, 1);
-
-                        if (bTowerUse[0] != true)
-                        {
-                            if (strTowerNo == "1")
-                                strJudge3 = "NG";
-                        }
-                        if (bTowerUse[1] != true)
-                        {
-                            if (strTowerNo == "2")
-                                strJudge3 = "NG";
-                        }
-                        if (bTowerUse[2] != true)
-                        {
-                            if (strTowerNo == "3")
-                                strJudge3 = "NG";
-                        }
-                        if (bTowerUse[3] != true)
-                        {
-                            if (strTowerNo == "4")
-                                strJudge3 = "NG";
-                        }
-
-
-                        if (strJudge == "OK" && strJudge2 == "OK" && strJudge3 == "OK")
-                        {
-                            try
-                            {
-                                Judge_ready_insert = AMM_Main.AMM.SetPicking_Readyinfo(AMM_Main.strDefault_linecode, strEquipid, strPickingid, data.UID, badge, data.Tower_no, data.SID, data.LOTID, data.Quantity, data.Manufacturer, data.Production_date, data.Inch, data.Input_type, "AMM_SID");
-                                if (Judge_ready_insert == "OK")
-                                {
-                                    dataGridView_LTlist.Rows.Add(new object[10] { data.SID, data.LOTID, data.UID, data.Quantity, data.Input_type, data.Tower_no, data.Production_date, data.Input_date, data.Manufacturer, data.Inch });
-                                    idx_list.Add(i);
-                                    label_count.Text = dataGridView_LTlist.Rows.Count.ToString();
-
-                                }
-                                else
-                                {
-                                    MessageBox.Show("DB 저장 실패");
-                                    break;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                string strex = ex.ToString();
-
-                                string strLog = string.Format("배출 실패 {0}", strex);
-                                Fnc_SaveLog(strLog, 1);
-
-                                MessageBox.Show(strex);
-                                break;
-                            }
-
-                        }
-
-                        else
-                        {
-                            string str = string.Format("UID# {0} 를 배출 할 수 없습니다.\n 배출 상태 및 타워 상태를 확인해주세요", data.UID);
-                            MessageBox.Show(str);
-                            break;
-                        }
-
-
-                    }
-
-                }
-
-                idx_list.Reverse();
-
-                for (int j = 0; j < idx_list.Count; j++)
-                {
-                    int temp = idx_list[j];
-                    dataGridView_longterm.Rows.Remove(dataGridView_longterm.Rows[temp]);
-
-                }
-
-
-            }
-            else
-            {
-                MessageBox.Show("청구 리스트 등록 실패 재시도 해주세요");
-                return;
-            }
-
+            
+            string user_check = "";            
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -7227,7 +6844,7 @@ namespace Amkor_Material_Manager
                         }
                     }
                 }
-                MDBPath = dt.Rows[0][1].ToString();
+                MDBPath = @"C:\SMDTowerSQL\BackupDB.MDB";//dt.Rows[0][1].ToString();
             }
 
             if (Tower_serial.Count == 0)
@@ -7322,14 +6939,14 @@ namespace Amkor_Material_Manager
                     //{
                     //    SyncListCSVOut();
                     //}
-
+                    getMDBConn();
                     string q = "";
                     foreach (DataGridViewRow row in dataGridView_missmatch.Rows)
                     {
                         q = $"insert into [TB_SYNC_INFO] ([DATETIME], [EQUIP_ID], [TOWER_NO], [UID], [SID], [LOTID], [QTY], [INCH_INFO], [SYNC_INFO], [EMPLOYEE_NO])" +
                             $"VALUES (GETDATE(), '{strGroup}', '{row.Cells["위치"].Value.ToString()}', '{row.Cells["UID"].Value.ToString()}', '{row.Cells["SID"].Value.ToString()}'," +
                             $"'{row.Cells["LOTID"].Value.ToString()}', {(row.Cells["Qty"].Value.ToString() == "" ? "0" : row.Cells["Qty"].Value.ToString().Replace(",", ""))}, '{row.Cells["인치"].Value.ToString()}', " +
-                            $"'배출 명령 생성','{ID}')";
+                            $"{(row.Cells["위치"].Value.ToString().Contains("T0") == true ? "'배출명령생성'" : "'위치정보 삭제'") },'{ID}')";
                         RunSqlCMD(AMMDBConnectionString, q);
                     }
 
@@ -7550,19 +7167,20 @@ namespace Amkor_Material_Manager
                                             Synclog.Info(string.Format("{0} Databse Delete UID : {1}", strGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
 
                                             MDBConn.DeleteData(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString(), MDBPath);
+                                            DeleteMycronicTower(nGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
 
                                             dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
                                         }
                                         else
                                         {
-                                            getMDBConn();
+                                         
 
 
                                             int cnt = MDBConn.TouchRow($"select * from Carrier where Carrier='{dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()}'", MDBPath);
 
                                             if (cnt == 0)
                                             {//insert
-                                                BackUpInsert(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
+                                                BackUpInsert1(dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString());
                                             }
                                             else
                                             {//update
@@ -7588,13 +7206,13 @@ namespace Amkor_Material_Manager
                                         }
                                         
                                     }
-                                    else if(dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "SQL_DB")
+                                    else if(dataGridView_missmatch.Rows[0].Cells["MISS"].Value.ToString() == "Local_DB")
                                     {
-                                        if(dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
-                                        {
-                                            dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
-                                        }
-                                        else
+                                        //if (dataGridView_missmatch.Rows[0].Cells["위치"].Value.ToString().Contains("T0") == true)
+                                        //{
+                                        //    dataGridView_missmatch.Rows.Remove(dataGridView_missmatch.Rows[0]);
+                                        //}
+                                        //else
                                         {
                                             Synclog.Info(string.Format("{0} Databse Delete UID : {1}", strGroup, dataGridView_missmatch.Rows[0].Cells["UID"].Value.ToString()));
 
@@ -7857,7 +7475,7 @@ namespace Amkor_Material_Manager
             string col = "(";
             string val = " values(";
 
-            if (LocalData.Tables.Count == 0)
+            if (LocalData.Tables.Count == 1)
             {
 
             }
@@ -7962,14 +7580,141 @@ namespace Amkor_Material_Manager
                     //}
                     #endregion
                 }
+
+                col = col.Substring(0, col.LastIndexOf(',')) + ")";
+                val = val.Substring(0, val.LastIndexOf(',')) + ")";
+
+                q1 += col + val;
+
+                MDBConn.RunQuary(q1, MDBPath);
             }
-            col = col.Substring(0, col.LastIndexOf(',')) + ")";
-            val = val.Substring(0, val.LastIndexOf(',')) + ")";
-
-            q1 += col + val;
-
-            MDBConn.RunQuary(q1, MDBPath);
             
+            
+        }
+
+        private void BackUpInsert1(string UID)
+        {
+            getMDBConn();
+
+            DataSet LocalData = GetMycronicData(comboBox_sel.SelectedIndex + 1, $"select * from TCarrier with(nolock) where Carrier='{UID}'");
+
+            string q1 = "INSERT INTO Carrier";
+            string col = "(";
+            string val = " values(";
+
+            if (LocalData.Tables.Count == 0)
+            {
+
+            }
+            else
+            {
+                for (int i = 0; i < LocalData.Tables[0].Columns.Count; i++)
+                {
+                    if (LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true)
+                    {
+                        col += $"{LocalData.Tables[0].Columns[i].ColumnName},{LocalData.Tables[0].Columns[i].ColumnName.Replace("Date", "") + "Time,"}";
+                    }
+                    else if (LocalData.Tables[0].Columns[i].ColumnName == "ID" || LocalData.Tables[0].Columns[i].ColumnName == "ArticleName" || LocalData.Tables[0].Columns[i].ColumnName == "Enabled" || LocalData.Tables[0].Columns[i].ColumnName == "InitialOuttime")
+                    {
+                    }
+                    else
+                    {
+                        col += $"{LocalData.Tables[0].Columns[i].ColumnName},";
+                    }
+
+
+                    switch (LocalData.Tables[0].Columns[i].ColumnName)
+                    {
+                        case "Depot":
+                            val += $"'Tower {Tower_serial[LocalData.Tables[0].Rows[0][i].ToString().Split('.')[0]]}, " +
+                            $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(1, 1))}, " +
+                            $"Slot {LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(2, 2)}',";
+                            break;
+                        case var _ when LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true:
+                            val += $"{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("yyyy-MM-dd")},";
+                            val += $"'{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("hh:mm")}',";
+                            break;
+                        case "Expiry":
+                            val += $"1900-01-01,";
+                            break;
+                        case "InitialOuttime":
+                        case "Enabled":
+                        case "ArticleName":
+                        case "ID":
+                            break;
+                        case "Guessed":
+                        case "Article":
+                        case "Cycles":
+                        case "Outtime":
+                        case "Diameter":
+                        case "Amplitude":
+                        case "Stock":
+                        case "StockNew":
+                        case "StockUsed":
+                        case "Duration":
+                        case "Core":
+                        case "Unleaded":
+                        case "Height":
+                        case "StepWidth":
+                        case "StockMin":
+                        case "StockTPSys":
+                        case "Frequency":
+                        case "TapeHeight":
+                        case "PriceP":
+                        case "HCode":
+                        case "MSLWatch":
+                            val += $"{LocalData.Tables[0].Rows[0][i].ToString()},";
+                            break;
+                        default:
+                            val += $"'{LocalData.Tables[0].Rows[0][i].ToString().Trim()}',";
+                            break;
+                    }
+
+                    #region column if else
+                    //if (LocalData.Tables[0].Columns[i].ColumnName == "Depot")
+                    //{
+                    //    val += $"'Tower {Tower_serial[LocalData.Tables[0].Rows[0][i].ToString().Split('.')[0]]}, " +
+                    //        $"Magazine {Dec2Alpa[int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(0, 1))]}{int.Parse(LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(1, 1))}, " +
+                    //        $"Slot {LocalData.Tables[0].Rows[0][i].ToString().Split('.')[1].Substring(2, 2)}',";
+                    //}
+                    //else if(LocalData.Tables[0].Columns[i].ColumnName.Contains("Date") == true)
+                    //{
+                    //    val += $"{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("yyyy-MM-dd")},";
+                    //    val += $"'{Convert.ToDateTime(LocalData.Tables[0].Rows[0][i].ToString()).ToString("hh:mm")}',";
+                    //}
+                    //else if (LocalData.Tables[0].Columns[i].ColumnName == "Article" || LocalData.Tables[0].Columns[i].ColumnName == "Stock" || LocalData.Tables[0].Columns[i].ColumnName == "StockMin" ||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "StockNew" || LocalData.Tables[0].Columns[i].ColumnName == "StockUsed" || LocalData.Tables[0].Columns[i].ColumnName == "StockTPSys" ||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "OutTime" || LocalData.Tables[0].Columns[i].ColumnName == "Duration" || LocalData.Tables[0].Columns[i].ColumnName == "Frequency" ||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "Amplitude" || LocalData.Tables[0].Columns[i].ColumnName == "Core" || LocalData.Tables[0].Columns[i].ColumnName == "TapeHeight" ||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "Guessed" || LocalData.Tables[0].Columns[i].ColumnName == "Unleaded" || LocalData.Tables[0].Columns[i].ColumnName == "PriceP" ||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "Cycles" || LocalData.Tables[0].Columns[i].ColumnName == "Height" || LocalData.Tables[0].Columns[i].ColumnName == "HCode"||
+                    //    LocalData.Tables[0].Columns[i].ColumnName == "Diameter" || LocalData.Tables[0].Columns[i].ColumnName == "StepWidth" || LocalData.Tables[0].Columns[i].ColumnName == "MSLWatch" 
+                    //    )
+                    //{
+                    //    val += $"{LocalData.Tables[0].Rows[0][i].ToString()},";
+                    //}
+                    //else if(LocalData.Tables[0].Columns[i].ColumnName == "ID" || LocalData.Tables[0].Columns[i].ColumnName == "ArticleName" || LocalData.Tables[0].Columns[i].ColumnName == "Enabled" || LocalData.Tables[0].Columns[i].ColumnName == "InitialOuttime")
+                    //{
+
+                    //}
+                    //else if(LocalData.Tables[0].Columns[i].ColumnName == "Expiry")
+                    //{
+                    //    val += $"1900-01-01,";
+                    //}
+                    //else
+                    //{
+                    //    val += $"'{LocalData.Tables[0].Rows[0][i].ToString().Trim()}',";
+                    //}
+                    #endregion
+                }
+
+                col = col.Substring(0, col.LastIndexOf(',')) + ")";
+                val = val.Substring(0, val.LastIndexOf(',')) + ")";
+
+                q1 += col + val;
+
+                MDBConn.RunQuary(q1, MDBPath);
+            }
         }
 
         private void SyncListCSVOut()
@@ -8029,9 +7774,9 @@ namespace Amkor_Material_Manager
             }
 
             Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
-            Workbook workbook = application.Workbooks.Add();// Filename: string.Format("{0}\\{1}", System.Environment.CurrentDirectory, @"\WaferReturn\WaferReturnOutTemp.xlsx"));
+            Excel.Workbook workbook = application.Workbooks.Add();// Filename: string.Format("{0}\\{1}", System.Environment.CurrentDirectory, @"\WaferReturn\WaferReturnOutTemp.xlsx"));
 
-            Worksheet worksheet1 = workbook.Worksheets.get_Item(1);
+            Excel.Worksheet worksheet1 = workbook.Worksheets.get_Item(1);
             object misValue = System.Reflection.Missing.Value;
 
             application.Visible = false;
@@ -8046,7 +7791,7 @@ namespace Amkor_Material_Manager
                 string[,] item = new string[dataGridView_missmatch.Rows.Count, 9];
                 string[] columns = new string[dataGridView_missmatch.Columns.Count];
 
-                Range rd = worksheet1.Range[worksheet1.Cells[1, 1], worksheet1.Cells[1, 12]];
+                Excel.Range rd = worksheet1.Range[worksheet1.Cells[1, 1], worksheet1.Cells[1, 12]];
                 rd.Merge();
                 rd.Value2 = "Sync List";
                 rd.Font.Bold = true;
@@ -8280,6 +8025,293 @@ namespace Amkor_Material_Manager
             _SyncHistory.ShowDialog();
         }
 
+        private void pictureBox2_DoubleClick(object sender, EventArgs e)
+        {
+            Form_LongtimeReport report = new Form_LongtimeReport();
+
+            report.ShowDialog();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            longTermExcelExport();
+            //longTermExcelOut();
+        }
+
+        private void longTermExcelExport()
+        {
+            string filePath = "";
+            WorkBook workbook = new WorkBook();
+            workbook.NumSheets = 1;
+            workbook.setSheetName(0, "장기보관 릴 리스트");
+            workbook.Sheet = 0;
+            
+            RangeStyle r = workbook.getRangeStyle();
+            r.MergeCells = true;
+            r.FontName = "Arial";
+            r.FontBold = true;
+            r.FontSize = 16*20;
+            r.HorizontalAlignment = RangeStyle.HorizontalAlignmentCenter;
+            workbook.setRangeStyle(r, 0, 0, 0, 10);
+            workbook.setText(0, 0, "장기보관 릴 리스트");
+
+            r.FontBold = false;
+            r.FontSize = 10;
+            workbook.setRangeStyle(r, 1, 0, 1, 1);
+            workbook.setText(1, 0, $"Total : {dataGridView_longterm.Rows.Count}");
+            
+            workbook.setRangeStyle(r, 1, 9, 1, 10);
+            workbook.setText(1, 9, $"Date : {DateTime.Now.ToString("yyyy-MM-dd")}");
+
+            r = workbook.getRangeStyle(2, 0, 2, 10);
+            r.TopBorder = RangeStyle.BorderThick;
+            r.BottomBorder = RangeStyle.BorderThick;
+            workbook.setRangeStyle(r, 2, 0, 2, 10);
+
+            workbook.setText(2, 0, "No");
+            workbook.setText(2, 1, "SID");
+            workbook.setText(2, 2, "Batch");
+            workbook.setText(2, 3, "UID");
+            workbook.setText(2, 4, "QTY");
+            workbook.setText(2, 5, "투입형태");
+            workbook.setText(2, 6, "위치");
+            workbook.setText(2, 7, "제조일");
+            workbook.setText(2, 8, "투입일");
+            workbook.setText(2, 9, "제조사");
+            workbook.setText(2, 10, "인치");
+
+            
+
+
+            for(int i = 0; i < dataGridView_longterm.RowCount ; i++)
+            {
+                workbook.setText(3 + i, 0, $"{i+1}");
+                workbook.setText(3 + i, 1, $"{dataGridView_longterm.Rows[i].Cells["SID"].Value.ToString()}");
+                workbook.setText(3 + i, 2, $"{dataGridView_longterm.Rows[i].Cells["Batch#"].Value.ToString()}");
+                workbook.setText(3 + i, 3, $"{dataGridView_longterm.Rows[i].Cells["UID"].Value.ToString()}");
+                workbook.setText(3 + i, 4, $"{dataGridView_longterm.Rows[i].Cells["Qty"].Value.ToString()}");
+                workbook.setText(3 + i, 5, $"{dataGridView_longterm.Rows[i].Cells["투입형태"].Value.ToString()}");
+                workbook.setText(3 + i, 6, $"{dataGridView_longterm.Rows[i].Cells["위치"].Value.ToString()}");
+                workbook.setText(3 + i, 7, $"{dataGridView_longterm.Rows[i].Cells["제조일"].Value.ToString()}");
+                workbook.setText(3 + i, 8, $"{dataGridView_longterm.Rows[i].Cells["투입일"].Value.ToString()}");
+                workbook.setText(3 + i, 9, $"{dataGridView_longterm.Rows[i].Cells["제조사"].Value.ToString()}");
+                workbook.setText(3 + i, 10, $"{dataGridView_longterm.Rows[i].Cells["인치"].Value.ToString()}");                
+            }
+
+
+            if (Properties.Settings.Default.LongTermReelReportPath != "")
+            {
+                filePath = $"{Properties.Settings.Default.LongTermReelReportPath}\\LongTermReel_Over{comboBox_month.SelectedIndex + 1}Mon_{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx";
+
+                if (Directory.Exists(Properties.Settings.Default.LongTermReelReportPath) == false)
+                    Directory.CreateDirectory(Properties.Settings.Default.LongTermReelReportPath);
+
+                workbook.writeXLSX(filePath);
+            }
+            else
+            {
+                filePath = $"{System.Environment.CurrentDirectory + "\\LongTermReel"}\\LongTermReel_Over{comboBox_month.SelectedIndex + 1}Mon_{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx";
+
+                if (Directory.Exists(System.Environment.CurrentDirectory + "\\LongTermReel") == false)
+                    Directory.CreateDirectory(System.Environment.CurrentDirectory + "\\LongTermReel");
+
+                Properties.Settings.Default.LongTermReelReportPath = System.Environment.CurrentDirectory + "\\LongTermReel";
+                Properties.Settings.Default.Save();
+
+                workbook.writeXLSX(filePath);
+            }
+        }
+
+        private void longTermExcelOut()
+        {
+            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
+            Workbook workbook = application.Workbooks.Add();// Filename: string.Format("{0}\\{1}", System.Environment.CurrentDirectory, @"\WaferReturn\WaferReturnOutTemp.xlsx"));
+
+            Worksheet worksheet1 = workbook.Worksheets[0];
+            object misValue = System.Reflection.Missing.Value;
+
+            
+            worksheet1.Name = "장기보관 Reel 리스트";
+
+
+            if (dataGridView_longterm.Rows.Count != 0)
+            {
+                string[,] item = new string[dataGridView_longterm.Rows.Count, dataGridView_longterm.Columns.Count + 1];
+                string[] columns = new string[dataGridView_longterm.Columns.Count + 1];
+
+
+                Range rd = worksheet1.Range[worksheet1.Cells[1, 1], worksheet1.Cells[1, 11]];
+                rd.Merge();
+                rd.Value2 = "장기보관 Reel 리스트";
+                rd.Font.Bold = true;
+                rd.Font.Size = 16.0;                
+                rd.HorizontalAlignment = HorizontalAlignment.Center;
+                worksheet1.get_Range("A1").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                rd = worksheet1.Range[worksheet1.Cells[2, 1], worksheet1.Cells[2, 2]];
+                rd.Merge();
+                rd.Value2 = $"Total : {dataGridView_longterm.RowCount}";
+                rd.HorizontalAlignment = HorizontalAlignment.Center;
+                worksheet1.get_Range("A2").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                rd = worksheet1.Range[worksheet1.Cells[2, 10], worksheet1.Cells[2, 11]];
+                rd.Merge();
+                rd.Value2 = $"Date : {DateTime.Now.ToShortDateString()}";
+                rd.HorizontalAlignment = HorizontalAlignment.Center;
+                worksheet1.get_Range("J2").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                //worksheet1.get_Range("A1").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                //rd = worksheet1.Range[worksheet1.Cells[3, 3], worksheet1.Cells[4, 11]];
+                //rd.Font.Color = Color.Red;
+                //rd.Font.Size = 20.0;
+                //rd.Merge();
+                //rd.HorizontalAlignment = HorizontalAlignment.Center;
+                //rd.Value2 = "★고객 요청 사항 확인★";
+                //worksheet1.get_Range("D3").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+
+                //rd = worksheet1.Range[worksheet1.Cells[4, 12], worksheet1.Cells[4, 12]];
+                //rd.Font.Color = Color.Red;
+                //rd.Font.Size = 20.0;
+                ////rd.Merge();
+                //rd.HorizontalAlignment = HorizontalAlignment.Center;
+                //rd.Value2 = "Total QTY";
+                //worksheet1.get_Range("D3").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+                int QtyCnt = 0;
+
+
+                if (dataGridView_longterm.Rows.Count > 0)
+                {
+                    
+                    for (int c = 0; c < dataGridView_longterm.Columns.Count+1; c++)
+                    {
+                        //컬럼 위치값을 가져오기
+                        columns[c] = ExcelColumnIndexToName(c);
+                    }
+
+                    for (int rowNo = 0; rowNo < dataGridView_longterm.Rows.Count; rowNo++)
+                    {
+                        for (int colNo = 0; colNo < dataGridView_longterm.Columns.Count +1; colNo++)
+                        {
+                            if(colNo == 0)
+                            {
+                                item[rowNo, colNo] = (rowNo + 1).ToString();
+                            }
+                            else
+                            {
+                                item[rowNo, colNo] = dataGridView_longterm.Rows[rowNo].Cells[colNo-1].Value.ToString().Trim();
+                            }
+                            
+                        }                        
+                    }
+                }
+
+                //해당위치에 컬럼명을 담기
+                //worksheet1.get_Range("A1", columns[MtlList.Columns.Count - 1] + "1").Value2 = headers;
+                //해당위치부터 데이터정보를 담기
+
+                //rd = worksheet1.Range[worksheet1.Cells[4, 13], worksheet1.Cells[4, 14]];
+                //rd.Font.Color = Color.Black;
+                //rd.Font.Size = 20.0;
+                //rd.Merge();
+                //rd.HorizontalAlignment = HorizontalAlignment.Center;
+                //rd.Value2 = QtyCnt;
+                //worksheet1.get_Range("M4").HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+
+                /**
+            *dataGridView_longterm.Columns.Add("SID", "SID");
+            *dataGridView_longterm.Columns.Add("Batch#", "Batch#");
+            *dataGridView_longterm.Columns.Add("UID", "UID");
+            *dataGridView_longterm.Columns.Add("Qty", "Qty");
+            *dataGridView_longterm.Columns.Add("투입형태", "투입형태");
+            *dataGridView_longterm.Columns.Add("위치", "위치");
+            *dataGridView_longterm.Columns.Add("제조일", "제조일");
+            *dataGridView_longterm.Columns.Add("투입일", "투입일");
+            *dataGridView_longterm.Columns.Add("제조사", "제조사");
+            *dataGridView_longterm.Columns.Add("인치", "인치");
+             */
+
+                
+                worksheet1.get_Range("A3").Value2 = "No";
+                worksheet1.get_Range("B3").Value2 = "SID";
+                worksheet1.get_Range("C3").Value2 = "Batch";
+                worksheet1.get_Range("D3").Value2 = "UID";
+                worksheet1.get_Range("E3").Value2 = "QTY";
+                worksheet1.get_Range("F3").Value2 = "투입형태";
+                worksheet1.get_Range("G3").Value2 = "위치";
+                worksheet1.get_Range("H3").Value2 = "제조일";
+                worksheet1.get_Range("I3").Value2 = "투입일";
+                worksheet1.get_Range("J3").Value2 = "제조사";
+                worksheet1.get_Range("K3").Value2 = "인치";
+                
+
+                rd = worksheet1.Range["A3", "K3"];
+                //rd.BorderAround2(XlLineStyle.xlDash);
+                //rd.Borders[XlBordersIndex.xlDiagonalUp].LineStyle = Excel.XlLineStyle.xlContinuous;
+                //rd.Borders[XlBordersIndex.xlDiagonalDown].LineStyle = Excel.XlLineStyle.xlContinuous;
+
+                rd.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                rd.Borders[Excel.XlBordersIndex.xlEdgeBottom].Weight = XlBorderWeight.xlThick;
+                rd.Borders[Excel.XlBordersIndex.xlEdgeTop].Weight = XlBorderWeight.xlThick;
+
+                worksheet1.get_Range("A4", columns[dataGridView_longterm.Columns.Count - 0] + (dataGridView_longterm.Rows.Count + 3).ToString()).Value = item;
+                worksheet1.get_Range("A4", columns[dataGridView_longterm.Columns.Count - 0] + (dataGridView_longterm.Rows.Count + 3).ToString()).HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                worksheet1.Cells.NumberFormat = @"@";
+                worksheet1.Columns.AutoFit();
+
+                worksheet1.PageSetup.PrintArea = string.Format("A1:{0}", columns[dataGridView_longterm.Columns.Count - 3] + (dataGridView_longterm.Rows.Count + 5).ToString());
+                worksheet1.PageSetup.Zoom = false;
+                worksheet1.PageSetup.FitToPagesWide = 1;        // Zoom이 False일 때만 적용 됨
+
+                string filePath = "";
+
+
+                if (Properties.Settings.Default.LongTermReelReportPath != "")
+                {
+                    filePath = $"{Properties.Settings.Default.LongTermReelReportPath}\\LongTermReel_Over{comboBox_month.SelectedIndex +1}Mon_{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx";
+
+                    if (Directory.Exists(Properties.Settings.Default.LongTermReelReportPath) == false)
+                        Directory.CreateDirectory(Properties.Settings.Default.LongTermReelReportPath);
+
+                    workbook.SaveAs(filePath, Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                }
+                else
+                {
+                    filePath = $"{System.Environment.CurrentDirectory + "\\LongTermReel"}\\LongTermReel_Over{comboBox_month.SelectedIndex +1}Mon_{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx";
+
+                    if (Directory.Exists(System.Environment.CurrentDirectory + "\\LongTermReel") == false)
+                        Directory.CreateDirectory(System.Environment.CurrentDirectory + "\\LongTermReel");
+
+                    Properties.Settings.Default.LongTermReelReportPath = System.Environment.CurrentDirectory + "\\LongTermReel";
+                    Properties.Settings.Default.Save();
+
+                    workbook.SaveAs(filePath, Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                }
+                workbook.Close();
+                application.Quit();
+
+                releaseObject(application);
+                releaseObject(worksheet1);
+                releaseObject(workbook);
+
+                if (isBackground == false)
+                {
+                    if (DialogResult.Yes == MessageBox.Show("파일을 여시겠습니까?", "file open?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        ProcessStartInfo info = new ProcessStartInfo("excel.exe", filePath);
+                        Process.Start(info);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("데이터가 없습니다.");
+            }
+        }
+
         public string GetMaterialListSIMMQuery(string towerLocation, string tid)
         {
             try
@@ -8319,6 +8351,32 @@ namespace Amkor_Material_Manager
             return obj1.UID.CompareTo(obj2.UID);
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Form_LongtimeReport report = new Form_LongtimeReport();
+            report.MakeExcelReportEvent += Report_MakeExcelReportEvent;
+            report.GetDataGridRowCountEvent += Report_GetDataGridRowCountEvent;
+            
+            report.ShowDialog();
+        }
+
+        private int Report_GetDataGridRowCountEvent()
+        {
+            return dataGridView_longterm.RowCount;
+        }
+
+        private void Report_MakeExcelReportEvent(int month)
+        {
+            comboBox_month.SelectedIndex = month;
+            comboBox_L_group.SelectedIndex = comboBox_L_group.Items.Count - 1;
+            
+
+            button_display_Click(new object(), new EventArgs());
+            longTermExcelOut();
+
+
+        }
+
         int CompareStorageData_ASM(ASM_StorageData obj1, ASM_StorageData obj2)
         {
             return obj1.SID.CompareTo(obj2.SID);
@@ -8327,6 +8385,29 @@ namespace Amkor_Material_Manager
         int CompareStorageData_AMM(AMM_StorageData obj1, AMM_StorageData obj2)
         {
             return obj1.SID.CompareTo(obj2.SID);
+        }
+
+
+        bool isBackground = false;
+        public bool SetLongTermReport()
+        {
+            try
+            {
+                isBackground = true;
+                comboBox_month.SelectedIndex = Properties.Settings.Default.LongTimeReelReportMonth - 1;
+                comboBox_L_group.SelectedIndex = comboBox_L_group.Items.Count - 1;
+
+                button_display_Click(new object(), new EventArgs());
+
+
+                button6_Click(new object(), new EventArgs());
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;                
+            }            
         }
 
 
@@ -8483,6 +8564,65 @@ public static class ExtensionMethods
     }
 
 }
+public class SharedAPI
+{
+    // 구조체 선언
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    public struct NETRESOURCE
+    {
+        public uint dwScope;
+        public uint dwType;
+        public uint dwDisplayType;
+        public uint dwUsage;
+        public string lpLocalName;
+        public string lpRemoteName;
+        public string lpComment;
+        public string lpProvider;
+    }
+
+    // API 함수 선언
+    [DllImport("mpr.dll", CharSet = CharSet.Auto)]
+    public static extern int WNetUseConnection(
+                IntPtr hwndOwner,
+                [MarshalAs(UnmanagedType.Struct)] ref NETRESOURCE lpNetResource,
+                string lpPassword,
+                string lpUserID,
+                uint dwFlags,
+                StringBuilder lpAccessName,
+                ref int lpBufferSize,
+                out uint lpResult);
+
+    // API 함수 선언 (공유해제)
+    [DllImport("mpr.dll", EntryPoint = "WNetCancelConnection2", CharSet = CharSet.Auto)]
+    public static extern int WNetCancelConnection2A(string lpName, int dwFlags, int fForce);
+
+    // 공유연결
+    public int ConnectRemoteServer(string server)
+    {
+        int capacity = 64;
+        uint resultFlags = 0;
+        uint flags = 0;
+        System.Text.StringBuilder sb = new System.Text.StringBuilder(capacity);
+        NETRESOURCE ns = new NETRESOURCE();
+        ns.dwType = 1;              // 공유 디스크
+        ns.lpLocalName = null;   // 로컬 드라이브 지정하지 않음
+        ns.lpRemoteName = server;
+        ns.lpProvider = null;
+        int result = 0;
+
+        result = WNetUseConnection(IntPtr.Zero, ref ns, "Siplace.1", "Administrator", flags, sb, ref capacity, out resultFlags);
+
+        return result;
+    }
+
+    // 공유해제
+    public void CencelRemoteServer(string server)
+    {
+        WNetCancelConnection2A(server, 1, 0);
+    }
+}
+
+
 class DataConn
 {
     public DataSet GetDataset(string quary, string DBpath)
@@ -8555,4 +8695,6 @@ class DataConn
 
         return res;
     }
+
+    
 }
