@@ -319,7 +319,7 @@ namespace Amkor_Material_Manager
 
                 System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(Properties.Settings.Default.LongTermReelReportPath);
 
-                System.IO.FileInfo[] fi = di.GetFiles("*.xlsx", System.IO.SearchOption.TopDirectoryOnly);
+                System.IO.FileInfo[] fi = di.GetFiles();
 
                 Array.Sort<System.IO.FileInfo>(fi, delegate (System.IO.FileInfo x, System.IO.FileInfo y) { return x.CreationTime.CompareTo(y.CreationTime); });
 
@@ -333,13 +333,10 @@ namespace Amkor_Material_Manager
 
                 smtp.Send(message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
             }
-
-            
         }
 
         private void AMM_Main_FormClosing(object sender, FormClosingEventArgs e)

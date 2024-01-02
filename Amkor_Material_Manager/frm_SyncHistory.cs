@@ -208,8 +208,7 @@ namespace Amkor_Material_Manager
                     }
                     else
                     {
-                        filepath = string.Format("{0}\\WaferReturnOut_{1}.xlsx", System.Environment.CurrentDirectory + "\\WaferReturn", DateTime.Now.ToString("yyyyMMddhhmmss"));
-                        workbook.SaveAs(filepath, Microsoft.Office.Interop.Excel.XlFileFormat.xlOpenXMLWorkbook, System.Reflection.Missing.Value, System.Reflection.Missing.Value, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Microsoft.Office.Interop.Excel.XlSaveConflictResolution.xlUserResolution, true, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                        
                     }
 
 
@@ -223,7 +222,7 @@ namespace Amkor_Material_Manager
 
                     if (DialogResult.Yes == MessageBox.Show("파일을 여시겠습니까?", "file open?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
-                        ProcessStartInfo info = new ProcessStartInfo("excel.exe", filepath);
+                        ProcessStartInfo info = new ProcessStartInfo("excel.exe", "\"" + filepath + "\"");
                         Process.Start(info);
                     }
 

@@ -212,6 +212,7 @@ namespace Amkor_Material_Manager
 
             else if (tabNo == 4)
             {
+                cb_excel.Checked = Properties.Settings.Default.LongTermReelReportExcel;
                 textBox_badge.Text = "";
 
                 Fnc_Process_LongtermInfo();
@@ -525,6 +526,7 @@ namespace Amkor_Material_Manager
             comboBox_month.SelectedIndex = 0;
             comboBox_L_group.SelectedIndex = 0;
 
+            cb_excel.Checked = Properties.Settings.Default.LongTermReelReportExcel;
 
             int nMonth = comboBox_month.SelectedIndex; //0: SID, 1:Detail info
             int nGroup = comboBox_L_group.SelectedIndex + 1;
@@ -8034,8 +8036,82 @@ namespace Amkor_Material_Manager
 
         private void button6_Click(object sender, EventArgs e)
         {
-            longTermExcelExport();
+            if (Properties.Settings.Default.LongTermReelReportExcel == true)
+                longTermExcelOut();//longTermExcelExport();
+            else
+                longTermCSVExport();
             //longTermExcelOut();
+        }
+
+        private void longTermCSVExport()
+        {
+            string csv = "";
+            string filePath = "";
+
+            csv += "Long term reel list report" + Environment.NewLine;
+            csv += Environment.NewLine;
+            csv += $"Total : {dataGridView_longterm.RowCount},,,,,,,,,,Date : {DateTime.Now.ToShortDateString()}" + Environment.NewLine;
+            csv += "No,SID,Batch,UID,QTY,In_type,Location,Production_date,In_date,Manufacturer,Inch" + Environment.NewLine;
+
+            for(int i = 0; i < dataGridView_longterm.RowCount; i++)
+            {
+                csv += $"{i+1},{dataGridView_longterm.Rows[i].Cells["SID"].Value.ToString().Trim()}," +        
+                    $"{dataGridView_longterm.Rows[i].Cells["Batch#"].Value.ToString().Trim()}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["UID"].Value.ToString().Trim()}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["Qty"].Value.ToString().Trim()}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["투입형태"].Value.ToString().Trim()}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["위치"].Value.ToString().Trim()}," +
+                    $"{DateTime.Parse(dataGridView_longterm.Rows[i].Cells["제조일"].Value.ToString()).ToString("yyyy-MM-dd HH:mm:ss")}," +
+                    $"{DateTime.Parse(dataGridView_longterm.Rows[i].Cells["투입일"].Value.ToString()).ToString("yyyy-MM-dd HH:mm:ss")}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["제조사"].Value.ToString().Trim()}," +
+                    $"{dataGridView_longterm.Rows[i].Cells["인치"].Value.ToString().Trim()}" + Environment.NewLine;
+            }
+
+            if (Properties.Settings.Default.LongTermReelReportPath != "")
+            {
+                filePath = $"{Properties.Settings.Default.LongTermReelReportPath}\\LongTermReel_Over{comboBox_month.SelectedIndex + 1}Mon_{DateTime.Now.ToString("yyyyMMddhhmmss")}.csv";
+
+                if (Directory.Exists(Properties.Settings.Default.LongTermReelReportPath) == false)
+                    Directory.CreateDirectory(Properties.Settings.Default.LongTermReelReportPath);
+
+                System.IO.FileStream fileStream = new FileStream(filePath, FileMode.Create);
+
+                fileStream.Write(Encoding.UTF8.GetBytes(csv) , 0, csv.Length);
+
+                fileStream.Dispose();
+            }
+            else
+            {
+                filePath = $"{System.Environment.CurrentDirectory + "\\LongTermReel"}\\LongTermReel_Over{comboBox_month.SelectedIndex + 1}Mon_{DateTime.Now.ToString("yyyyMddhhmmss")}.csv";
+
+                if (Directory.Exists(System.Environment.CurrentDirectory + "\\LongTermReel") == false)
+                    Directory.CreateDirectory(System.Environment.CurrentDirectory + "\\LongTermReel");
+
+                Properties.Settings.Default.LongTermReelReportPath = System.Environment.CurrentDirectory + "\\LongTermReel";
+                Properties.Settings.Default.Save();
+
+                System.IO.FileStream fileStream = new FileStream(filePath, FileMode.Create);
+
+                fileStream.Write(Encoding.UTF8.GetBytes(csv), 0, csv.Length);
+                fileStream.Dispose();
+            }
+
+            if (isBackground == false)
+            {
+                if (DialogResult.Yes == MessageBox.Show("파일을 여시겠습니까?", "file open?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    if (Properties.Settings.Default.LongTermReelReportExcel == false)
+                    {
+                        ProcessStartInfo info = new ProcessStartInfo("notepad.exe", "\"" + filePath + "\"");
+                        Process.Start(info);
+                    }
+                    else
+                    {
+                        ProcessStartInfo info = new ProcessStartInfo("excel.exe", "\"" + filePath + "\"");
+                        Process.Start(info);
+                    }
+                }
+            }
         }
 
         private void longTermExcelExport()
@@ -8127,7 +8203,8 @@ namespace Amkor_Material_Manager
             Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
             Workbook workbook = application.Workbooks.Add();// Filename: string.Format("{0}\\{1}", System.Environment.CurrentDirectory, @"\WaferReturn\WaferReturnOutTemp.xlsx"));
 
-            Worksheet worksheet1 = workbook.Worksheets[0];
+
+            Worksheet worksheet1 = workbook.Worksheets.get_Item(1);
             object misValue = System.Reflection.Missing.Value;
 
             
@@ -8377,6 +8454,12 @@ namespace Amkor_Material_Manager
 
         }
 
+        private void cb_excel_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.LongTermReelReportExcel = cb_excel.Checked;
+            Properties.Settings.Default.Save();
+        }
+
         int CompareStorageData_ASM(ASM_StorageData obj1, ASM_StorageData obj2)
         {
             return obj1.SID.CompareTo(obj2.SID);
@@ -8402,6 +8485,7 @@ namespace Amkor_Material_Manager
 
                 button6_Click(new object(), new EventArgs());
 
+                isBackground = true;
                 return true;
             }
             catch (Exception ex)

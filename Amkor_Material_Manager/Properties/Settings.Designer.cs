@@ -178,5 +178,17 @@ namespace Amkor_Material_Manager.Properties {
                 this["LongTermReelReportEN"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LongTermReelReportExcel {
+            get {
+                return ((bool)(this["LongTermReelReportExcel"]));
+            }
+            set {
+                this["LongTermReelReportExcel"] = value;
+            }
+        }
     }
 }
